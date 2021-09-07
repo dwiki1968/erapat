@@ -102,14 +102,15 @@ const FormPresensi = () => {
 
   return (
     <>
-      <Box>
-        <Container maxW={"5xl"} minHeight="100vh" p={10}>
+      <Box
+      //  bg={useColorModeValue("gray.50", "gray.900")}
+      >
+        <Container maxW={"5xl"} minHeight="100vh" p={5}>
           <Flex>
             <Heading size="lg">📝 E-Rapat PTI</Heading>
             <Spacer />
             <ColorModeToggle />
           </Flex>
-
           <Flex flexDir={{ base: "column", sm: "column", md: "column" }}>
             <Box mt={10} w={{ xs: "100%", sm: "100%" }}>
               <Heading>{nama}</Heading>
@@ -119,93 +120,96 @@ const FormPresensi = () => {
               </Text>
             </Box>
             <Spacer />
-            {successSubmit ? (
-              <Alert
-                mt={5}
-                boxShadow="md"
-                p={10}
-                status="success"
-                variant="subtle"
-                flexDirection="column"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-                borderRadius="lg"
-              >
-                <AlertIcon boxSize="40px" mr={0} />
-                <AlertTitle mt={4} mb={1} fontSize="lg">
-                  Presensi berhasil!
-                </AlertTitle>
-                <AlertDescription maxWidth="sm">
-                  Terimakasih telah mengisi presensi kehadiran rapat {nama}
-                </AlertDescription>
-                <Button
-                  mt={10}
-                  colorScheme="green"
-                  size="md"
-                  onClick={() => setSuccessSubmit(false)}
+            <Box
+              w={{ xs: "100%", sm: "100%" }}
+              mt={5}
+              boxShadow="md"
+              borderRadius="lg"
+              p={10}
+              // bg={useColorModeValue("white", "gray.800")}
+            >
+              {successSubmit ? (
+                <Alert
+                  mt={5}
+                  boxShadow="md"
+                  p={10}
+                  status="success"
+                  variant="subtle"
+                  flexDirection="column"
+                  alignItems="center"
+                  justifyContent="center"
+                  textAlign="center"
+                  borderRadius="lg"
                 >
-                  Isi lagi
-                </Button>
-              </Alert>
-            ) : (
-              <Box
-                w={{ xs: "100%", sm: "100%" }}
-                mt={5}
-                boxShadow="md"
-                borderRadius="lg"
-                p={10}
-              >
-                {/* formik */}
-                <Formik
-                  initialValues={initialValues}
-                  validationSchema={validationSchema}
-                  onSubmit={onSubmit}
-                >
-                  {(formik) => {
-                    return (
-                      <Form>
-                        <FormikInput
-                          type="text"
-                          label="Nama Lengkap"
-                          name="nama_peserta"
-                          variant="filled"
-                        />
-                        <Box m={2} />
+                  <AlertIcon boxSize="40px" mr={0} />
+                  <AlertTitle mt={4} mb={1} fontSize="lg">
+                    Presensi berhasil!
+                  </AlertTitle>
+                  <AlertDescription maxWidth="sm">
+                    Terimakasih telah mengisi presensi kehadiran rapat {nama}
+                  </AlertDescription>
+                  <Button
+                    mt={10}
+                    colorScheme="green"
+                    size="md"
+                    onClick={() => setSuccessSubmit(false)}
+                  >
+                    Isi lagi
+                  </Button>
+                </Alert>
+              ) : (
+                <Box>
+                  {/* formik */}
+                  <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}
+                  >
+                    {(formik) => {
+                      return (
+                        <Form>
+                          <FormikInput
+                            type="text"
+                            label="Nama Lengkap"
+                            name="nama_peserta"
+                            variant="filled"
+                          />
+                          <Box m={2} />
 
-                        <FormikInput
-                          type="text"
-                          label="Unit Kerja"
-                          name="unit_kerja"
-                          variant="filled"
-                        />
-                        <Box m={2} />
+                          <FormikInput
+                            type="text"
+                            label="Unit Kerja"
+                            name="unit_kerja"
+                            variant="filled"
+                          />
+                          <Box m={2} />
 
-                        <Text fontWeight="semibold" mb={2}>
-                          Tanda Tangan
-                        </Text>
-                        <TandaTangan getTtdUrl={getTtdUrl} />
-                        <Box m={2} />
+                          <Text fontWeight="semibold" mb={2}>
+                            Tanda Tangan
+                          </Text>
+                          <TandaTangan getTtdUrl={getTtdUrl} />
+                          <Box m={5} />
 
-                        <Button
-                          type="submit"
-                          disabled={
-                            !formik.isValid || ttdUrl.signature_url == ""
-                          }
-                          colorScheme="green"
-                          variant="solid"
-                          size="md"
-                          isLoading={loadingSubmit}
-                          borderColor="gray.800"
-                        >
-                          Submit
-                        </Button>
-                      </Form>
-                    );
-                  }}
-                </Formik>
-              </Box>
-            )}
+                          <Button
+                            type="submit"
+                            disabled={
+                              !formik.isValid || ttdUrl.signature_url == ""
+                            }
+                            colorScheme="green"
+                            variant="solid"
+                            size="md"
+                            isLoading={loadingSubmit}
+                            borderColor="gray.800"
+                          >
+                            Submit
+                          </Button>
+                        </Form>
+                      );
+                    }}
+                  </Formik>
+                </Box>
+              )}
+            </Box>
           </Flex>
         </Container>
       </Box>

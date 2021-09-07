@@ -4,6 +4,7 @@ import {
   ButtonGroup,
   Center,
   Flex,
+  IconButton,
   Spinner,
   Table,
   Tbody,
@@ -13,15 +14,32 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import useSWR from "swr";
+import { IsoToLocalDate, IsoToLocalTime } from "../../utils/utils";
 import AksiTabel from "./AksiTabel";
 import DokumenTabel from "./DokumenTabel";
 import FilterTabel from "./FilterTabel";
-import { IsoToLocalDate, IsoToLocalTime } from "../../utils/utils";
 
 const TabelRapat = () => {
-  const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_URL}/rapats`); //get data--> kedepannya ganti slug bukan id
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(3);
+  const start = (page - 1) * limit;
+
+  const { data: rapats, error } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/rapats?_limit=${limit}&_start=${start}`
+  );
+
+  const { data: totalRapat } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/rapats/count`
+  );
+
+  if (!totalRapat) {
+    console.log("loading");
+  }
+
+  let lastPage = Math.ceil(totalRapat / limit);
 
   if (error) {
     return (
@@ -34,7 +52,7 @@ const TabelRapat = () => {
     <>
       <FilterTabel />
       <Box overflow="auto">
-        {data ? (
+        {rapats ? (
           <Table>
             <Thead>
               <Tr>
@@ -53,7 +71,7 @@ const TabelRapat = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {data.map((rapat) => (
+              {rapats.map((rapat) => (
                 <Tr key={rapat.id}>
                   <Td>
                     <Text fontSize="md">{rapat.nama}</Text>
@@ -91,10 +109,20 @@ const TabelRapat = () => {
       </Box>
       <Box my={5}>
         <Flex>
-          <ButtonGroup size="sm" isAttached variant="outline">
-            <Button>👈 Sebelum</Button>
-            <Button>1</Button>
-            <Button>Sesudah 👉</Button>
+          <ButtonGroup size="sm" variant="outline" isAttached>
+            <IconButton
+              icon={<FiArrowLeft />}
+              isDisabled={page == 1}
+              onClick={() => setPage(page - 1)}
+            />
+
+            <Button>Page : {page}</Button>
+
+            <IconButton
+              onClick={() => setPage(page + 1)}
+              icon={<FiArrowRight />}
+              isDisabled={page == lastPage}
+            />
           </ButtonGroup>
         </Flex>
       </Box>

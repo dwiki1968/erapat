@@ -145,7 +145,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
         fontFamily="monospace"
         fontWeight="bold"
       >
-        Logo
+        📝 E-Rapat
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>

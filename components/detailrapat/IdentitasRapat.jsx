@@ -125,7 +125,7 @@ const IdentitasRapat = () => {
           return (
             <Form>
               <Flex flexDir="column">
-                <Flex mb={30} mt={5}>
+                <Flex>
                   {editable ? (
                     <Button
                       leftIcon={<FiEdit />}
@@ -141,14 +141,14 @@ const IdentitasRapat = () => {
                       leftIcon={<FiEdit />}
                       variant="solid"
                       size="md"
-                      colorScheme="cyan"
+                      colorScheme="blue"
                       onClick={() => setEditable(true)}
                     >
                       Ubah
                     </Button>
                   )}
 
-                  <Box mx={5} />
+                  <Box mx={3} />
                   <Button
                     leftIcon={<FiSave />}
                     type="submit"

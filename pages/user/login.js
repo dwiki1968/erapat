@@ -28,6 +28,7 @@ import { useState } from "react";
 import { FaLock, FaUserAlt } from "react-icons/fa";
 import * as Yup from "yup";
 import ColorModeToggle from "../../components/ui/ColorModeToggle";
+import { parseCookies, setCookie, destroyCookie } from "nookies";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -78,11 +79,11 @@ const Login = () => {
   return (
     <>
       <Flex flexDir="column" backgroundColor="gray.50" height="100vh">
-        <Flex justifyContent="flex-end">
+        {/* <Flex justifyContent="flex-end">
           <Flex pt={5} px={10}>
             <ColorModeToggle />
           </Flex>
-        </Flex>
+        </Flex> */}
         <Flex
           flex="1"
           flexDirection="column"

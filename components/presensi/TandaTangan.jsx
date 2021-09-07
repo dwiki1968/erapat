@@ -11,7 +11,7 @@ export default function TandaTangan({ getTtdUrl }) {
         <Box
           maxWidth="300px"
           borderRadius="lg"
-          bg={useColorModeValue("gray.100", "gray.800")}
+          bg={useColorModeValue("gray.100", "gray.700")}
         >
           <SignatureCanvas
             penColor="blue"

@@ -1,3 +1,4 @@
+import { Box, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 import { FiFileText } from "react-icons/fi";
@@ -16,12 +17,24 @@ const DetailRapat = () => {
       <SideMenu>
         <DashboardContainer>
           <PageTittle title="Detail Rapat" icon={<FiFileText />} />
-          <PaperContainer mt={5}>
-            <AlatDetail />
-          </PaperContainer>
-          <PaperContainer mt={5}>
-            <IdentitasRapat />
-          </PaperContainer>
+
+          <Flex
+            flexDir={{
+              base: "column-reverse",
+              sm: "column-reverse",
+              md: "column-reverse",
+              lg: "row",
+            }}
+          >
+            <PaperContainer mt={5} flex={1}>
+              <IdentitasRapat />
+            </PaperContainer>
+
+            <Box m={2} />
+            <PaperContainer mt={5} w={{ sm: "100%", md: "100%", lg: "60%" }}>
+              <AlatDetail />
+            </PaperContainer>
+          </Flex>
         </DashboardContainer>
       </SideMenu>
     </>
