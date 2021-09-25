@@ -13,26 +13,54 @@ import {
   Th,
   Thead,
   Tr,
+  Select,
+  Input,
+  Spacer,
+  InputGroup,
+  InputRightAddon,
 } from "@chakra-ui/react";
+import { parseCookies } from "nookies";
 import React, { useState } from "react";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { FiArrowLeft, FiArrowRight, FiSearch } from "react-icons/fi";
 import useSWR from "swr";
 import { IsoToLocalDate, IsoToLocalTime } from "../../utils/utils";
 import AksiTabel from "./AksiTabel";
-import DokumenTabel from "./DokumenTabel";
 import FilterTabel from "./FilterTabel";
 
 const TabelRapat = () => {
+  const cookies = parseCookies();
+  // console.log("tabel", cookies);
+
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(10);
+  const [search, setSearch] = useState("");
+  const [sortby, setSortby] = useState("created_at:DESC");
+
+  const handleSort = (e) => {
+    setSortby(e.target.value);
+  };
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
   const start = (page - 1) * limit;
 
+  // fetc data rapat untuk tabel
   const { data: rapats, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/rapats?_limit=${limit}&_start=${start}`
+    cookies.token
+      ? [
+          `${process.env.NEXT_PUBLIC_URL}/rapats?_limit=${limit}&_start=${start}&_sort=${sortby}&nama_contains=${search}`,
+          cookies.token,
+        ]
+      : null
   );
 
+  //get data total rapat untuk paginasi
   const { data: totalRapat } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/rapats/count`
+    cookies.token
+      ? [`${process.env.NEXT_PUBLIC_URL}/rapats/count`, cookies.token]
+      : null
   );
 
   if (!totalRapat) {
@@ -50,7 +78,38 @@ const TabelRapat = () => {
   }
   return (
     <>
-      <FilterTabel />
+      <Flex>
+        <InputGroup size="md">
+          <Input
+            w={{ base: "100%", sm: "100%", md: "40%" }}
+            mb={5}
+            placeholder="Pencarian . . ."
+            value={search}
+            onChange={handleSearch}
+            borderRadius="lg"
+          />
+          <InputRightAddon>
+            <FiSearch />
+          </InputRightAddon>
+        </InputGroup>
+        <Spacer />
+        <Flex w={{ base: "100%", sm: "100%", md: "30%" }} mb={5}>
+          <Select
+            borderRadius="lg"
+            size="md"
+            variant="filled"
+            onChange={handleSort}
+            value={sortby}
+          >
+            <option value="created_at:ASC">Tgl. buat a-z</option>
+            <option value="created_at:DESC">Tgl. buat z-a</option>
+            <option value="jadwal_rapat:ASC">Tgl. jadwal a-z</option>
+            <option value="jadwal_rapat:DESC">Tgl. jadwal z-a</option>
+            <option value="nama:ASC">Nama rapat a-z</option>
+            <option value="nama:DESC">Nama rapat z-a</option>
+          </Select>
+        </Flex>
+      </Flex>
       <Box overflow="auto">
         {rapats ? (
           <Table>
@@ -63,7 +122,7 @@ const TabelRapat = () => {
                   <Text fontSize="md">Jadwal</Text>
                 </Th>
                 <Th>
-                  <Text fontSize="md">Dokumen</Text>
+                  <Text fontSize="md">Pembuat</Text>
                 </Th>
                 <Th pl={10}>
                   <Text fontSize="md">Aksi</Text>
@@ -86,7 +145,7 @@ const TabelRapat = () => {
                   </Td>
 
                   <Td>
-                    <DokumenTabel idRapat={rapat.id} slug={rapat.slug_rapat} />
+                    <Text fontSize="sm">{rapat.user.nama}</Text>
                   </Td>
                   <Td>
                     <AksiTabel slug={rapat.slug_rapat} idRapat={rapat.id} />
@@ -109,7 +168,7 @@ const TabelRapat = () => {
       </Box>
       <Box my={5}>
         <Flex>
-          <ButtonGroup size="sm" variant="outline" isAttached>
+          <ButtonGroup size="md" variant="outline" isAttached>
             <IconButton
               icon={<FiArrowLeft />}
               isDisabled={page == 1}

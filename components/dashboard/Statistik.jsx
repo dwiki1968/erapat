@@ -7,7 +7,10 @@ import {
   StatNumber,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { parseCookies } from "nookies";
+import { useState } from "react";
 import { FiArchive, FiCalendar, FiSmile } from "react-icons/fi";
+import useSWR from "swr";
 
 function StatsCard(props) {
   const { title, stat, icon } = props;
@@ -15,6 +18,7 @@ function StatsCard(props) {
     <Stat
       px={{ base: 2, md: 4 }}
       py={"5"}
+      // bg="red.400"
       bgGradient="linear(to-l, red.400, purple.400)"
       rounded={"lg"}
     >
@@ -25,7 +29,7 @@ function StatsCard(props) {
             isTruncated
             color={useColorModeValue("gray.200", "gray.700")}
           >
-            {title}
+            {title ? title : ". . ."}
           </StatLabel>
           <StatNumber
             fontSize={"3xl"}
@@ -47,6 +51,39 @@ function StatsCard(props) {
 }
 
 export default function Statistik() {
+  const [today, setToday] = useState(new Date().toISOString());
+
+  const cookies = parseCookies();
+
+  const { data, error } = useSWR(
+    cookies.token
+      ? [`${process.env.NEXT_PUBLIC_URL}/users/me`, cookies.token]
+      : null
+  );
+  const { data: semua, errorSemua } = useSWR(
+    cookies.token
+      ? [`${process.env.NEXT_PUBLIC_URL}/rapats/count`, cookies.token]
+      : null
+  );
+
+  const { data: upcoming, errorUpcoming } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/rapats/count?jadwal_rapat_gte=${today}`
+  );
+
+  //belum dilakukan handel eror -> kedepannya kita pakai toast saja
+  if (error) {
+    console.log(error);
+  }
+
+  if (errorSemua) {
+    console.log(error);
+  }
+
+  if (errorUpcoming) {
+    console.log(error);
+  }
+
+  // console.log("stat", data);
   return (
     <>
       <SimpleGrid
@@ -55,17 +92,17 @@ export default function Statistik() {
       >
         <StatsCard
           title={"Halo, selamat datang! ✨"}
-          stat={"Dwiki Krisna Saputra"}
+          stat={data ? data.nama : "loading.."}
           icon={<FiSmile size={"3em"} />}
         />
         <StatsCard
           title={"Total"}
-          stat={"40"}
+          stat={semua}
           icon={<FiArchive size={"3em"} />}
         />
         <StatsCard
           title={"Akan datang"}
-          stat={"10"}
+          stat={upcoming}
           icon={<FiCalendar size={"3em"} />}
         />
       </SimpleGrid>

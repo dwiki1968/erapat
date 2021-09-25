@@ -1,7 +1,18 @@
-import { Box, Button, Center, Flex, Spacer, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Spacer,
+  useToast,
+  RadioGroup,
+  Radio,
+  Stack,
+} from "@chakra-ui/react";
 import axios from "axios";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
 import { useState } from "react";
 import { FiEdit, FiSave } from "react-icons/fi";
 import PuffLoader from "react-spinners/PuffLoader";
@@ -11,18 +22,25 @@ import * as Yup from "yup";
 import { IsoToForm } from "../../utils/utils";
 import FormikInput from "../ui/formik/FormikInput";
 import FormikSelect from "../ui/formik/FormikSelect";
+import FormikTextArea from "../ui/formik/FormikTextArea";
 
 const IdentitasRapat = () => {
+  const cookies = parseCookies(); //cookies.token
+
   const router = useRouter();
   const rapatId = router.query.rapat;
-  console.log("slugparams", rapatId);
+  // console.log("slugparams", rapatId);
   const toast = useToast();
   const [editable, setEditable] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [jenisState, setJenisState] = useState(null);
 
   const { data, error } = useSWR(
-    rapatId
-      ? `${process.env.NEXT_PUBLIC_URL}/rapats?slug_rapat=${rapatId}`
+    rapatId && cookies.token
+      ? [
+          `${process.env.NEXT_PUBLIC_URL}/rapats?slug_rapat=${rapatId}`,
+          cookies.token,
+        ]
       : null
   );
 
@@ -47,7 +65,7 @@ const IdentitasRapat = () => {
   //jika ada data maka dijalankann baris dibaawah
 
   const dataRapat = data[0];
-  const { id, nama, jadwal_rapat, pimpinan, jenis, tempat, agenda_rapat } =
+  const { id, nama, jadwal_rapat, pimpinan, tempat, agenda_rapat, jenis } =
     dataRapat;
 
   //merubah format iso datettime dari strapi agar bisa dicosume form
@@ -57,7 +75,6 @@ const IdentitasRapat = () => {
     nama,
     jadwal_rapat: stringJadwal,
     pimpinan,
-    jenis,
     tempat,
     agenda_rapat,
   };
@@ -68,7 +85,6 @@ const IdentitasRapat = () => {
     nama: Yup.string().required("Required"),
     jadwal_rapat: Yup.string().required("Required"),
     pimpinan: Yup.string().required("Required"),
-    jenis: Yup.string().required("Required"),
     tempat: Yup.string().required("Required"),
     agenda_rapat: Yup.string().required("Required"),
   });
@@ -87,6 +103,12 @@ const IdentitasRapat = () => {
         {
           ...values,
           slug_rapat,
+          jenis: jenisState,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
         }
       );
       console.log("res: ", response);
@@ -177,14 +199,16 @@ const IdentitasRapat = () => {
                   name="agenda_rapat"
                   variant="filled"
                 />
-                <FormikInput
-                  isDisabled={!editable}
-                  type="datetime-local"
-                  label="Jadwal Rapat"
-                  name="jadwal_rapat"
-                  variant="filled"
-                />
 
+                <Box w={{ base: "100%", sm: "100%", md: "50%" }}>
+                  <FormikInput
+                    isDisabled={!editable}
+                    type="datetime-local"
+                    label="Jadwal Rapat"
+                    name="jadwal_rapat"
+                    variant="filled"
+                  />
+                </Box>
                 <FormikInput
                   isDisabled={!editable}
                   type="text"
@@ -192,31 +216,32 @@ const IdentitasRapat = () => {
                   name="pimpinan"
                   variant="filled"
                 />
-                <Flex flexDir={{ base: "column", sm: "column", md: "row" }}>
-                  <Box w={{ base: "100%", sm: "100%", md: "30%" }}>
-                    <FormikSelect
-                      isDisabled={!editable}
-                      type="text"
-                      label="Jenis"
-                      name="jenis"
-                      variant="filled"
-                    >
-                      <option value="offline">Offline</option>
-                      <option value="online">Online</option>
-                    </FormikSelect>
-                  </Box>
-                  <Spacer />
 
-                  <Box w={{ base: "100%", sm: "100%", md: "65%" }}>
-                    <FormikInput
-                      isDisabled={!editable}
-                      type="text"
-                      label="Lokasi/ Zoom"
-                      name="tempat"
-                      variant="filled"
-                    />
-                  </Box>
-                </Flex>
+                <RadioGroup
+                  value={jenisState ? jenisState : jenis}
+                  onChange={setJenisState}
+                  my={2}
+                  disabled={!editable}
+                >
+                  <Stack direction="row">
+                    <Radio value="offline" isDisabled={!editable}>
+                      Offline
+                    </Radio>
+                    <Radio value="online" isDisabled={!editable}>
+                      Online
+                    </Radio>
+                  </Stack>
+                </RadioGroup>
+
+                <Box w={{ base: "100%", sm: "100%", md: "65%" }}>
+                  <FormikTextArea
+                    isDisabled={!editable}
+                    type="text"
+                    label="Lokasi/ Zoom"
+                    name="tempat"
+                    variant="filled"
+                  />
+                </Box>
               </Flex>
             </Form>
           );

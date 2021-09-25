@@ -25,3 +25,7 @@ export function IsoToLocalTime(isoFormat) {
 export function IsoToForm(isoFormat) {
   return isoFormat.substring(0, 16);
 }
+
+export function getCurrentDate() {
+  return new Date().toISOString();
+}

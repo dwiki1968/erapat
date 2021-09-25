@@ -13,7 +13,11 @@ import {
   Spacer,
   Spinner,
   Text,
+  Link,
   useColorModeValue,
+  Stack,
+  Radio,
+  RadioGroup,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Form, Formik } from "formik";
@@ -25,13 +29,31 @@ import ColorModeToggle from "../ui/ColorModeToggle";
 import FormikInput from "../ui/formik/FormikInput";
 import TandaTangan from "./TandaTangan";
 import { IsoToLocalDate, IsoToLocalTime } from "../../utils/utils";
+import { parseCookies } from "nookies";
+import Footer from "../layout/Footer";
+
+const ColorModeContainer = ({ children, light, dark, ...rest }) => {
+  return (
+    <>
+      <Box {...rest} bg={useColorModeValue(light, dark)}>
+        {children}
+      </Box>
+    </>
+  );
+};
 
 const FormPresensi = () => {
   const router = useRouter();
   const rapatId = router.query.rapat;
+  const cookies = parseCookies(); // cookies.token
+  const [isExternal, setIsExternal] = useState(false);
+
   const { data, error } = useSWR(
-    rapatId
-      ? `${process.env.NEXT_PUBLIC_URL}/rapats?slug_rapat=${rapatId}`
+    rapatId && cookies.token
+      ? [
+          `${process.env.NEXT_PUBLIC_URL}/rapats?slug_rapat=${rapatId}`,
+          cookies.token,
+        ]
       : null
   );
   const [successSubmit, setSuccessSubmit] = useState(false);
@@ -69,8 +91,8 @@ const FormPresensi = () => {
   };
 
   const validationSchema = Yup.object({
-    nama_peserta: Yup.string().required("Mohon diisi 😅"),
-    unit_kerja: Yup.string().required("Mohon diisi 😅"),
+    nama_peserta: Yup.string().required("Mohon diisi terlebih dahulu 🙏"),
+    unit_kerja: Yup.string().required("Mohon diisi terlebih dahulu 🙏"),
   });
 
   const getTtdUrl = (value) => {
@@ -102,117 +124,150 @@ const FormPresensi = () => {
 
   return (
     <>
-      <Box
-      //  bg={useColorModeValue("gray.50", "gray.900")}
-      >
+      <ColorModeContainer light="gray.50" dark="gray.800">
         <Container maxW={"5xl"} minHeight="100vh" p={5}>
-          <Flex>
-            <Heading size="lg">📝 E-Rapat PTI</Heading>
+          <Flex mb={10}>
+            <Link>
+              <Heading onClick={() => router.push("/")} size="lg">
+                📝 E-Rapat PTI
+              </Heading>
+            </Link>
             <Spacer />
             <ColorModeToggle />
           </Flex>
           <Flex flexDir={{ base: "column", sm: "column", md: "column" }}>
-            <Box mt={10} w={{ xs: "100%", sm: "100%" }}>
-              <Heading>{nama}</Heading>
-              <Text>
-                {IsoToLocalDate(jadwal_rapat)} | Pukul{" "}
-                {IsoToLocalTime(jadwal_rapat)} WIB - Selesai
-              </Text>
-            </Box>
-            <Spacer />
-            <Box
+            <ColorModeContainer
+              mt={10}
               w={{ xs: "100%", sm: "100%" }}
-              mt={5}
-              boxShadow="md"
+              p={{ base: 3, sm: 4, md: 5, lg: 10 }}
               borderRadius="lg"
-              p={10}
-              // bg={useColorModeValue("white", "gray.800")}
+              light="gray.100"
+              dark="gray.700"
             >
-              {successSubmit ? (
-                <Alert
-                  mt={5}
-                  boxShadow="md"
-                  p={10}
-                  status="success"
-                  variant="subtle"
-                  flexDirection="column"
-                  alignItems="center"
-                  justifyContent="center"
-                  textAlign="center"
-                  borderRadius="lg"
-                >
-                  <AlertIcon boxSize="40px" mr={0} />
-                  <AlertTitle mt={4} mb={1} fontSize="lg">
-                    Presensi berhasil!
-                  </AlertTitle>
-                  <AlertDescription maxWidth="sm">
-                    Terimakasih telah mengisi presensi kehadiran rapat {nama}
-                  </AlertDescription>
-                  <Button
-                    mt={10}
-                    colorScheme="green"
-                    size="md"
-                    onClick={() => setSuccessSubmit(false)}
+              <Box>
+                <Heading>{nama}</Heading>
+                <Text>
+                  {IsoToLocalDate(jadwal_rapat)} | Pukul{" "}
+                  {IsoToLocalTime(jadwal_rapat)} WIB - Selesai
+                </Text>
+              </Box>
+            </ColorModeContainer>
+            <Spacer />
+            <ColorModeContainer
+              light="white"
+              dark="gray.800"
+              borderRadius="lg"
+              mt={3}
+              w={{ xs: "100%", sm: "100%" }}
+              borderWidth="1px"
+              // p={5}
+              p={{ base: 3, sm: 4, md: 5, lg: 10 }}
+            >
+              <Box>
+                {successSubmit ? (
+                  <Alert
+                    mt={5}
+                    boxShadow="md"
+                    p={5}
+                    status="success"
+                    variant="subtle"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    textAlign="center"
+                    borderRadius="lg"
                   >
-                    Isi lagi
-                  </Button>
-                </Alert>
-              ) : (
-                <Box>
-                  {/* formik */}
-                  <Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={onSubmit}
-                  >
-                    {(formik) => {
-                      return (
-                        <Form>
-                          <FormikInput
-                            type="text"
-                            label="Nama Lengkap"
-                            name="nama_peserta"
-                            variant="filled"
-                          />
-                          <Box m={2} />
+                    <AlertIcon boxSize="40px" mr={0} />
+                    <AlertTitle mt={4} mb={1} fontSize="lg">
+                      Presensi berhasil!
+                    </AlertTitle>
+                    <AlertDescription maxWidth="sm">
+                      Terimakasih telah mengisi presensi kehadiran rapat {nama}
+                    </AlertDescription>
+                    <Button
+                      mt={10}
+                      colorScheme="green"
+                      size="md"
+                      onClick={() => setSuccessSubmit(false)}
+                    >
+                      Isi lagi
+                    </Button>
+                  </Alert>
+                ) : (
+                  <Box>
+                    {/* formik */}
+                    <Formik
+                      initialValues={initialValues}
+                      validationSchema={validationSchema}
+                      onSubmit={onSubmit}
+                    >
+                      {(formik) => {
+                        return (
+                          <Form>
+                            <FormikInput
+                              type="text"
+                              label="Nama Lengkap"
+                              name="nama_peserta"
+                              variant="filled"
+                              placeholder="contoh: John Doe"
+                              maxWidth="500px"
+                            />
+                            {/* <Box m={5} />
+                            <Text fontWeight="semibold" mb={1}>
+                              Jenis Peserta
+                            </Text>
+                            <RadioGroup
+                              value={isExternal}
+                              onChange={setIsExternal}
+                            >
+                              <Flex>
+                                <Radio mr={5} value={false}>
+                                  Internal PPATK
+                                </Radio>
+                                <Radio value={true}>Eksternal</Radio>
+                              </Flex>
+                            </RadioGroup> */}
 
-                          <FormikInput
-                            type="text"
-                            label="Unit Kerja"
-                            name="unit_kerja"
-                            variant="filled"
-                          />
-                          <Box m={2} />
+                            <Box m={5} />
+                            <FormikInput
+                              type="text"
+                              label="Unit Kerja / Instansi"
+                              name="unit_kerja"
+                              variant="filled"
+                              placeholder="contoh: Pusat Teknologi Informasi"
+                            />
+                            <Box m={5} />
 
-                          <Text fontWeight="semibold" mb={2}>
-                            Tanda Tangan
-                          </Text>
-                          <TandaTangan getTtdUrl={getTtdUrl} />
-                          <Box m={5} />
+                            <Text fontWeight="semibold" mb={2}>
+                              Tanda Tangan
+                            </Text>
+                            <TandaTangan getTtdUrl={getTtdUrl} />
+                            <Box m={5} />
 
-                          <Button
-                            type="submit"
-                            disabled={
-                              !formik.isValid || ttdUrl.signature_url == ""
-                            }
-                            colorScheme="green"
-                            variant="solid"
-                            size="md"
-                            isLoading={loadingSubmit}
-                            borderColor="gray.800"
-                          >
-                            Submit
-                          </Button>
-                        </Form>
-                      );
-                    }}
-                  </Formik>
-                </Box>
-              )}
-            </Box>
+                            <Button
+                              type="submit"
+                              disabled={
+                                !formik.isValid || ttdUrl.signature_url == ""
+                              }
+                              colorScheme="green"
+                              variant="solid"
+                              size="md"
+                              isLoading={loadingSubmit}
+                            >
+                              Submit
+                            </Button>
+                          </Form>
+                        );
+                      }}
+                    </Formik>
+                  </Box>
+                )}
+              </Box>
+            </ColorModeContainer>
           </Flex>
+          <Footer />
         </Container>
-      </Box>
+      </ColorModeContainer>
     </>
   );
 };

@@ -38,7 +38,7 @@ export default function DialogKonfirmasi(props) {
                 Batal
               </Button>
               <Button colorScheme="red" onClick={handleAksi} ml={3}>
-                Hapus
+                Lanjut
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

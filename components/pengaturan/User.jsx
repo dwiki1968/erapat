@@ -1,14 +1,34 @@
 import { Button, Divider } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
+import { parseCookies } from "nookies";
 import React from "react";
 import { FaRegEdit } from "react-icons/fa";
+import useSWR from "swr";
 import * as Yup from "yup";
 import FormikInput from "../ui/formik/FormikInput";
 
 export default function User() {
+  const cookies = parseCookies(); // cookies.token
+
+  const { data, error } = useSWR(
+    cookies.token
+      ? [`${process.env.NEXT_PUBLIC_URL}/users/me`, cookies.token]
+      : null
+  );
+
+  if (error) {
+    console.log(error);
+  }
+
+  if (!data) {
+    return <> loading...</>;
+  }
+
+  console.log(data);
+
   const initialValues = {
-    nama: "Dwiki Krisna S",
-    username: "dks002",
+    nama: data.nama,
+    username: data.username,
     password: "kerdil1234",
   };
 

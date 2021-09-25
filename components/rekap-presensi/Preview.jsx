@@ -38,7 +38,7 @@ const Preview = ({ data }) => {
         </Button>
       </Box>
 
-      <Box ref={componentRef} p={20}>
+      <Box ref={componentRef}>
         {data && (
           <Box>
             <Center mb={5}>
@@ -47,22 +47,20 @@ const Preview = ({ data }) => {
               </Heading>
             </Center>
 
-            <Text fontWeight="light">
-              Hari, Tanggal : {IsoToLocalDate(data.jadwal_rapat)}
+            <Text fontSize="sm" fontWeight="light">
+              {IsoToLocalDate(data.jadwal_rapat)}
             </Text>
-            <Text fontWeight="light">
-              Waktu : Pukul {IsoToLocalTime(data.jadwal_rapat)} WIB - Selesai
+            <Text fontSize="sm" fontWeight="light">
+              {IsoToLocalTime(data.jadwal_rapat)} WIB - Selesai
             </Text>
           </Box>
         )}
 
         <Box>
-          <Divider my={5} />
-          <Table variant="simple" colorScheme="gray">
+          <Table mt={2} variant="simple" size="md" colorScheme="gray">
             <Thead bg="gray.200">
               <Tr>
                 <Th>No.</Th>
-
                 <Th>Nama</Th>
                 <Th>Unit Kerja</Th>
                 <Th>Tanda Tangan</Th>
@@ -77,7 +75,7 @@ const Preview = ({ data }) => {
                     <Td>{rekap.nama_peserta}</Td>
                     <Td>{rekap.unit_kerja}</Td>
                     <Td>
-                      <Img w="50px" src={rekap.signature_url} />
+                      <Img w="100px" src={rekap.signature_url} />
                     </Td>
                   </Tr>
                 ))}

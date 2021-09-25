@@ -14,3 +14,32 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@media print {
+  @page {
+    size: landscape;
+  }
+}
+
+@media print {
+  html,
+  body {
+    height: initial !important;
+    overflow: initial !important;
+    background-color: white !important;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .item {
+    page-break-after: avoid;
+  }
+
+  #item-container {
+    display: block;
+  }
+}
+
+@page {
+  size: auto;
+  margin: 15mm 10mm;
+}

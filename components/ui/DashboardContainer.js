@@ -6,7 +6,7 @@ const DashboardContainer = ({ children }) => {
   return (
     <div>
       <Box
-        minH="100vh"
+        minH="80vh"
         borderRadius="lg"
         bg={useColorModeValue("gray.100", "gray.800")}
         py={2}

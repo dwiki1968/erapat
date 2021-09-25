@@ -1,6 +1,7 @@
 import { Box, Button, useColorModeValue } from "@chakra-ui/react";
 import React, { useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
+import styles from "./TandaTangan.module.css";
 
 export default function TandaTangan({ getTtdUrl }) {
   let canvasRef;
@@ -9,7 +10,8 @@ export default function TandaTangan({ getTtdUrl }) {
     <>
       <Box>
         <Box
-          maxWidth="300px"
+          maxW="400px"
+          h="200px"
           borderRadius="lg"
           bg={useColorModeValue("gray.100", "gray.700")}
         >
@@ -20,8 +22,7 @@ export default function TandaTangan({ getTtdUrl }) {
               getTtdUrl(canvasRef.toDataURL());
             }}
             canvasProps={{
-              width: 300,
-              height: 150,
+              className: styles.container,
             }}
           />
         </Box>

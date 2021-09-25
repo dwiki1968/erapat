@@ -12,11 +12,19 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useRouter } from "next/dist/client/router";
-import React from "react";
-import { FiFilePlus, FiHome, FiMenu, FiSettings } from "react-icons/fi";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import {
+  FiFilePlus,
+  FiHome,
+  FiMenu,
+  FiSettings,
+  FiLogOut,
+} from "react-icons/fi";
 import ColorModeToggle from "../ui/ColorModeToggle";
 import Footer from "./Footer";
+import { parseCookies, setCookie, destroyCookie } from "nookies";
+import DialogKonfirmasi from "../ui/DialogKonfirmasi";
 
 const LinkItems = [
   { name: "Beranda", icon: FiHome, route: "/dashboard" },
@@ -119,39 +127,59 @@ const NavItem = ({ icon, children, route, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const onLogOut = () => {
+    destroyCookie(null, "token");
+    router.push("/dashboard");
+  };
   return (
-    <Flex
-      ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 4 }}
-      height="20"
-      alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
-      borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
-      justifyContent={{ base: "space-between", md: "flex-end" }}
-      {...rest}
-    >
-      <IconButton
-        display={{ base: "flex", md: "none" }}
-        onClick={onOpen}
-        variant="outline"
-        aria-label="open menu"
-        icon={<FiMenu />}
-      />
-
-      <Text
-        display={{ base: "flex", md: "none" }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold"
+    <>
+      <Flex
+        ml={{ base: 0, md: 60 }}
+        px={{ base: 4, md: 4 }}
+        height="20"
+        alignItems="center"
+        bg={useColorModeValue("white", "gray.900")}
+        borderBottomWidth="1px"
+        borderBottomColor={useColorModeValue("gray.200", "gray.700")}
+        justifyContent={{ base: "space-between", md: "flex-end" }}
+        {...rest}
       >
-        📝 E-Rapat
-      </Text>
+        <IconButton
+          display={{ base: "flex", md: "none" }}
+          onClick={onOpen}
+          variant="outline"
+          aria-label="open menu"
+          icon={<FiMenu />}
+        />
 
-      <HStack spacing={{ base: "0", md: "6" }}>
-        <ColorModeToggle />
-        <Flex alignItems={"center"}></Flex>
-      </HStack>
-    </Flex>
+        <Text
+          display={{ base: "flex", md: "none" }}
+          fontSize="2xl"
+          fontFamily="monospace"
+          fontWeight="bold"
+        >
+          📝 E-Rapat
+        </Text>
+
+        <HStack spacing={{ base: "0", md: "6" }}>
+          <ColorModeToggle />
+          <IconButton
+            variant="ghost"
+            aria-label="log out button"
+            onClick={() => setIsOpen(true)}
+            icon={<FiLogOut />}
+          />
+          <Flex alignItems={"center"}></Flex>
+        </HStack>
+      </Flex>
+      <DialogKonfirmasi
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        handleAksi={onLogOut}
+        title={`Log out dari aplikasi`}
+      />
+    </>
   );
 };

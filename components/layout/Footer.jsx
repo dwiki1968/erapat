@@ -52,7 +52,7 @@ export default function Footer() {
         align={{ base: "center", md: "center" }}
       >
         <Heading size="md">📝 E-Rapat</Heading>
-        <Text>© 2021 Pusat Teknologi Informasi | PPATK</Text>
+        <Text>© 2021 Aktualisasi Latsar Dwiki Krisna | PPATK</Text>
         <Stack direction={"row"} spacing={6}>
           <SocialButton label={"Twitter"} href={"#"}>
             <FaTwitter />

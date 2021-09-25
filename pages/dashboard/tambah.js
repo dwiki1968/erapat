@@ -7,8 +7,33 @@ import FormTambah from "../../components/tambah/FormTambah";
 import DashboardContainer from "../../components/ui/DashboardContainer";
 import PageTittle from "../../components/ui/PageTittle";
 import PaperContainer from "../../components/ui/PaperContainer";
+import nookies from "nookies";
+import jwt_decode from "jwt-decode";
+import { Box } from "@chakra-ui/react";
 
-function Tambah() {
+export async function getServerSideProps(ctx) {
+  // Parse
+  const cookies = nookies.get(ctx);
+  // console.log("kuki", cookies);
+
+  if (!cookies.token) {
+    return {
+      redirect: {
+        destination: "/user/login",
+      },
+    };
+  }
+
+  return {
+    props: {
+      token: cookies.token,
+    },
+  };
+}
+
+function Tambah({ token }) {
+  const decode = jwt_decode(token);
+  // console.log(decode);
   return (
     <>
       <SideMenu>
@@ -18,8 +43,8 @@ function Tambah() {
           <PageTittle title="Tambah Rapat" icon={<FiFilePlus />} />
 
           {/* ada warning pada formik */}
-          <PaperContainer mt={5}>
-            <FormTambah />
+          <PaperContainer mt={5} maxWidth="900px">
+            <FormTambah token={token} />
           </PaperContainer>
         </DashboardContainer>
       </SideMenu>

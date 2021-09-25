@@ -28,7 +28,26 @@ import { useState } from "react";
 import { FaLock, FaUserAlt } from "react-icons/fa";
 import * as Yup from "yup";
 import ColorModeToggle from "../../components/ui/ColorModeToggle";
-import { parseCookies, setCookie, destroyCookie } from "nookies";
+import nookies, { parseCookies, setCookie, destroyCookie } from "nookies";
+import { FiLogIn } from "react-icons/fi";
+
+export async function getServerSideProps(ctx) {
+  // Parse
+  const cookies = nookies.get(ctx);
+  console.log("kuki", cookies);
+
+  if (cookies.token) {
+    return {
+      redirect: {
+        destination: "/dashboard/",
+      },
+    };
+  }
+
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -67,8 +86,13 @@ const Login = () => {
         }
       );
       console.log("res: ", response);
+      setCookie(null, "token", response.data.jwt, {
+        maxAge: 7 * 24 * 60 * 60,
+        path: "/",
+      });
+
       setLoading(false);
-      router.push("/dashboard");
+      router.replace("/dashboard");
     } catch (error) {
       setLoading(false);
       setFail(true);
@@ -204,7 +228,6 @@ const Login = () => {
 
                         <Button
                           disabled={!formik.isValid}
-                          borderRadius={0}
                           type="submit"
                           variant="solid"
                           colorScheme="red"

@@ -8,27 +8,35 @@ import {
   Spacer,
   Text,
   useToast,
+  Textarea,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import UploadBahan from "../request/UploadBahan";
-import UploadRisalah from "../request/UploadRisalah";
+import UploadBahan from "./request/UploadBahan";
+import UploadRisalah from "./request/UploadRisalah";
 import FilesRapat from "./FilesRapat";
 
 import PuffLoader from "react-spinners/PuffLoader";
+import { parseCookies } from "nookies";
+import FileRisalah from "./request/FileRisalah";
+import FileBahan from "./request/FileBahan";
+import { FiUserCheck } from "react-icons/fi";
+import Clipboard from "./Clipboard";
+import { IsoToLocalDate, IsoToLocalTime } from "../../utils/utils";
 
 function AlatDetail() {
+  const cookies = parseCookies(); //cookies.token
+
   const router = useRouter();
   const slugRapat = router.query.rapat;
-  const { hasCopied, onCopy } = useClipboard(
-    slugRapat ? `http://localhost:3000/presensi/${slugRapat}` : "loading..."
-  );
 
-  console.log("slugparams", slugRapat);
   const toast = useToast();
   const { data, error } = useSWR(
-    slugRapat
-      ? `${process.env.NEXT_PUBLIC_URL}/rapats?slug_rapat=${slugRapat}`
+    slugRapat && cookies.token
+      ? [
+          `${process.env.NEXT_PUBLIC_URL}/rapats?slug_rapat=${slugRapat}`,
+          cookies.token,
+        ]
       : null
   );
 
@@ -53,6 +61,7 @@ function AlatDetail() {
   //jika ada data maka dijalankann baris dibaawah
 
   const dataRapat = data[0];
+  console.log(dataRapat);
   const {
     id,
     nama,
@@ -61,56 +70,69 @@ function AlatDetail() {
     jenis,
     tempat,
     agenda_rapat,
-    file_bahan,
-    file_risalah,
+    file_bahan, //array of object
+    file_risalah, //object
+    slug_rapat,
   } = dataRapat;
-  console.log("dataRapat", dataRapat);
 
   return (
     <>
       <Flex mb={5}>
         <Button
+          leftIcon={<FiUserCheck />}
           colorScheme="green"
           mr={10}
           size="md"
           onClick={() => router.push(`/dashboard/rekap-presensi/${slugRapat}`)}
         >
-          👨‍💼 Rekap Presensi
+          Rekap Presensi
         </Button>
       </Flex>
+
+      {/* undangan  */}
+      <Text fontWeight="semibold">Undangan Rapat</Text>
+      <Box my={2} />
+      <Clipboard
+        kalimat={`Undangan *Rapat ${nama}*\nAgenda Rapat : ${agenda_rapat}\nHari/Tanggal : ${IsoToLocalDate(
+          jadwal_rapat
+        )}\nWaktu : ${IsoToLocalTime(
+          jadwal_rapat
+        )}\nPimpinan : ${pimpinan}\nLokasi / Tautan: ${tempat}\nKami mohon kehadiran Bapak/Ibu, terima kasih.`}
+      />
+      <Box my={5} />
+
       {/* copy presensi rapat  */}
-      <Flex alignItems="center">
-        <Text fontWeight="semibold">Link Presensi</Text>
-        <Spacer />
-        <Input
-          w="80%"
-          value={
-            slugRapat
-              ? `http://localhost:3000/presensi/${slugRapat}`
-              : "loading..."
-          }
-          isReadOnly
-          placeholder="Welcome"
-        />
-        <Button onClick={onCopy} ml={2} colorScheme="green">
-          {hasCopied ? "Copied" : "Copy"}
-        </Button>
-      </Flex>
+      <Text fontWeight="semibold">Tautan presensi</Text>
+      <Box my={2} />
+      <Clipboard
+        kalimat={`Yth. Bapak/Ibu peserta rapat \nBerikut link presensi: \nhttp://localhost:3000/presensi/${slug_rapat}\nTerima kasih`}
+      />
       {/* file rapat  */}
-      <Flex
-        my={5}
-        flexDir={{ base: "column", sm: "row", md: "column", lg: "row" }}
-      >
-        <Box w={{ base: "100%", sm: "50%", md: "100%", lg: "50%" }}>
+      <Box my={5} />
+
+      {/* file risalah  */}
+      <Text fontWeight="semibold">File Risalah</Text>
+      <Box my={2} />
+      <Box>
+        {file_risalah ? (
+          <FileRisalah fileRisalah={file_risalah} />
+        ) : (
           <UploadRisalah RapatId={id} />
-          <Box my={5} />
-          <UploadBahan RapatId={id} />
-        </Box>
-        <Box m={3} />
-        <Box flex={1}>
-          <FilesRapat fileRisalah={file_risalah} fileBahan={file_bahan} />
-        </Box>
-      </Flex>
+        )}
+
+        <Box my={5} />
+        {/* file bahan rapat  */}
+        <Text fontWeight="semibold">File Bahan Rapat </Text>
+        <Text fontSize="sm" fontStyle="italic">
+          {" "}
+          *Optional
+        </Text>
+        <Box my={2} />
+
+        <UploadBahan RapatId={id} />
+        <Box my={2} />
+        {file_bahan.length > 0 ? <FileBahan fileBahan={file_bahan} /> : null}
+      </Box>
     </>
   );
 }
