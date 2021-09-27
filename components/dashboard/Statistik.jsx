@@ -19,7 +19,7 @@ function StatsCard(props) {
       px={{ base: 2, md: 4 }}
       py={"5"}
       // bg="red.400"
-      bgGradient="linear(to-l, red.400, purple.400)"
+      bgGradient="red.400"
       rounded={"lg"}
     >
       <Flex justifyContent={"space-between"}>
