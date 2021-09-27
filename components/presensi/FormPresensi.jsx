@@ -1,4 +1,3 @@
-import PuffLoader from "react-spinners/PuffLoader";
 import {
   Alert,
   AlertDescription,
@@ -10,27 +9,23 @@ import {
   Container,
   Flex,
   Heading,
-  Spacer,
-  Spinner,
-  Text,
   Link,
+  Spacer,
+  Text,
   useColorModeValue,
-  Stack,
-  Radio,
-  RadioGroup,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import PuffLoader from "react-spinners/PuffLoader";
 import useSWR from "swr";
 import * as Yup from "yup";
+import { IsoToLocalDate, IsoToLocalTime } from "../../utils/utils";
+import Footer from "../layout/Footer";
 import ColorModeToggle from "../ui/ColorModeToggle";
 import FormikInput from "../ui/formik/FormikInput";
 import TandaTangan from "./TandaTangan";
-import { IsoToLocalDate, IsoToLocalTime } from "../../utils/utils";
-import { parseCookies } from "nookies";
-import Footer from "../layout/Footer";
 
 const ColorModeContainer = ({ children, light, dark, ...rest }) => {
   return (
@@ -45,17 +40,12 @@ const ColorModeContainer = ({ children, light, dark, ...rest }) => {
 const FormPresensi = () => {
   const router = useRouter();
   const rapatId = router.query.rapat;
-  const cookies = parseCookies(); // cookies.token
   // const [isExternal, setIsExternal] = useState(false);
 
   const { data, error } = useSWR(
-    rapatId && cookies.token
-      ? [
-          `${process.env.NEXT_PUBLIC_URL}/rapats?slug_rapat=${rapatId}`,
-          cookies.token,
-        ]
-      : null
+    `${process.env.NEXT_PUBLIC_URL}/rapats?slug_rapat=${rapatId}`
   );
+
   const [successSubmit, setSuccessSubmit] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [errorSubmit, setErrorSubmit] = useState(false);
