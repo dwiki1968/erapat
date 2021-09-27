@@ -2,34 +2,16 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Center,
   Flex,
   IconButton,
-  Spinner,
-  Table,
-  Tbody,
-  Td,
   Text,
-  Th,
-  Thead,
-  Tr,
-  Select,
-  Input,
-  Spacer,
-  InputGroup,
-  InputRightAddon,
 } from "@chakra-ui/react";
-import { parseCookies } from "nookies";
 import React, { useState } from "react";
-import { FiArrowLeft, FiArrowRight, FiSearch } from "react-icons/fi";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import useSWR from "swr";
-
 import CardRapat from "./CardRapat";
 
 const AllRapat = () => {
-  const cookies = parseCookies();
-  // console.log("tabel", cookies);
-
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [search, setSearch] = useState("");
@@ -47,19 +29,12 @@ const AllRapat = () => {
 
   // fetc data rapat untuk tabel
   const { data: rapats, error } = useSWR(
-    cookies.token
-      ? [
-          `${process.env.NEXT_PUBLIC_URL}/rapats?_limit=${limit}&_start=${start}&_sort=${sortby}&nama_contains=${search}`,
-          cookies.token,
-        ]
-      : null
+    `${process.env.NEXT_PUBLIC_URL}/rapats?_limit=${limit}&_start=${start}&_sort=${sortby}&nama_contains=${search}`
   );
 
   //get data total rapat untuk paginasi
   const { data: totalRapat } = useSWR(
-    cookies.token
-      ? [`${process.env.NEXT_PUBLIC_URL}/rapats/count`, cookies.token]
-      : null
+    `${process.env.NEXT_PUBLIC_URL}/rapats/count`
   );
 
   if (!totalRapat) {

@@ -46,7 +46,7 @@ const FormPresensi = () => {
   const router = useRouter();
   const rapatId = router.query.rapat;
   const cookies = parseCookies(); // cookies.token
-  const [isExternal, setIsExternal] = useState(false);
+  // const [isExternal, setIsExternal] = useState(false);
 
   const { data, error } = useSWR(
     rapatId && cookies.token
@@ -104,7 +104,7 @@ const FormPresensi = () => {
   //handel submit form presensi
   const onSubmit = async (values) => {
     setLoadingSubmit(true);
-    let data = { rapat: [id], ...values, ...ttdUrl };
+    let data = { rapat: id, ...values, ...ttdUrl };
     console.log(data);
 
     try {
@@ -212,21 +212,6 @@ const FormPresensi = () => {
                               placeholder="contoh: John Doe"
                               maxWidth="500px"
                             />
-                            {/* <Box m={5} />
-                            <Text fontWeight="semibold" mb={1}>
-                              Jenis Peserta
-                            </Text>
-                            <RadioGroup
-                              value={isExternal}
-                              onChange={setIsExternal}
-                            >
-                              <Flex>
-                                <Radio mr={5} value={false}>
-                                  Internal PPATK
-                                </Radio>
-                                <Radio value={true}>Eksternal</Radio>
-                              </Flex>
-                            </RadioGroup> */}
 
                             <Box m={5} />
                             <FormikInput
