@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import { FiDelete, FiUploadCloud } from "react-icons/fi";
 
 function UploadBahan(props) {
   const toast = useToast();
@@ -30,6 +31,7 @@ function UploadBahan(props) {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
+    maxSize: 5242880,
   });
 
   const removeFile = (file) => () => {
@@ -45,7 +47,7 @@ function UploadBahan(props) {
   const files = myFiles.map((file) => (
     <ListItem key={file.path}>
       <Text fontSize="sm">
-        {file.path} - {file.size} bytes{" "}
+        {file.path} - {(file.size / 1000000).toFixed(2)} Mb
       </Text>
       {/* <Button size="xs" onClick={removeFile(file)}>
         Remove File
@@ -105,33 +107,39 @@ function UploadBahan(props) {
           borderRadius="lg"
           borderWidth="2px"
           borderColor="gray.200"
-          minH="70px"
+          minH="90px"
           borderStyle="dashed"
           padding={5}
           {...getRootProps({ className: "dropzone" })}
         >
           <input {...getInputProps()} />
           <Text color="gray.400" fontSize="sm">
-            Drag n drop some files here, or click to select files
+            Seret file ke sini, atau klik untuk memilih file (maks 5 mb)
           </Text>
 
           <List>{files}</List>
         </Box>
-        <Flex ml={2}>
+        <Flex ml={2} flexDir="column">
           <Button
-            mr={2}
             colorScheme="green"
             isDisabled={!myFiles.length}
             onClick={uploadFile}
             size="sm"
             isLoading={isLoading}
+            rightIcon={<FiUploadCloud />}
           >
-            Unggah Bahan
+            Unggah
           </Button>
 
           {files.length > 0 && (
-            <Button size="sm" colorScheme="red" onClick={removeAll}>
-              Remove{" "}
+            <Button
+              mt={2}
+              size="sm"
+              rightIcon={<FiDelete />}
+              colorScheme="red"
+              onClick={removeAll}
+            >
+              Batal
             </Button>
           )}
         </Flex>

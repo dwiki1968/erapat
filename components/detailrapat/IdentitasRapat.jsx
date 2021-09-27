@@ -3,7 +3,6 @@ import {
   Button,
   Center,
   Flex,
-  Spacer,
   useToast,
   RadioGroup,
   Radio,
@@ -29,11 +28,16 @@ const IdentitasRapat = () => {
 
   const router = useRouter();
   const rapatId = router.query.rapat;
-  // console.log("slugparams", rapatId);
   const toast = useToast();
   const [editable, setEditable] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [jenisState, setJenisState] = useState(null);
+  const { data: unitKerja, error: errUnit } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/units`
+  );
+
+  if (errUnit) {
+    alert("terjadi eror data unit kerja");
+  }
 
   const { data, error } = useSWR(
     rapatId && cookies.token
@@ -65,8 +69,16 @@ const IdentitasRapat = () => {
   //jika ada data maka dijalankann baris dibaawah
 
   const dataRapat = data[0];
-  const { id, nama, jadwal_rapat, pimpinan, tempat, agenda_rapat, jenis } =
-    dataRapat;
+  const {
+    id,
+    nama,
+    jadwal_rapat,
+    pimpinan,
+    tempat,
+    agenda_rapat,
+    jenis,
+    unit,
+  } = dataRapat;
 
   //merubah format iso datettime dari strapi agar bisa dicosume form
   const stringJadwal = IsoToForm(jadwal_rapat);
@@ -77,9 +89,11 @@ const IdentitasRapat = () => {
     pimpinan,
     tempat,
     agenda_rapat,
+    unit,
+    jenis,
   };
 
-  console.log("initialValues", initialValues);
+  // console.log("initialValues", initialValues);
   //yup validasi
   const validationSchema = Yup.object({
     nama: Yup.string().required("Required"),
@@ -87,6 +101,8 @@ const IdentitasRapat = () => {
     pimpinan: Yup.string().required("Required"),
     tempat: Yup.string().required("Required"),
     agenda_rapat: Yup.string().required("Required"),
+    unit: Yup.string().required("Required"),
+    jenis: Yup.string().required("Required"),
   });
 
   //handelsubmit form edit / put
@@ -95,7 +111,7 @@ const IdentitasRapat = () => {
 
     //membuat slug rapat
     const slug_rapat = slugify(values.nama, { lower: true });
-    console.log("Form data values", values);
+    // console.log("Form data values", values);
     //post data ke server
     try {
       const response = await axios.put(
@@ -103,7 +119,6 @@ const IdentitasRapat = () => {
         {
           ...values,
           slug_rapat,
-          jenis: jenisState,
         },
         {
           headers: {
@@ -120,6 +135,7 @@ const IdentitasRapat = () => {
         status: "success",
         duration: 9000,
         isClosable: true,
+        position: "top-right",
       });
       router.push(`/dashboard/rapats/${slug_rapat}`);
     } catch (error) {
@@ -132,6 +148,7 @@ const IdentitasRapat = () => {
         status: "error",
         duration: 9000,
         isClosable: true,
+        position: "top-right",
       });
     }
   };
@@ -192,6 +209,26 @@ const IdentitasRapat = () => {
                   name="nama"
                   variant="filled"
                 />
+
+                <FormikSelect
+                  isDisabled={!editable}
+                  // placeholder="Pilih Unit Kerja"
+                  type="text"
+                  label="Unit Kerja"
+                  name="unit"
+                  variant="filled"
+                  maxW="350px"
+                >
+                  <option value={unit}>{unit}</option>
+
+                  {unitKerja &&
+                    unitKerja.map((unit) => (
+                      <option key={unit.id} value={unit.nama}>
+                        {unit.nama}
+                      </option>
+                    ))}
+                </FormikSelect>
+
                 <FormikInput
                   isDisabled={!editable}
                   type="text"
@@ -200,16 +237,17 @@ const IdentitasRapat = () => {
                   variant="filled"
                 />
 
-                <Box w={{ base: "100%", sm: "100%", md: "50%" }}>
-                  <FormikInput
-                    isDisabled={!editable}
-                    type="datetime-local"
-                    label="Jadwal Rapat"
-                    name="jadwal_rapat"
-                    variant="filled"
-                  />
-                </Box>
                 <FormikInput
+                  maxW="250px"
+                  isDisabled={!editable}
+                  type="datetime-local"
+                  label="Jadwal Rapat"
+                  name="jadwal_rapat"
+                  variant="filled"
+                />
+
+                <FormikInput
+                  maxW="350px"
                   isDisabled={!editable}
                   type="text"
                   label="Pimpinan"
@@ -217,31 +255,27 @@ const IdentitasRapat = () => {
                   variant="filled"
                 />
 
-                <RadioGroup
-                  value={jenisState ? jenisState : jenis}
-                  onChange={setJenisState}
-                  my={2}
-                  disabled={!editable}
+                <FormikSelect
+                  isDisabled={!editable}
+                  // placeholder="Pilih Unit Kerja"
+                  type="text"
+                  label="Jenis Rapat"
+                  name="jenis"
+                  variant="filled"
+                  maxW="150px"
                 >
-                  <Stack direction="row">
-                    <Radio value="offline" isDisabled={!editable}>
-                      Offline
-                    </Radio>
-                    <Radio value="online" isDisabled={!editable}>
-                      Online
-                    </Radio>
-                  </Stack>
-                </RadioGroup>
+                  <option value="offline">offline</option>
+                  <option value="online">online</option>
+                </FormikSelect>
 
-                <Box w={{ base: "100%", sm: "100%", md: "65%" }}>
-                  <FormikTextArea
-                    isDisabled={!editable}
-                    type="text"
-                    label="Lokasi/ Zoom"
-                    name="tempat"
-                    variant="filled"
-                  />
-                </Box>
+                <FormikTextArea
+                  maxW="500px"
+                  isDisabled={!editable}
+                  type="text"
+                  label="Lokasi/ Zoom"
+                  name="tempat"
+                  variant="filled"
+                />
               </Flex>
             </Form>
           );

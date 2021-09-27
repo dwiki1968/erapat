@@ -1,27 +1,21 @@
 import {
-  Box,
-  Heading,
+  Flex,
   IconButton,
   Link,
   List,
-  ListIcon,
   ListItem,
   useToast,
-  Flex,
-  Icon,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { parseCookies } from "nookies";
-import React from "react";
-import {
-  AiOutlineDelete,
-  AiOutlineFilePdf,
-  AiOutlineFilePpt,
-} from "react-icons/ai";
+import React, { useState } from "react";
+import { AiOutlineDelete } from "react-icons/ai";
+import DialogKonfirmasi from "../../ui/DialogKonfirmasi";
 
 const DeleteButton = ({ fileId }) => {
   const cookies = parseCookies();
   const toast = useToast();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleDelete = async () => {
     try {
@@ -33,14 +27,16 @@ const DeleteButton = ({ fileId }) => {
           },
         }
       );
-      console.log("res: ", response);
+      // console.log("res: ", response);
       toast({
         title: "Selamat!",
         description: "Data berhasil dihapus 🎉",
         status: "success",
         duration: 9000,
         isClosable: true,
+        position: "top-right",
       });
+      setIsOpen(false);
     } catch (error) {
       console.log("err put req: ", error);
       toast({
@@ -49,43 +45,48 @@ const DeleteButton = ({ fileId }) => {
         status: "error",
         duration: 9000,
         isClosable: true,
+        position: "top-right",
       });
+      setIsOpen(false);
     }
   };
 
   return (
-    <IconButton
-      variant="link"
-      colorScheme="red"
-      icon={<AiOutlineDelete />}
-      onClick={handleDelete}
-    />
+    <>
+      <DialogKonfirmasi
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        handleAksi={handleDelete}
+        title="Hapus File Bahan"
+      />
+      <IconButton
+        variant="link"
+        colorScheme="red"
+        icon={<AiOutlineDelete />}
+        onClick={() => setIsOpen(true)}
+      />
+    </>
   );
 };
 
 const FileBahan = (props) => {
-  console.log("bahan", props);
   const { fileBahan } = props;
   const baseUrl = process.env.NEXT_PUBLIC_URL;
 
   return (
     <div>
-      <Box bg="gray.50" borderRadius="lg" p={3}>
-        <List>
-          <Icon as={AiOutlineFilePpt} w={8} h={8} color="orange.400" />
-
-          {fileBahan.map((data) => (
-            <ListItem key={data.id}>
-              <Flex>
-                <Link color="blue.400" href={`${baseUrl}${data.url}`}>
-                  {data.name}
-                </Link>
-                <DeleteButton fileId={data.id} />
-              </Flex>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
+      <List>
+        {fileBahan.map((data) => (
+          <ListItem key={data.id}>
+            <Flex>
+              <Link color="blue.400" href={`${baseUrl}${data.url}`}>
+                {data.name}
+              </Link>
+              <DeleteButton fileId={data.id} />
+            </Flex>
+          </ListItem>
+        ))}
+      </List>
     </div>
   );
 };

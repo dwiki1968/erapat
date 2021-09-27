@@ -13,16 +13,18 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { parseCookies } from "nookies";
-import React from "react";
+import React, { useState } from "react";
 import {
   AiOutlineDelete,
   AiOutlineFilePdf,
   AiOutlineFilePpt,
 } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
+import DialogKonfirmasi from "../../ui/DialogKonfirmasi";
 
 const DeleteButton = ({ fileId }) => {
   const cookies = parseCookies();
+  const [isOpen, setIsOpen] = useState(false);
 
   const toast = useToast();
 
@@ -36,14 +38,16 @@ const DeleteButton = ({ fileId }) => {
           },
         }
       );
-      console.log("res: ", response);
+      // console.log("res: ", response);
       toast({
         title: "Selamat!",
-        description: "Data berhasil dihapus 🎉",
+        description: "File berhasil dihapus 🎉",
         status: "success",
         duration: 9000,
         isClosable: true,
+        position: "top-right",
       });
+      setIsOpen(false);
     } catch (error) {
       console.log("err put req: ", error);
       toast({
@@ -52,17 +56,27 @@ const DeleteButton = ({ fileId }) => {
         status: "error",
         duration: 9000,
         isClosable: true,
+        position: "top-right",
       });
+      setIsOpen(false);
     }
   };
 
   return (
-    <IconButton
-      variant="link"
-      colorScheme="red"
-      icon={<AiOutlineDelete />}
-      onClick={handleDelete}
-    />
+    <>
+      <DialogKonfirmasi
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        handleAksi={handleDelete}
+        title="Hapus File Risalah"
+      />
+      <IconButton
+        variant="link"
+        colorScheme="red"
+        icon={<AiOutlineDelete />}
+        onClick={() => setIsOpen(true)}
+      />
+    </>
   );
 };
 
@@ -74,27 +88,23 @@ const FileRisalah = (props) => {
 
   return (
     <>
-      <Box bg="gray.50" borderRadius="lg" p={3} minH="70px">
-        <List>
-          {fileRisalah && (
-            <ListItem>
-              <Icon as={AiOutlineFilePdf} w={8} h={8} color="red.500" />
-
-              <Flex>
-                <Link
-                  color="blue.400"
-                  href={`${baseUrl}${fileRisalah.url}`}
-                  isExternal
-                >
-                  {fileRisalah.name}
-                </Link>
-                {/* <IconButton icon={FiDownload} /> */}
-                <DeleteButton fileId={fileRisalah.id} />
-              </Flex>
-            </ListItem>
-          )}
-        </List>
-      </Box>
+      <List>
+        {fileRisalah && (
+          <ListItem>
+            <Flex>
+              <Link
+                color="blue.400"
+                href={`${baseUrl}${fileRisalah.url}`}
+                isExternal
+              >
+                {fileRisalah.name}
+              </Link>
+              <DeleteButton fileId={fileRisalah.id} />
+            </Flex>
+          </ListItem>
+        )}
+      </List>
+      {/* </Box> */}
     </>
   );
 };

@@ -77,24 +77,27 @@ export default function User() {
                 variant="filled"
               />
 
-              <FormikInput
+              {/* <FormikInput
                 type="password"
                 label="Password"
                 name="password"
                 variant="filled"
-              />
+              /> */}
 
-              <Button
+              {/* perlu fitur update password  */}
+
+              {/* <Button
                 mt={5}
                 leftIcon={<FaRegEdit />}
                 type="submit"
-                disabled={!formik.isValid}
+                // disabled={!formik.isValid}
+                disabled={true}
                 variant="solid"
                 size="md"
                 colorScheme="cyan"
               >
                 Ubah
-              </Button>
+              </Button> */}
             </Form>
           );
         }}

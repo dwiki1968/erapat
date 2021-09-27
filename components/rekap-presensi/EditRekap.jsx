@@ -11,15 +11,17 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { parseCookies } from "nookies";
-import React from "react";
+import React, { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
+import DialogKonfirmasi from "../ui/DialogKonfirmasi";
 
 const DeleteButton = ({ presensiId }) => {
   const cookies = parseCookies(); //token
   const toast = useToast();
+  const [isOpen, setIsOpen] = useState(false);
 
   const onDelete = async () => {
-    console.log("delete", presensiId);
+    // console.log("delete", presensiId);
     try {
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_URL}/rekap-presensis/${presensiId}`,
@@ -38,6 +40,7 @@ const DeleteButton = ({ presensiId }) => {
         isClosable: true,
         position: "top-right",
       });
+      setIsOpen(false);
     } catch (error) {
       console.log("err put req: ", error);
       toast({
@@ -48,18 +51,28 @@ const DeleteButton = ({ presensiId }) => {
         isClosable: true,
         position: "top-right",
       });
+      setIsOpen(false);
     }
   };
 
   return (
-    <IconButton
-      onClick={onDelete}
-      aria-label="Search database"
-      colorScheme="red"
-      icon={<FiTrash2 />}
-      size="md"
-      variant="link"
-    />
+    <>
+      <DialogKonfirmasi
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        handleAksi={onDelete}
+        title="Hapus Data Kehadiran"
+      />
+
+      <IconButton
+        onClick={() => setIsOpen(true)}
+        aria-label="Search database"
+        colorScheme="red"
+        icon={<FiTrash2 />}
+        size="md"
+        variant="link"
+      />
+    </>
   );
 };
 

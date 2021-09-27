@@ -129,7 +129,7 @@ const FormPresensi = () => {
           <Flex mb={10}>
             <Link>
               <Heading onClick={() => router.push("/")} size="lg">
-                📝 E-Rapat PTI
+                📝 E-Rapat
               </Heading>
             </Link>
             <Spacer />
@@ -145,7 +145,7 @@ const FormPresensi = () => {
               dark="gray.700"
             >
               <Box>
-                <Heading>{nama}</Heading>
+                <Heading>Presensi {nama}</Heading>
                 <Text>
                   {IsoToLocalDate(jadwal_rapat)} | Pukul{" "}
                   {IsoToLocalTime(jadwal_rapat)} WIB - Selesai

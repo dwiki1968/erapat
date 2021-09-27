@@ -34,7 +34,7 @@ import { FiLogIn } from "react-icons/fi";
 export async function getServerSideProps(ctx) {
   // Parse
   const cookies = nookies.get(ctx);
-  console.log("kuki", cookies);
+  // console.log("kuki", cookies);
 
   if (cookies.token) {
     return {
@@ -75,7 +75,7 @@ const Login = () => {
   });
 
   const onSubmit = async (values) => {
-    console.log("Form data", values);
+    // console.log("Form data", values);
     setLoading(true);
     try {
       const response = await axios.post(
@@ -85,7 +85,7 @@ const Login = () => {
           password: values.password,
         }
       );
-      console.log("res: ", response);
+      // console.log("res: ", response);
       setCookie(null, "token", response.data.jwt, {
         maxAge: 7 * 24 * 60 * 60,
         path: "/",

@@ -8,6 +8,7 @@ import PageTittle from "../../components/ui/PageTittle";
 import { FiSettings } from "react-icons/fi";
 import { Heading, Text } from "@chakra-ui/layout";
 import nookies from "nookies";
+import UnitKerja from "../../components/pengaturan/UnitKerja";
 
 export async function getServerSideProps(ctx) {
   // Parse
@@ -44,6 +45,13 @@ const Pengaturan = () => {
               👨‍💼 Pengaturan User
             </Heading>
             <User />
+          </PaperContainer>
+
+          <PaperContainer mt={5} maxWidth="900px">
+            <Heading mb={5} size="md">
+              🏛 Unit Kerja
+            </Heading>
+            <UnitKerja />
           </PaperContainer>
         </DashboardContainer>
       </SideMenu>

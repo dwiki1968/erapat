@@ -12,11 +12,12 @@ const Clipboard = ({ kalimat }) => {
       <Flex alignItems="start">
         <Spacer />
         <Textarea
+          variant="filled"
           fontSize="sm"
           size="md"
           value={kalimat}
           isReadOnly
-          placeholder="Welcome"
+          overflow="hidden"
         />
         <Button size="sm" onClick={onCopy} ml={2} colorScheme="green">
           {hasCopied ? "Copied" : "Copy"}

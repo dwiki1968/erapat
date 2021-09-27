@@ -1,28 +1,39 @@
 import {
-  Box,
   Button,
   Flex,
-  Spacer,
-  Stack,
   Radio,
   RadioGroup,
+  Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Form, Formik } from "formik";
+import jwt_decode from "jwt-decode";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FiSave } from "react-icons/fi";
 import slugify from "slugify";
+import useSWR from "swr";
 import * as Yup from "yup";
 import FormikInput from "../ui/formik/FormikInput";
+import FormikSelect from "../ui/formik/FormikSelect";
 import FormikTextArea from "../ui/formik/FormikTextArea";
-import jwt_decode from "jwt-decode";
 
 const FormTambah = ({ token }) => {
   //mengambil id user dari jwt
   const decode = jwt_decode(token); //id --> id user
   // console.log("decode", decode);
+  const toast = useToast();
+
+  //get data unit kerja untuk field unit kerja
+  const { data: unitKerja, error: errUnit } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/units`
+  );
+
+  if (errUnit) {
+    alert("terjadi eror data unit kerja");
+  }
 
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -34,6 +45,7 @@ const FormTambah = ({ token }) => {
     pimpinan: "-",
     tempat: "",
     agenda_rapat: "",
+    unit: "",
   };
 
   const validationSchema = Yup.object({
@@ -42,6 +54,7 @@ const FormTambah = ({ token }) => {
     pimpinan: Yup.string().required("Required"),
     tempat: Yup.string().required("Required"),
     agenda_rapat: Yup.string().required("Required"),
+    unit: Yup.string().required("Required"),
   });
 
   const onSubmit = async (values) => {
@@ -64,10 +77,23 @@ const FormTambah = ({ token }) => {
       );
       console.log("res: ", response);
       setLoading(false);
+      toast({
+        title: "Selamat!",
+        description: "Data berhasil ditambahkan 🎉",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
       router.push(`/dashboard/rapats/${slug_rapat}`);
     } catch (error) {
       setLoading(false);
-      alert("maaf terjadi kesalahan");
+      toast({
+        title: "Sayang sekali!",
+        description: "Maaf terjadi kesalahan 😱",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
 
       console.log("err: ", error);
     }
@@ -91,6 +117,23 @@ const FormTambah = ({ token }) => {
                   name="nama"
                   variant="filled"
                 />
+
+                <FormikSelect
+                  placeholder="Pilih Unit Kerja"
+                  type="text"
+                  label="Unit Kerja"
+                  name="unit"
+                  variant="filled"
+                  maxW="500px"
+                >
+                  {unitKerja &&
+                    unitKerja.map((unit) => (
+                      <option key={unit.id} value={unit.nama}>
+                        {unit.nama}
+                      </option>
+                    ))}
+                </FormikSelect>
+
                 <FormikInput
                   placeholder="contoh: Membahas Penyusunan TOR dan RAB TA 2022"
                   type="text"
@@ -99,28 +142,28 @@ const FormTambah = ({ token }) => {
                   variant="filled"
                 />
 
-                <Box w={{ base: "100%", sm: "100%", md: "30%" }}>
-                  <FormikInput
-                    type="datetime-local"
-                    label="Jadwal Rapat "
-                    name="jadwal_rapat"
-                    variant="filled"
-                  />
-                </Box>
-                <Box w={{ base: "100%", sm: "100%", md: "65%" }}>
-                  <FormikInput
-                    type="text"
-                    label="Pimpinan"
-                    keterangan={
-                      <Text fontSize="sm" fontStyle="italic">
-                        *Optional
-                      </Text>
-                    }
-                    name="pimpinan"
-                    variant="filled"
-                  />
-                </Box>
+                <FormikInput
+                  type="datetime-local"
+                  label="Jadwal Rapat "
+                  name="jadwal_rapat"
+                  variant="filled"
+                  maxW="340px"
+                />
 
+                <FormikInput
+                  type="text"
+                  label="Pimpinan"
+                  keterangan={
+                    <Text fontSize="sm" fontStyle="italic">
+                      *Optional
+                    </Text>
+                  }
+                  name="pimpinan"
+                  variant="filled"
+                  maxW="500px"
+                />
+
+                {/* perlu di tingkatkan dengan menggunakan formik pada radio buttton */}
                 <RadioGroup onChange={setJenis} value={jenis} my={2}>
                   <Stack direction="row">
                     <Radio value="offline">Offline</Radio>
@@ -129,27 +172,23 @@ const FormTambah = ({ token }) => {
                 </RadioGroup>
 
                 {jenis === "online" ? (
-                  <Box w={{ base: "100%", sm: "100%", md: "65%" }}>
-                    <FormikTextArea
-                      type="text"
-                      label="Lokasi/ Zoom"
-                      name="tempat"
-                      variant="filled"
-                      placeholder="contoh: 
-                      tautan: https://s.id/bimtek-ppk
-                    Id meeting: 823 8451 3638; Passcode: 878080"
-                    />
-                  </Box>
+                  <FormikTextArea
+                    type="text"
+                    label="Lokasi/ Zoom"
+                    name="tempat"
+                    variant="filled"
+                    placeholder={`contoh: \nTautan: https://s.id/bimtek-ppk \nId meeting: 823 8451 3638; Passcode: 878080`}
+                    maxW="500px"
+                  />
                 ) : (
-                  <Box w={{ base: "100%", sm: "100%", md: "65%" }}>
-                    <FormikInput
-                      type="text"
-                      label="Lokasi/ Zoom"
-                      name="tempat"
-                      variant="filled"
-                      placeholder="contoh: Ruang rapat lantai 5 PTI"
-                    />
-                  </Box>
+                  <FormikInput
+                    type="text"
+                    label="Lokasi/ Zoom"
+                    name="tempat"
+                    variant="filled"
+                    placeholder="contoh: Ruang rapat lantai 5 PTI"
+                    maxW="500px"
+                  />
                 )}
 
                 <Flex mb={30} mt={5}>

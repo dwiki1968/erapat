@@ -66,7 +66,7 @@ const AksiTabel = ({ slug, idRapat }) => {
         <Tooltip hasArrow label="Detail " bg="gray.300" color="black">
           <Button
             variant="ghost"
-            colorScheme="cyan"
+            colorScheme="green"
             size="sm"
             onClick={() => router.push(`/dashboard/rapats/${slug}`)}
             rightIcon={<FiFileText />}
@@ -78,7 +78,7 @@ const AksiTabel = ({ slug, idRapat }) => {
         <Tooltip hasArrow label="Edit data rapat" bg="gray.300" color="black">
           <IconButton
             variant="ghost"
-            colorScheme="teal"
+            colorScheme="green"
             size="sm"
             onClick={() => router.push(`/dashboard/rapats/${slug}`)}
             icon={<FiEdit />}

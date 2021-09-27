@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/layout";
+import nookies from "nookies";
 import React from "react";
 import { FiFilePlus } from "react-icons/fi";
 import MetaPage from "../../components/layout/MetaPage";
@@ -7,14 +7,10 @@ import FormTambah from "../../components/tambah/FormTambah";
 import DashboardContainer from "../../components/ui/DashboardContainer";
 import PageTittle from "../../components/ui/PageTittle";
 import PaperContainer from "../../components/ui/PaperContainer";
-import nookies from "nookies";
-import jwt_decode from "jwt-decode";
-import { Box } from "@chakra-ui/react";
 
 export async function getServerSideProps(ctx) {
   // Parse
   const cookies = nookies.get(ctx);
-  // console.log("kuki", cookies);
 
   if (!cookies.token) {
     return {
@@ -32,8 +28,6 @@ export async function getServerSideProps(ctx) {
 }
 
 function Tambah({ token }) {
-  const decode = jwt_decode(token);
-  // console.log(decode);
   return (
     <>
       <SideMenu>

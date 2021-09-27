@@ -18,7 +18,9 @@ import {
   Spacer,
   InputGroup,
   InputRightAddon,
+  Link,
 } from "@chakra-ui/react";
+import router from "next/router";
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
 import { FiArrowLeft, FiArrowRight, FiSearch } from "react-icons/fi";
@@ -116,16 +118,16 @@ const TabelRapat = () => {
             <Thead>
               <Tr>
                 <Th>
-                  <Text fontSize="md">Nama</Text>
+                  <Text fontSize="sm">Nama</Text>
                 </Th>
                 <Th>
-                  <Text fontSize="md">Jadwal</Text>
+                  <Text fontSize="sm">Jadwal</Text>
                 </Th>
                 <Th>
-                  <Text fontSize="md">Pembuat</Text>
+                  <Text fontSize="sm">Pembuat</Text>
                 </Th>
                 <Th pl={10}>
-                  <Text fontSize="md">Aksi</Text>
+                  <Text fontSize="sm">Aksi</Text>
                 </Th>
               </Tr>
             </Thead>
@@ -133,14 +135,22 @@ const TabelRapat = () => {
               {rapats.map((rapat) => (
                 <Tr key={rapat.id}>
                   <Td>
-                    <Text fontSize="md">{rapat.nama}</Text>
+                    <Link
+                      color="blue.500"
+                      onClick={() =>
+                        router.push(`/dashboard/rapats/${rapat.slug_rapat}`)
+                      }
+                      fontSize="md"
+                    >
+                      {rapat.nama}
+                    </Link>
                   </Td>
                   <Td>
                     <Text fontSize="sm">
-                      📆 {IsoToLocalDate(rapat.jadwal_rapat)}
+                      ⏲ {IsoToLocalTime(rapat.jadwal_rapat)} WIB
                     </Text>
                     <Text fontSize="sm">
-                      ⏲ {IsoToLocalTime(rapat.jadwal_rapat)} WIB
+                      📆 {IsoToLocalDate(rapat.jadwal_rapat)}
                     </Text>
                   </Td>
 

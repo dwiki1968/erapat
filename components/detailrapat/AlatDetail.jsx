@@ -1,4 +1,4 @@
-import { useClipboard } from "@chakra-ui/hooks";
+import { useClipboard, useDisclosure } from "@chakra-ui/hooks";
 import {
   Box,
   Button,
@@ -9,6 +9,8 @@ import {
   Text,
   useToast,
   Textarea,
+  Collapse,
+  IconButton,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
@@ -20,7 +22,7 @@ import PuffLoader from "react-spinners/PuffLoader";
 import { parseCookies } from "nookies";
 import FileRisalah from "./request/FileRisalah";
 import FileBahan from "./request/FileBahan";
-import { FiUserCheck } from "react-icons/fi";
+import { FiPlus, FiPlusCircle, FiUserCheck } from "react-icons/fi";
 import Clipboard from "./Clipboard";
 import { IsoToLocalDate, IsoToLocalTime } from "../../utils/utils";
 
@@ -31,6 +33,7 @@ function AlatDetail() {
   const slugRapat = router.query.rapat;
 
   const toast = useToast();
+  const { isOpen, onToggle } = useDisclosure();
   const { data, error } = useSWR(
     slugRapat && cookies.token
       ? [
@@ -61,7 +64,7 @@ function AlatDetail() {
   //jika ada data maka dijalankann baris dibaawah
 
   const dataRapat = data[0];
-  console.log(dataRapat);
+  // console.log(dataRapat);
   const {
     id,
     nama,
@@ -77,7 +80,7 @@ function AlatDetail() {
 
   return (
     <>
-      <Flex mb={5}>
+      <Flex mb={3}>
         <Button
           leftIcon={<FiUserCheck />}
           colorScheme="green"
@@ -107,7 +110,7 @@ function AlatDetail() {
       <Clipboard
         kalimat={`Yth. Bapak/Ibu peserta rapat \nBerikut link presensi: \nhttp://localhost:3000/presensi/${slug_rapat}\nTerima kasih`}
       />
-      {/* file rapat  */}
+
       <Box my={5} />
 
       {/* file risalah  */}
@@ -124,12 +127,20 @@ function AlatDetail() {
         {/* file bahan rapat  */}
         <Text fontWeight="semibold">File Bahan Rapat </Text>
         <Text fontSize="sm" fontStyle="italic">
-          {" "}
           *Optional
         </Text>
         <Box my={2} />
-
-        <UploadBahan RapatId={id} />
+        <IconButton
+          onClick={onToggle}
+          icon={<FiPlus />}
+          rounded="full"
+          colorScheme="green"
+          size="sm"
+        />
+        <Collapse in={isOpen} animateOpacity>
+          <Box mt={2} />
+          <UploadBahan RapatId={id} />
+        </Collapse>
         <Box my={2} />
         {file_bahan.length > 0 ? <FileBahan fileBahan={file_bahan} /> : null}
       </Box>
