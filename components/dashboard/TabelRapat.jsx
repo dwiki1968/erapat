@@ -80,22 +80,23 @@ const TabelRapat = () => {
   }
   return (
     <>
-      <Flex>
+      <Flex flexDir={{ base: "column", sm: "column", md: "column", lg: "row" }}>
         <InputGroup size="md">
           <Input
-            w={{ base: "100%", sm: "100%", md: "40%" }}
+            w={{ base: "100%", sm: "100%", md: "100%", lg: "40%" }}
             mb={5}
             placeholder="Pencarian . . ."
             value={search}
             onChange={handleSearch}
             borderRadius="lg"
+            variant="filled"
           />
           <InputRightAddon>
             <FiSearch />
           </InputRightAddon>
         </InputGroup>
         <Spacer />
-        <Flex w={{ base: "100%", sm: "100%", md: "30%" }} mb={5}>
+        <Flex w={{ base: "100%", sm: "100%", md: "100%", lg: "30%" }} mb={5}>
           <Select
             borderRadius="lg"
             size="md"
@@ -135,15 +136,16 @@ const TabelRapat = () => {
               {rapats.map((rapat) => (
                 <Tr key={rapat.id}>
                   <Td>
-                    <Link
-                      color="blue.500"
-                      onClick={() =>
-                        router.push(`/dashboard/rapats/${rapat.slug_rapat}`)
-                      }
-                      fontSize="md"
-                    >
-                      {rapat.nama}
-                    </Link>
+                    <Text fontSize="sm">
+                      <Link
+                        color="blue.500"
+                        onClick={() =>
+                          router.push(`/dashboard/rapats/${rapat.slug_rapat}`)
+                        }
+                      >
+                        {rapat.nama}
+                      </Link>
+                    </Text>
                   </Td>
                   <Td>
                     <Text fontSize="sm">
@@ -170,7 +172,7 @@ const TabelRapat = () => {
               thickness="5px"
               speed="0.45s"
               emptyColor="gray.200"
-              color="purple.200"
+              color="#FD6F96"
               size="xl"
             />
           </Center>

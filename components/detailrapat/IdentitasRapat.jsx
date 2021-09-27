@@ -56,7 +56,7 @@ const IdentitasRapat = () => {
     return (
       <>
         <Center p={10}>
-          <PuffLoader color="#FF6B7E" />
+          <PuffLoader color="#95DAC1" />
         </Center>
       </>
     );

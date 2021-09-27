@@ -63,10 +63,10 @@ const AksiTabel = ({ slug, idRapat }) => {
 
       {/* komponen tombol aksi */}
       <Flex flexDir={{ base: "column", sm: "column", md: "row" }}>
-        <Tooltip hasArrow label="Detail " bg="gray.300" color="black">
+        <Tooltip hasArrow label="Detail " bg="#95DAC1" color="black">
           <Button
             variant="ghost"
-            colorScheme="green"
+            colorScheme="blue"
             size="sm"
             onClick={() => router.push(`/dashboard/rapats/${slug}`)}
             rightIcon={<FiFileText />}
@@ -75,17 +75,17 @@ const AksiTabel = ({ slug, idRapat }) => {
           </Button>
         </Tooltip>
 
-        <Tooltip hasArrow label="Edit data rapat" bg="gray.300" color="black">
+        <Tooltip hasArrow label="Edit data rapat" bg="#95DAC1" color="black">
           <IconButton
             variant="ghost"
-            colorScheme="green"
+            colorScheme="blue"
             size="sm"
             onClick={() => router.push(`/dashboard/rapats/${slug}`)}
             icon={<FiEdit />}
           />
         </Tooltip>
 
-        <Tooltip hasArrow label="Hapus rapat" bg="gray.300" color="black">
+        <Tooltip hasArrow label="Hapus rapat" bg="#95DAC1" color="black">
           <IconButton
             variant="ghost"
             colorScheme="red"

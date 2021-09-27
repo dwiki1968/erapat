@@ -19,8 +19,48 @@ function StatsCard(props) {
       px={{ base: 2, md: 4 }}
       py={"5"}
       // bg="red.400"
-      bgGradient="red.400"
+      bg="#FD6F96"
       rounded={"lg"}
+      shadow="lg"
+    >
+      <Flex justifyContent={"space-between"}>
+        <Box pl={{ base: 2, md: 4 }}>
+          <StatLabel
+            fontWeight={"bold"}
+            isTruncated
+            color={useColorModeValue("gray.200", "gray.700")}
+          >
+            {title ? title : ". . ."}
+          </StatLabel>
+          <StatNumber
+            fontSize={"3xl"}
+            fontWeight={"medium"}
+            color={useColorModeValue("gray.200", "gray.700")}
+          >
+            {stat}
+          </StatNumber>
+        </Box>
+        <Box
+          color={useColorModeValue("gray.200", "gray.700")}
+          alignContent={"center"}
+        >
+          {icon}
+        </Box>
+      </Flex>
+    </Stat>
+  );
+}
+
+function ProfileCard(props) {
+  const { title, stat, icon } = props;
+  return (
+    <Stat
+      px={{ base: 2, md: 4 }}
+      py={"5"}
+      // bg="red.400"
+      bg="#6F69AC"
+      rounded={"lg"}
+      shadow="lg"
     >
       <Flex justifyContent={"space-between"}>
         <Box pl={{ base: 2, md: 4 }}>
@@ -90,7 +130,7 @@ export default function Statistik() {
         columns={{ base: 1, md: 2, lg: 3 }}
         spacing={{ base: 5, lg: 8 }}
       >
-        <StatsCard
+        <ProfileCard
           title={"Halo, selamat datang! ✨"}
           stat={data ? data.nama : "loading.."}
           icon={<FiSmile size={"3em"} />}

@@ -30,6 +30,7 @@ import * as Yup from "yup";
 import ColorModeToggle from "../../components/ui/ColorModeToggle";
 import nookies, { parseCookies, setCookie, destroyCookie } from "nookies";
 import { FiLogIn } from "react-icons/fi";
+import MetaPage from "../../components/layout/MetaPage";
 
 export async function getServerSideProps(ctx) {
   // Parse
@@ -102,12 +103,8 @@ const Login = () => {
 
   return (
     <>
+      <MetaPage titlePage="Login ke Aplikasi" />
       <Flex flexDir="column" backgroundColor="gray.50" height="100vh">
-        {/* <Flex justifyContent="flex-end">
-          <Flex pt={5} px={10}>
-            <ColorModeToggle />
-          </Flex>
-        </Flex> */}
         <Flex
           flex="1"
           flexDirection="column"

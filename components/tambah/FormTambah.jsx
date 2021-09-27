@@ -83,6 +83,7 @@ const FormTambah = ({ token }) => {
         status: "success",
         duration: 9000,
         isClosable: true,
+        position: "top-right",
       });
       router.push(`/dashboard/rapats/${slug_rapat}`);
     } catch (error) {
@@ -93,6 +94,7 @@ const FormTambah = ({ token }) => {
         status: "error",
         duration: 9000,
         isClosable: true,
+        position: "top-right",
       });
 
       console.log("err: ", error);

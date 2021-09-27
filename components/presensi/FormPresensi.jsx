@@ -60,14 +60,18 @@ const FormPresensi = () => {
     return (
       <>
         <Center minHeight="100vh">
-          <PuffLoader color="#FF6B7E" />
+          <PuffLoader color="#95DAC1" />
         </Center>
       </>
     );
   }
 
   if (!data.length) {
-    return <>kosong</>;
+    return (
+      <>
+        <Text>Maaf Data Kosong </Text>
+      </>
+    );
   }
 
   //jika ada data maka dijalankann baris dibaawah
@@ -131,7 +135,7 @@ const FormPresensi = () => {
               w={{ xs: "100%", sm: "100%" }}
               p={{ base: 3, sm: 4, md: 5, lg: 10 }}
               borderRadius="lg"
-              light="gray.100"
+              light="#95DAC1"
               dark="gray.700"
             >
               <Box>
