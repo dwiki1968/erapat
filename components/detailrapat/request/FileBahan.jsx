@@ -79,7 +79,7 @@ const FileBahan = (props) => {
         {fileBahan.map((data) => (
           <ListItem key={data.id}>
             <Flex>
-              <Link color="blue.400" href={`${baseUrl}${data.url}`}>
+              <Link color="blue.400" href={data.url}>
                 {data.name}
               </Link>
               <DeleteButton fileId={data.id} />

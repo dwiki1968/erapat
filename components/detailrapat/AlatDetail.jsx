@@ -96,7 +96,7 @@ function AlatDetail() {
       <Text fontWeight="semibold">Undangan Rapat</Text>
       <Box my={2} />
       <Clipboard
-        kalimat={`Undangan *Rapat ${nama}*\nAgenda Rapat : ${agenda_rapat}\nHari/Tanggal : ${IsoToLocalDate(
+        kalimat={`Undangan *${nama}*\nAgenda Rapat : ${agenda_rapat}\nHari/Tanggal : ${IsoToLocalDate(
           jadwal_rapat
         )}\nWaktu : ${IsoToLocalTime(
           jadwal_rapat
@@ -108,7 +108,7 @@ function AlatDetail() {
       <Text fontWeight="semibold">Tautan presensi</Text>
       <Box my={2} />
       <Clipboard
-        kalimat={`Yth. Bapak/Ibu peserta rapat \nBerikut link presensi: \nhttp://localhost:3000/presensi/${slug_rapat}\nTerima kasih`}
+        kalimat={`Yth. Bapak/Ibu peserta ${nama} \nBerikut link presensi: \n${process.env.NEXT_PUBLIC_CLIENT}/${slug_rapat}\nTerima kasih`}
       />
 
       <Box my={5} />

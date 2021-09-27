@@ -92,11 +92,7 @@ const FileRisalah = (props) => {
         {fileRisalah && (
           <ListItem>
             <Flex>
-              <Link
-                color="blue.400"
-                href={`${baseUrl}${fileRisalah.url}`}
-                isExternal
-              >
+              <Link color="blue.400" href={fileRisalah.url} isExternal>
                 {fileRisalah.name}
               </Link>
               <DeleteButton fileId={fileRisalah.id} />
