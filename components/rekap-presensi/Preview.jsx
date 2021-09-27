@@ -45,39 +45,45 @@ const Preview = ({ data }) => {
       <Box ref={componentRef}>
         {data && (
           <Box>
-            <Flex>
+            <Flex alignContent="center">
               <Box w="70px">
                 <Image src={logoPPATK} />
               </Box>
-              <Center>
-                <Heading size="md" maxWidth="75%" textAlign="center">
-                  PUSAT PELAPORAN DAN ANALISIS TRAKSAKSI KEUANGAN
-                </Heading>
-              </Center>
+              <Box flex={1}>
+                <Center>
+                  <Heading size="lg" textAlign="center">
+                    Pusat Pelaporan dan Analisis Transaksi Keuangan
+                  </Heading>
+                </Center>
+                <Center>
+                  <Heading size="md" textAlign="center">
+                    {data.unit}
+                  </Heading>
+                </Center>
+              </Box>
             </Flex>
             <Divider borderWidth="medium" my={3} />
-            <Flex>
-              <Box w="50%">
-                <Heading size="sm" maxWidth="75%">
-                  {data.nama}
-                </Heading>
 
-                <Text fontSize="sm">{data.unit}</Text>
-              </Box>
-              <Spacer />
-              <Box>
-                <Text fontSize="sm">{IsoToLocalDate(data.jadwal_rapat)}</Text>
-                <Text fontSize="sm">
-                  {IsoToLocalTime(data.jadwal_rapat)} WIB - Selesai
-                </Text>
-              </Box>
-            </Flex>
+            <Box w="50%">
+              <Heading size="sm" maxWidth="75%">
+                {data.nama}
+              </Heading>
+            </Box>
+            <Spacer />
+            <Box>
+              <Text fontSize="sm">
+                {IsoToLocalDate(data.jadwal_rapat)}, Pukul{" "}
+                {IsoToLocalTime(data.jadwal_rapat)} WIB - Selesai
+              </Text>
+            </Box>
           </Box>
         )}
 
+        <Box m={5}></Box>
+
         <Box>
-          <Table mt={2} variant="simple" size="md">
-            <Thead>
+          <Table mt={2} variant="simple" size="sm">
+            <Thead bg="#95DAC1" h="50px">
               <Tr>
                 <Th>No.</Th>
                 <Th>Nama</Th>
@@ -100,7 +106,7 @@ const Preview = ({ data }) => {
                       <Text fontSize="sm">{rekap.unit_kerja} </Text>
                     </Td>
                     <Td>
-                      <Img w="100px" src={rekap.signature_url} />
+                      <Img w="100px" h="40px" src={rekap.signature_url} />
                     </Td>
                   </Tr>
                 ))}

@@ -1,40 +1,33 @@
-import RingLoader from "react-spinners/RingLoader";
-
 import {
   Box,
+  Button,
   Center,
-  Flex,
-  Spinner,
+  Drawer,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerOverlay,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  Spacer,
   Text,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Button,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import nookies from "nookies";
 import React from "react";
-import { FiEdit, FiFileText, FiHome, FiPrinter } from "react-icons/fi";
+import { FiEdit, FiFileText, FiPrinter } from "react-icons/fi";
+import { PuffLoader } from "react-spinners";
 import useSWR from "swr";
+import MetaPage from "../../../components/layout/MetaPage";
 import SideMenu from "../../../components/layout/SideMenu";
 import EditRekap from "../../../components/rekap-presensi/EditRekap";
 import Preview from "../../../components/rekap-presensi/Preview";
-import DashBoardContainer from "../../../components/ui/DashboardContainer";
-import PaperContainer from "../../../components/ui/PaperContainer";
-import PageTittle from "../../../components/ui/PageTittle";
-import MetaPage from "../../../components/layout/MetaPage";
 import BackButton from "../../../components/ui/BackButton";
-import nookies from "nookies";
+import DashBoardContainer from "../../../components/ui/DashboardContainer";
+import PageTittle from "../../../components/ui/PageTittle";
+import PaperContainer from "../../../components/ui/PaperContainer";
 
 export async function getServerSideProps(ctx) {
   // Parse
@@ -44,7 +37,7 @@ export async function getServerSideProps(ctx) {
   if (!cookies.token) {
     return {
       redirect: {
-        destination: "/user/login",
+        destination: "/dashboard",
       },
     };
   }
@@ -77,7 +70,7 @@ const RekapPresensi = ({ token }) => {
         <SideMenu>
           <DashBoardContainer>
             <Center h="80vh">
-              <RingLoader color="#FF6B7E" />
+              <PuffLoader color="#95DAC1" />
             </Center>
           </DashBoardContainer>
         </SideMenu>
@@ -86,7 +79,11 @@ const RekapPresensi = ({ token }) => {
   }
 
   if (!data.length) {
-    return <>kosong</>;
+    return (
+      <>
+        <Text>Data Tidak Ada</Text>
+      </>
+    );
   }
 
   //jika ada data maka dijalankann baris dibaawah
@@ -126,7 +123,7 @@ const RekapPresensi = ({ token }) => {
               mb={5}
               leftIcon={<FiPrinter />}
             >
-              Preview dan cetak
+              Preview and Print
             </Button>
 
             <EditRekap data={dataRapat} />
