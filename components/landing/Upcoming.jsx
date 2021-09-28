@@ -19,6 +19,7 @@ const Upcoming = () => {
       </Box>
     );
   }
+
   return (
     <>
       <CardRapat data={rapats} />

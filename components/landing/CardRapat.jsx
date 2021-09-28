@@ -6,6 +6,8 @@ import {
   Link,
   Text,
   useColorModeValue,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
@@ -38,6 +40,15 @@ const CardRapat = ({ data }) => {
           <BeatLoader size={10} color="#FF6B7E" />
         </Center>
       </>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <Alert status="info" borderRadius="lg">
+        <AlertIcon />
+        <Text>Semua rapat telah selesai / belum ada rapat baru</Text>
+      </Alert>
     );
   }
 
