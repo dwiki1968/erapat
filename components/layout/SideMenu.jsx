@@ -166,7 +166,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
           <Link>📝 E-Rapat</Link>
         </Text>
 
-        <HStack spacing={{ base: "0", md: "6" }}>
+        <HStack spacing={{ base: "1", md: "6" }}>
           <ColorModeToggle />
           <IconButton
             variant="ghost"

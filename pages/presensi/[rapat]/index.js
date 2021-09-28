@@ -1,6 +1,6 @@
 import React from "react";
-import MetaPage from "../../components/layout/MetaPage";
-import FormPresensi from "../../components/presensi/FormPresensi";
+import MetaPage from "../../../components/layout/MetaPage";
+import FormPresensi from "../../../components/presensi/FormPresensi";
 
 const Presensi = () => {
   return (

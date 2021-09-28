@@ -13,6 +13,9 @@ import {
   Spacer,
   Text,
   useColorModeValue,
+  Radio,
+  RadioGroup,
+  Stack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Form, Formik } from "formik";
@@ -25,6 +28,8 @@ import { IsoToLocalDate, IsoToLocalTime } from "../../utils/utils";
 import Footer from "../layout/Footer";
 import ColorModeToggle from "../ui/ColorModeToggle";
 import FormikInput from "../ui/formik/FormikInput";
+import FormikSelect from "../ui/formik/FormikSelect";
+import Success from "./Success";
 import TandaTangan from "./TandaTangan";
 
 const ColorModeContainer = ({ children, light, dark, ...rest }) => {
@@ -41,12 +46,23 @@ const FormPresensi = () => {
   const router = useRouter();
   const rapatId = router.query.rapat;
   // const [isExternal, setIsExternal] = useState(false);
+  //get data unit kerja untuk field unit kerja
+  const { data: unitKerja, error: errUnit } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/units`
+  );
+
+  if (errUnit) {
+    alert("terjadi eror data unit kerja");
+  }
 
   const { data, error } = useSWR(
     `${process.env.NEXT_PUBLIC_URL}/rapats?slug_rapat=${rapatId}`
   );
 
+  const [jenis, setJenis] = useState("in");
   const [successSubmit, setSuccessSubmit] = useState(false);
+  const [resData, setResData] = useState();
+
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [errorSubmit, setErrorSubmit] = useState(false);
   const [ttdUrl, setTtdUrl] = useState({ signature_url: "" });
@@ -99,14 +115,15 @@ const FormPresensi = () => {
   const onSubmit = async (values) => {
     setLoadingSubmit(true);
     let data = { rapat: id, ...values, ...ttdUrl };
-    console.log(data);
+    // console.log(data);
 
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL}/rekap-presensis`,
         { ...data }
       );
-      console.log("res: ", response);
+      // console.log("res: ", );
+      setResData(response.data);
       setLoadingSubmit(false);
       setSuccessSubmit(true);
     } catch (error) {
@@ -135,7 +152,7 @@ const FormPresensi = () => {
               w={{ xs: "100%", sm: "100%" }}
               p={{ base: 3, sm: 4, md: 5, lg: 10 }}
               borderRadius="lg"
-              light="#95DAC1"
+              light="gray.100"
               dark="gray.700"
             >
               <Box>
@@ -147,47 +164,25 @@ const FormPresensi = () => {
               </Box>
             </ColorModeContainer>
             <Spacer />
-            <ColorModeContainer
-              light="white"
-              dark="gray.800"
-              borderRadius="lg"
-              mt={3}
-              w={{ xs: "100%", sm: "100%" }}
-              borderWidth="1px"
-              // p={5}
-              p={{ base: 3, sm: 4, md: 5, lg: 10 }}
-            >
-              <Box>
-                {successSubmit ? (
-                  <Alert
-                    mt={5}
-                    boxShadow="md"
-                    p={5}
-                    status="success"
-                    variant="subtle"
-                    flexDirection="column"
-                    alignItems="center"
-                    justifyContent="center"
-                    textAlign="center"
-                    borderRadius="lg"
-                  >
-                    <AlertIcon boxSize="40px" mr={0} />
-                    <AlertTitle mt={4} mb={1} fontSize="lg">
-                      Presensi berhasil!
-                    </AlertTitle>
-                    <AlertDescription maxWidth="sm">
-                      Terimakasih telah mengisi presensi kehadiran rapat {nama}
-                    </AlertDescription>
-                    <Button
-                      mt={10}
-                      colorScheme="green"
-                      size="md"
-                      onClick={() => setSuccessSubmit(false)}
-                    >
-                      Isi lagi
-                    </Button>
-                  </Alert>
-                ) : (
+
+            <Box>
+              {successSubmit ? (
+                <Success
+                  setSuccessSubmit={setSuccessSubmit}
+                  nama={nama}
+                  resData={resData}
+                />
+              ) : (
+                <ColorModeContainer
+                  light="white"
+                  dark="gray.800"
+                  borderRadius="lg"
+                  mt={3}
+                  w={{ xs: "100%", sm: "100%" }}
+                  borderWidth="1px"
+                  // p={5}
+                  p={{ base: 3, sm: 4, md: 5, lg: 10 }}
+                >
                   <Box>
                     {/* formik */}
                     <Formik
@@ -208,13 +203,53 @@ const FormPresensi = () => {
                             />
 
                             <Box m={5} />
-                            <FormikInput
-                              type="text"
-                              label="Unit Kerja / Instansi"
-                              name="unit_kerja"
-                              variant="filled"
-                              placeholder="contoh: Pusat Teknologi Informasi"
-                            />
+                            <RadioGroup
+                              onChange={setJenis}
+                              value={jenis}
+                              my={2}
+                            >
+                              <Stack direction="row">
+                                <Radio mr={3} value="in">
+                                  <Text fontWeight="semibold">
+                                    Internal PPATK
+                                  </Text>
+                                </Radio>
+                                <Radio value="eks">
+                                  <Text fontWeight="semibold">
+                                    {" "}
+                                    Eksternal PPATK{" "}
+                                  </Text>
+                                </Radio>
+                              </Stack>
+                            </RadioGroup>
+
+                            {jenis === "in" ? (
+                              <FormikSelect
+                                placeholder="Pilih Unit Kerja"
+                                type="text"
+                                label="Unit Kerja"
+                                name="unit_kerja"
+                                variant="filled"
+                                maxW="500px"
+                              >
+                                {unitKerja &&
+                                  unitKerja.map((unit) => (
+                                    <option key={unit.id} value={unit.nama}>
+                                      {unit.nama}
+                                    </option>
+                                  ))}
+                              </FormikSelect>
+                            ) : (
+                              <FormikInput
+                                type="text"
+                                label="Instansi"
+                                name="unit_kerja"
+                                variant="filled"
+                                maxW="500px"
+                                placeholder="contoh: Kementerian X / PT X"
+                              />
+                            )}
+
                             <Box m={5} />
 
                             <Text fontWeight="semibold" mb={2}>
@@ -240,9 +275,9 @@ const FormPresensi = () => {
                       }}
                     </Formik>
                   </Box>
-                )}
-              </Box>
-            </ColorModeContainer>
+                </ColorModeContainer>
+              )}
+            </Box>
           </Flex>
           <Footer />
         </Container>

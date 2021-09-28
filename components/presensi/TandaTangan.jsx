@@ -11,7 +11,7 @@ export default function TandaTangan({ getTtdUrl }) {
       <Box>
         <Box
           maxW="400px"
-          h="200px"
+          h="150px"
           borderRadius="lg"
           bg={useColorModeValue("gray.100", "gray.700")}
         >

@@ -6,6 +6,26 @@ import PaperContainer from "../../components/ui/PaperContainer";
 import MetaPage from "../../components/layout/MetaPage";
 import PageTittle from "../../components/ui/PageTittle";
 import { FiUser } from "react-icons/fi";
+import nookies from "nookies";
+
+export async function getServerSideProps(ctx) {
+  // Parse
+  const cookies = nookies.get(ctx);
+
+  if (!cookies.token) {
+    return {
+      redirect: {
+        destination: "/user/login",
+      },
+    };
+  }
+
+  return {
+    props: {
+      token: cookies.token,
+    },
+  };
+}
 
 const RapatAnda = () => {
   return (
@@ -16,7 +36,6 @@ const RapatAnda = () => {
         <DashboardContainer>
           <PageTittle title="Rapat Anda" icon={<FiUser />} />
 
-          {/* ada warning pada formik */}
           <PaperContainer mt={5}>
             <TabelRapatUser />
           </PaperContainer>
