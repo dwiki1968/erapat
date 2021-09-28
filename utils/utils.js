@@ -22,8 +22,19 @@ export function IsoToLocalTime(isoFormat) {
   return jam;
 }
 
+function dateToISOLikeButLocal(isoFormat) {
+  let date = new Date(isoFormat);
+  const offsetMs = date.getTimezoneOffset() * 60 * 1000;
+  const msLocal = date.getTime() - offsetMs;
+  const dateLocal = new Date(msLocal);
+  const iso = dateLocal.toISOString();
+  const isoLocal = iso.slice(0, 19);
+  return isoLocal;
+}
+
 export function IsoToForm(isoFormat) {
-  return isoFormat.substring(0, 16);
+  const local = dateToISOLikeButLocal(isoFormat);
+  return local.substring(0, 16);
 }
 
 export function getCurrentDate() {

@@ -58,7 +58,11 @@ function AlatDetail() {
   }
 
   if (!data.length) {
-    return <>kosong</>;
+    return (
+      <>
+        <Text>Data tidak ada ...</Text>
+      </>
+    );
   }
 
   //jika ada data maka dijalankann baris dibaawah
@@ -108,7 +112,7 @@ function AlatDetail() {
       <Text fontWeight="semibold">Tautan presensi</Text>
       <Box my={2} />
       <Clipboard
-        kalimat={`Yth. Bapak/Ibu peserta ${nama} \nBerikut link presensi: \n${process.env.NEXT_PUBLIC_CLIENT}/${slug_rapat}\nTerima kasih`}
+        kalimat={`Yth. Bapak/Ibu peserta ${nama} \nBerikut link presensi: \n${process.env.NEXT_PUBLIC_CLIENT}/presensi/${slug_rapat}\nTerima kasih`}
       />
 
       <Box my={5} />

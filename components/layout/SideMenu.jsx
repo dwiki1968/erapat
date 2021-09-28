@@ -13,21 +13,23 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { destroyCookie } from "nookies";
 import React, { useState } from "react";
 import {
   FiFilePlus,
   FiHome,
+  FiLogOut,
   FiMenu,
   FiSettings,
-  FiLogOut,
+  FiUser,
 } from "react-icons/fi";
 import ColorModeToggle from "../ui/ColorModeToggle";
-import Footer from "./Footer";
-import { parseCookies, setCookie, destroyCookie } from "nookies";
 import DialogKonfirmasi from "../ui/DialogKonfirmasi";
+import Footer from "./Footer";
 
 const LinkItems = [
   { name: "Beranda", icon: FiHome, route: "/dashboard" },
+  { name: "Rapat Anda", icon: FiUser, route: "/dashboard/rapat-anda" },
   { name: "Tambah Rapat", icon: FiFilePlus, route: "/dashboard/tambah" },
   { name: "Pengaturan", icon: FiSettings, route: "/dashboard/pengaturan" },
 ];
@@ -159,8 +161,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
           fontSize="2xl"
           fontFamily="monospace"
           fontWeight="bold"
+          onClick={() => router.push("/dashboard")}
         >
-          📝 E-Rapat
+          <Link>📝 E-Rapat</Link>
         </Text>
 
         <HStack spacing={{ base: "0", md: "6" }}>
