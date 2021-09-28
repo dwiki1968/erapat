@@ -15,7 +15,7 @@ const AllRapat = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [search, setSearch] = useState("");
-  const [sortby, setSortby] = useState("created_at:DESC");
+  const [sortby, setSortby] = useState("jadwal_rapat:DESC");
 
   const handleSort = (e) => {
     setSortby(e.target.value);
