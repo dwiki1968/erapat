@@ -68,7 +68,7 @@ export default function Home() {
           </Heading>
           <Text fontSize="md" color={"gray.500"}>
             Selamat datang! aplikasi ini dibuat untuk mengintegrasikan data
-            rapat pada unit kerja Pusat Teknologi Informasi PPATK ✨
+            rapat pada unit kerja Pusat Teknologi Informasi PPATK.
           </Text>
           <Stack
             spacing={{ base: 4, sm: 6 }}
@@ -83,7 +83,7 @@ export default function Home() {
               px={6}
               colorScheme={"red"}
               bg={"red.400"}
-              _hover={{ bg: "red.500" }}
+              _hover={{ bg: "red.400" }}
             >
               Buat Rapat
             </Button>

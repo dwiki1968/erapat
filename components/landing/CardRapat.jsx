@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Box,
   Center,
   Flex,
@@ -6,8 +8,6 @@ import {
   Link,
   Text,
   useColorModeValue,
-  Alert,
-  AlertIcon,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
