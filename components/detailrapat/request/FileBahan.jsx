@@ -10,6 +10,7 @@ import axios from "axios";
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
+import { maksKarakter } from "../../../utils/utils";
 import DialogKonfirmasi from "../../ui/DialogKonfirmasi";
 
 const DeleteButton = ({ fileId }) => {
@@ -80,7 +81,7 @@ const FileBahan = (props) => {
           <ListItem key={data.id}>
             <Flex>
               <Link color="blue.400" href={data.url}>
-                {data.name}
+                {maksKarakter(data.name, 20)}
               </Link>
               <DeleteButton fileId={data.id} />
             </Flex>

@@ -14,6 +14,7 @@ import {
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { FiDelete, FiUploadCloud } from "react-icons/fi";
+import { maksKarakter } from "../../../utils/utils";
 
 function UploadBahan(props) {
   const toast = useToast();
@@ -47,7 +48,7 @@ function UploadBahan(props) {
   const files = myFiles.map((file) => (
     <ListItem key={file.path}>
       <Text fontSize="sm">
-        {file.path} - {(file.size / 1000000).toFixed(2)} Mb
+        {maksKarakter(file.path)} - {(file.size / 1000000).toFixed(2)} Mb
       </Text>
       {/* <Button size="xs" onClick={removeFile(file)}>
         Remove File

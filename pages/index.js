@@ -24,6 +24,7 @@ export default function Home() {
   return (
     <>
       {/* {today} */}
+
       <Head>
         <title>Jadwal Rapat</title>
         <link rel="icon" href="/favicon.ico" />
@@ -33,7 +34,9 @@ export default function Home() {
         <Center p={5}>
           <Heading size="lg">List Jadwal Rapat</Heading>
         </Center>
-        <CustomRadio setTabVal={setTabVal} />
+        <Center>
+          <CustomRadio setTabVal={setTabVal} />
+        </Center>
         {tabVal === "new" ? <Upcoming /> : <AllRapat />}
       </Container>
       <Container maxW={"5xl"}>

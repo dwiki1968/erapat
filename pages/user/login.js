@@ -227,7 +227,7 @@ const Login = () => {
                           type="submit"
                           variant="solid"
                           colorScheme="red"
-                          bg="#FD6F96"
+                          bg="red.400"
                           width="full"
                           onClick={() => setFail(false)}
                           isLoading={loading}
@@ -245,7 +245,7 @@ const Login = () => {
           <Box>
             Kembali ke{" "}
             <Button
-              color="#6F69AC"
+              color="teal.400"
               variant="link"
               onClick={() => router.push("/")}
             >

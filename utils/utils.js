@@ -40,3 +40,9 @@ export function IsoToForm(isoFormat) {
 export function getCurrentDate() {
   return new Date().toISOString();
 }
+
+export function maksKarakter(str, num = "15") {
+  const body = str.length > num ? str.substring(0, num) : str;
+  const ekstensi = str.length > num ? str.slice(-4) : null;
+  return `${body}...${ekstensi}`;
+}

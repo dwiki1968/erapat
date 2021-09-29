@@ -12,6 +12,7 @@ import { parseCookies } from "nookies";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiDelete, FiUploadCloud } from "react-icons/fi";
+import { maksKarakter } from "../../../utils/utils";
 
 function UploadRisalah(props) {
   const cookies = parseCookies();
@@ -45,7 +46,7 @@ function UploadRisalah(props) {
   const files = myFiles.map((file) => (
     <ListItem key={file.path}>
       <Text fontSize="sm">
-        {file.path} - {(file.size / 1000000).toFixed(2)} Mb
+        {maksKarakter(file.path)} - {(file.size / 1000000).toFixed(2)} Mb
       </Text>
       {/* <Button size="xs" onClick={removeFile(file)}>
         Remove File

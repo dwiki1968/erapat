@@ -56,8 +56,8 @@ function CustomRadio(props) {
     <HStack
       {...group}
       px={3}
-      py={2}
-      bg={useColorModeValue("gray.100", "gray.700")}
+      //   py={2}
+      //   bg={useColorModeValue("gray.100", "gray.700")}
       borderRadius="lg"
       w="fit-content"
     >

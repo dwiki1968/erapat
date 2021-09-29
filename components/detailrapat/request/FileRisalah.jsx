@@ -20,6 +20,7 @@ import {
   AiOutlineFilePpt,
 } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
+import { maksKarakter } from "../../../utils/utils";
 import DialogKonfirmasi from "../../ui/DialogKonfirmasi";
 
 const DeleteButton = ({ fileId }) => {
@@ -93,7 +94,7 @@ const FileRisalah = (props) => {
           <ListItem>
             <Flex>
               <Link color="blue.400" href={fileRisalah.url} isExternal>
-                {fileRisalah.name}
+                {maksKarakter(fileRisalah.name, 20)}
               </Link>
               <DeleteButton fileId={fileRisalah.id} />
             </Flex>
