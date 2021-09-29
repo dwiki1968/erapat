@@ -137,9 +137,9 @@ const FormPresensi = () => {
     <>
       <ColorModeContainer light="gray.50" dark="gray.800">
         <Container maxW={"5xl"} minHeight="100vh" p={5}>
-          <Flex mb={10}>
+          <Flex mb={10} alignItems="center">
             <Link>
-              <Heading onClick={() => router.push("/")} size="lg">
+              <Heading onClick={() => router.push("/")} size="md">
                 📝 E-Rapat
               </Heading>
             </Link>

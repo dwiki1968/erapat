@@ -51,8 +51,10 @@ export default function Footer() {
         justify={{ base: "center", md: "space-between" }}
         align={{ base: "center", md: "center" }}
       >
-        <Heading size="md">📝 E-Rapat</Heading>
-        <Text>© 2021 Aktualisasi Latsar Dwiki Krisna | PPATK</Text>
+        <Heading size="sm">📝 E-Rapat</Heading>
+        <Text fontSize="sm">
+          © 2021 Aktualisasi Latsar Dwiki Krisna | PPATK
+        </Text>
         <Stack direction={"row"} spacing={6}>
           <SocialButton label={"Twitter"} href={"#"}>
             <FaTwitter />

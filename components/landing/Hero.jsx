@@ -5,6 +5,7 @@ import {
   Divider,
   Flex,
   Heading,
+  Link,
   Spacer,
   Stack,
   Text,
@@ -14,14 +15,22 @@ import Image from "next/image";
 
 import ColorModeToggle from "../ui/ColorModeToggle";
 import heroImg from "../../public/heroimg.png";
+import { FiLogIn } from "react-icons/fi";
 
 export default function Home() {
   const router = useRouter();
   return (
     <>
-      <Flex pt={5} mb={5}>
-        <Heading size="lg">📝 E-Rapat</Heading>
+      <Flex pt={5} mb={5} alignItems="center">
+        <Heading size="md">📝 E-Rapat</Heading>
         <Spacer />
+        <Button
+          variant="ghost"
+          mr={2}
+          onClick={() => router.push("/user/login")}
+        >
+          Login
+        </Button>
         <ColorModeToggle />
       </Flex>
       <Stack

@@ -45,7 +45,7 @@ const CardRapat = ({ data }) => {
 
   if (data.length === 0) {
     return (
-      <Alert status="info" borderRadius="lg">
+      <Alert status="info" borderRadius="lg" mt={5} p={5}>
         <AlertIcon />
         <Text>Semua rapat telah selesai / belum ada rapat baru</Text>
       </Alert>

@@ -12,7 +12,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { destroyCookie } from "nookies";
 import React, { useState } from "react";
 import {
@@ -69,6 +69,7 @@ export default function SetMenu({ children }) {
 }
 
 const SidebarContent = ({ onClose, ...rest }) => {
+  const router = useRouter();
   return (
     <Box
       transition="3s ease"
@@ -82,7 +83,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          📝E-Rapat
+          <Link onClick={() => router.push("/dashboard")}>📝E-Rapat</Link>
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
@@ -133,7 +134,8 @@ const MobileNav = ({ onOpen, ...rest }) => {
   const [isOpen, setIsOpen] = useState(false);
   const onLogOut = () => {
     destroyCookie(null, "token");
-    router.push("/dashboard");
+    router.replace("/user/login");
+    setIsOpen(false);
   };
   return (
     <>

@@ -91,7 +91,6 @@ const Login = () => {
         maxAge: 7 * 24 * 60 * 60,
         path: "/",
       });
-
       setLoading(false);
       router.replace("/dashboard");
     } catch (error) {

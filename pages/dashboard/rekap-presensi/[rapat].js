@@ -37,7 +37,7 @@ export async function getServerSideProps(ctx) {
   if (!cookies.token) {
     return {
       redirect: {
-        destination: "/dashboard",
+        destination: "/user/login",
       },
     };
   }

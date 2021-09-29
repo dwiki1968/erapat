@@ -15,7 +15,7 @@ import nookies from "nookies";
 export async function getServerSideProps(ctx) {
   // Parse
   const cookies = nookies.get(ctx);
-  console.log("kuki", cookies);
+  // console.log("kuki", cookies);
 
   if (!cookies.token) {
     return {
