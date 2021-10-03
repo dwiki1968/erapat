@@ -23,6 +23,7 @@ const ColorModeContainer = ({ children }) => {
       p={5}
       bg={useColorModeValue("gray.100", "gray.700")}
       rounded="md"
+      _hover={{ boxShadow: "lg" }}
     >
       {children}
     </Box>

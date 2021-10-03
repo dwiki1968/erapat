@@ -103,6 +103,7 @@ const TabelRapat = () => {
             variant="filled"
             onChange={handleSort}
             value={sortby}
+            textColor="gray.400"
           >
             <option value="created_at:ASC">Tgl. buat a-z</option>
             <option value="created_at:DESC">Tgl. buat z-a</option>

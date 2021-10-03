@@ -15,19 +15,19 @@ function RadioCard(props) {
       <Box
         {...checkbox}
         cursor="pointer"
-        borderWidth="1px"
+        borderWidth="2px"
         borderRadius="md"
-        boxShadow="md"
         _checked={{
-          bg: "teal.400",
-          color: "white",
+          // bg: "teal.400",
+          color: "teal.400",
           borderColor: "teal.400",
+          boxShadow: "lg",
         }}
         _focus={{
           boxShadow: "outline",
         }}
-        px={5}
-        py={2}
+        px={2}
+        py={1}
       >
         {props.children}
       </Box>

@@ -16,6 +16,7 @@ import router, { useRouter } from "next/router";
 import { destroyCookie } from "nookies";
 import React, { useState } from "react";
 import {
+  FiCalendar,
   FiFilePlus,
   FiHome,
   FiLogOut,
@@ -31,6 +32,8 @@ const LinkItems = [
   { name: "Beranda", icon: FiHome, route: "/dashboard" },
   { name: "Rapat Anda", icon: FiUser, route: "/dashboard/rapat-anda" },
   { name: "Tambah Rapat", icon: FiFilePlus, route: "/dashboard/tambah" },
+  { name: "Jadwal", icon: FiCalendar, route: "/" },
+
   { name: "Pengaturan", icon: FiSettings, route: "/dashboard/pengaturan" },
 ];
 

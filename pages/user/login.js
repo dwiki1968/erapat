@@ -89,7 +89,7 @@ const Login = () => {
       // console.log("res: ", response);
       setCookie(null, "token", response.data.jwt, {
         // maxAge: 7 * 24 * 60 * 60,
-        maxAge: 60 * 60,
+        maxAge: 2 * 60 * 60,
         path: "/",
       });
       setLoading(false);

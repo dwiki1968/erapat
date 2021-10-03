@@ -76,7 +76,7 @@ export default function Home() {
           >
             <Button
               onClick={() => router.push("/user/login")}
-              // rounded={"full"}
+              rounded={"full"}
               borderRadius="lg"
               size={"md"}
               fontWeight={"normal"}
