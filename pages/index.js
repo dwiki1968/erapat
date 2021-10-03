@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { useState } from "react";
+import { FiCalendar } from "react-icons/fi";
 import AllRapat from "../components/landing/AllRapat";
 import CustomRadio from "../components/landing/CustomRadio";
 import Hero from "../components/landing/Hero";
@@ -32,7 +33,10 @@ export default function Home() {
       <Container maxW={"5xl"} minHeight="85vh">
         <Hero />
         <Center p={5}>
-          <Heading size="lg">List Jadwal Rapat</Heading>
+          <Heading mr={3} size="lg">
+            <FiCalendar />
+          </Heading>
+          <Heading size="lg">Jadwal Rapat</Heading>
         </Center>
         <Center>
           <CustomRadio setTabVal={setTabVal} />
