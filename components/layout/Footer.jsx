@@ -56,7 +56,7 @@ export default function Footer() {
           © 2021 Aktualisasi Latsar Dwiki Krisna | PPATK
         </Text>
         <Text as="i" fontWeight="semibold" fontSize="sm" color="red.300">
-          "Indonesia Tanpa Korupsi"
+          Indonesia Tanpa Korupsi
         </Text>
         <Stack direction={"row"} spacing={6}>
           <SocialButton label={"Twitter"} href={"https://twitter.com/PPATK"}>
