@@ -6,7 +6,7 @@ const ColorModeToggle = () => {
 
   return (
     <IconButton
-      variant="solid"
+      variant="ghost"
       // size="lg"
       aria-label="theme toggle"
       icon={colorMode === "light" ? <FiMoon /> : <FiSun />}

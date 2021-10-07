@@ -12,7 +12,7 @@ function FormikTextArea(props) {
   return (
     <Field name={name}>
       {({ field, form }) => (
-        <FormControl isInvalid={form.errors[name] && form.touched[name]} my={2}>
+        <FormControl isInvalid={form.errors[name] && form.touched[name]} my={3}>
           <FormLabel htmlFor={name}>{label}</FormLabel>
           <Textarea id={name} {...rest} {...field} />
           <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
