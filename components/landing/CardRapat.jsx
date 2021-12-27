@@ -63,8 +63,7 @@ const CardRapat = ({ data }) => {
           Belum Ada Rapat Lagi
         </AlertTitle>
         <AlertDescription maxWidth="sm">
-          Semua rapat sudah selesai, mohon cek menu "Semua Rapat" untuk
-          menemukan rapat yang telah terlaksana.
+          Pada saat ini semua rapat sudah dilaksanakan.
         </AlertDescription>
       </Alert>
     );
