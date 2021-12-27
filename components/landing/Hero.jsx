@@ -12,27 +12,14 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-
-import ColorModeToggle from "../ui/ColorModeToggle";
 import heroImg from "../../public/heroimg.png";
-import { FiLogIn } from "react-icons/fi";
+import Navbar from "../layout/Navbar";
 
 export default function Home() {
   const router = useRouter();
   return (
     <>
-      <Flex pt={5} mb={5} alignItems="center">
-        <Heading size="md">📝 E-Rapat</Heading>
-        <Spacer />
-        <Button
-          variant="ghost"
-          mr={2}
-          onClick={() => router.push("/user/login")}
-        >
-          Login
-        </Button>
-        <ColorModeToggle />
-      </Flex>
+      <Navbar />
       <Stack
         align={"center"}
         spacing={{ base: 8, md: 10 }}
@@ -45,20 +32,7 @@ export default function Home() {
             fontWeight={600}
             fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
           >
-            <Text
-              as={"span"}
-              position={"relative"}
-              _after={{
-                content: "''",
-                width: "full",
-                height: "30%",
-                position: "absolute",
-                bottom: 1,
-                left: 0,
-                bg: "red.400",
-                zIndex: -1,
-              }}
-            >
+            <Text as={"span"} position={"relative"}>
               Aplikasi Rapat
             </Text>
             <br />
@@ -76,8 +50,7 @@ export default function Home() {
           >
             <Button
               onClick={() => router.push("/user/login")}
-              rounded={"full"}
-              borderRadius="lg"
+              borderRadius="xl"
               size={"md"}
               fontWeight={"normal"}
               px={6}
@@ -86,6 +59,18 @@ export default function Home() {
               _hover={{ bg: "red.400" }}
             >
               Buat Rapat
+            </Button>
+            <Button
+              onClick={() => router.push("/jadwal")}
+              borderRadius="xl"
+              size={"md"}
+              fontWeight={"normal"}
+              px={6}
+              colorScheme={"gray"}
+              bg={"gray.300"}
+              _hover={{ bg: "gray.400" }}
+            >
+              Jadwal
             </Button>
           </Stack>
         </Stack>
@@ -96,25 +81,11 @@ export default function Home() {
           position={"relative"}
           w={"full"}
         >
-          <Box
-            position={"relative"}
-            // height={"260px"}
-            width={"full"}
-            overflow={"hidden"}
-          >
-            <Image
-              alt={"Hero Image"}
-              // fit={"cover"}
-              // align={"center"}
-              // w={"100%"}
-              // h={"100%"}
-              src={heroImg}
-            />
+          <Box position={"relative"} width={"full"} overflow={"hidden"}>
+            <Image alt={"Hero Image"} src={heroImg} />
           </Box>
         </Flex>
       </Stack>
     </>
   );
 }
-
-// "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"

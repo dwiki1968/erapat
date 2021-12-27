@@ -100,11 +100,11 @@ function AlatDetail() {
       <Text fontWeight="semibold">Undangan Rapat</Text>
       <Box my={2} />
       <Clipboard
-        kalimat={`Undangan *${nama}*\nAgenda Rapat : ${agenda_rapat}\nHari/Tanggal : ${IsoToLocalDate(
+        kalimat={`Dengan hormat,\nBersama ini kami mengundang Bapak dan Ibu untuk menghadiri Undangan *${nama}*\n\nAgenda Rapat : ${agenda_rapat}\nHari/Tanggal : ${IsoToLocalDate(
           jadwal_rapat
         )}\nWaktu : ${IsoToLocalTime(
           jadwal_rapat
-        )}\nPimpinan : ${pimpinan}\nLokasi / Tautan: ${tempat}\nKami mohon kehadiran Bapak/Ibu, terima kasih.`}
+        )}\nPimpinan : ${pimpinan}\nLokasi / Tautan: ${tempat}\n\nKami mohon kehadiran Bapak/Ibu, terima kasih.`}
       />
       <Box my={5} />
 
@@ -112,7 +112,7 @@ function AlatDetail() {
       <Text fontWeight="semibold">Tautan presensi</Text>
       <Box my={2} />
       <Clipboard
-        kalimat={`Yth. Bapak/Ibu peserta ${nama} \nBerikut link presensi: \n${process.env.NEXT_PUBLIC_CLIENT}/presensi/${slug_rapat}\nTerima kasih`}
+        kalimat={`Yth. Bapak/Ibu peserta ${nama} \n\nBerikut link presensi: \n${process.env.NEXT_PUBLIC_CLIENT}/presensi/${slug_rapat}\n\nTerima kasih`}
       />
 
       <Box my={5} />

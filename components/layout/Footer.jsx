@@ -38,7 +38,7 @@ export default function Footer() {
   return (
     <Box
       mt="50px"
-      bg={useColorModeValue("gray.50", "gray.600")}
+      bg={useColorModeValue("gray.50", "gray.800")}
       color={useColorModeValue("gray.700", "gray.200")}
       borderRadius="lg"
     >
@@ -51,9 +51,9 @@ export default function Footer() {
         justify={{ base: "center", md: "space-between" }}
         align={{ base: "center", md: "center" }}
       >
-        <Heading size="sm">📝 E-Rapat</Heading>
-        <Text fontSize="sm">
-          © 2021 Aktualisasi Latsar Dwiki Krisna | PPATK
+        <Heading size="xs">📝 E-Rapat</Heading>
+        <Text align="center" fontSize="sm">
+          © 2021 Pusat Pelaporan dan Analisis Transaksi Keungan
         </Text>
         <Text as="i" fontWeight="semibold" fontSize="sm" color="red.300">
           Indonesia Tanpa Korupsi

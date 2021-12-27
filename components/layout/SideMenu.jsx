@@ -32,7 +32,7 @@ const LinkItems = [
   { name: "Beranda", icon: FiHome, route: "/dashboard" },
   { name: "Rapat Anda", icon: FiUser, route: "/dashboard/rapat-anda" },
   { name: "Tambah Rapat", icon: FiFilePlus, route: "/dashboard/tambah" },
-  { name: "Jadwal", icon: FiCalendar, route: "/" },
+  { name: "Jadwal", icon: FiCalendar, route: "/jadwal" },
 
   { name: "Pengaturan", icon: FiSettings, route: "/dashboard/pengaturan" },
 ];

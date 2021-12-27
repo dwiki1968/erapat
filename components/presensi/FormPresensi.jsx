@@ -31,6 +31,7 @@ import FormikInput from "../ui/formik/FormikInput";
 import FormikSelect from "../ui/formik/FormikSelect";
 import Success from "./Success";
 import TandaTangan from "./TandaTangan";
+import Navbar from "../layout/Navbar";
 
 const ColorModeContainer = ({ children, light, dark, ...rest }) => {
   return (
@@ -137,15 +138,7 @@ const FormPresensi = () => {
     <>
       <ColorModeContainer light="gray.50" dark="gray.800">
         <Container maxW={"5xl"} minHeight="100vh" p={5}>
-          <Flex mb={10} alignItems="center">
-            <Link>
-              <Heading onClick={() => router.push("/")} size="md">
-                📝 E-Rapat
-              </Heading>
-            </Link>
-            <Spacer />
-            <ColorModeToggle />
-          </Flex>
+          <Navbar />
           <Flex flexDir={{ base: "column", sm: "column", md: "column" }}>
             <ColorModeContainer
               mt={10}

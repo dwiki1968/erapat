@@ -1,6 +1,8 @@
 import {
   Alert,
   AlertIcon,
+  AlertTitle,
+  AlertDescription,
   Box,
   Center,
   Flex,
@@ -46,9 +48,24 @@ const CardRapat = ({ data }) => {
 
   if (data.length === 0) {
     return (
-      <Alert status="info" borderRadius="lg" mt={5} p={5}>
-        <AlertIcon />
-        <Text>Semua rapat telah selesai / belum ada rapat baru</Text>
+      <Alert
+        borderRadius="xl"
+        status="info"
+        variant="subtle"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
+        height="200px"
+      >
+        <AlertIcon boxSize="40px" mr={0} />
+        <AlertTitle mt={4} mb={1} fontSize="lg">
+          Belum Ada Rapat Lagi
+        </AlertTitle>
+        <AlertDescription maxWidth="sm">
+          Semua rapat sudah selesai, mohon cek menu "Semua Rapat" untuk
+          menemukan rapat yang telah terlaksana.
+        </AlertDescription>
       </Alert>
     );
   }
