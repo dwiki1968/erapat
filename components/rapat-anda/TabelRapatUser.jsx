@@ -19,6 +19,7 @@ import {
   InputGroup,
   InputRightAddon,
   Link,
+  Heading,
 } from "@chakra-ui/react";
 import router from "next/router";
 import { parseCookies } from "nookies";
@@ -89,6 +90,9 @@ const TabelRapatUser = () => {
   }
   return (
     <>
+      <Heading size="md" mb={5}>
+        Rapat Buatan Anda :
+      </Heading>
       <Flex flexDir={{ base: "column", sm: "column", md: "column", lg: "row" }}>
         <InputGroup size="md">
           <Input
@@ -167,7 +171,7 @@ const TabelRapatUser = () => {
                   </Td>
 
                   <Td>
-                    <Text fontSize="sm">{rapat.user.nama}</Text>
+                    <Text fontSize="sm">Anda</Text>
                   </Td>
                   <Td>
                     <AksiTabel slug={rapat.slug_rapat} idRapat={rapat.id} />

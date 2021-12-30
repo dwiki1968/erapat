@@ -12,7 +12,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { destroyCookie } from "nookies";
 import React, { useState } from "react";
 import {
@@ -22,7 +22,6 @@ import {
   FiLogOut,
   FiMenu,
   FiSettings,
-  FiUser,
 } from "react-icons/fi";
 import ColorModeToggle from "../ui/ColorModeToggle";
 import DialogKonfirmasi from "../ui/DialogKonfirmasi";
@@ -30,7 +29,7 @@ import Footer from "./Footer";
 
 const LinkItems = [
   { name: "Beranda", icon: FiHome, route: "/dashboard" },
-  { name: "Rapat Anda", icon: FiUser, route: "/dashboard/rapat-anda" },
+  { name: "Semua Rapat", icon: FiCalendar, route: "/dashboard/semua-rapat" },
   { name: "Tambah Rapat", icon: FiFilePlus, route: "/dashboard/tambah" },
   { name: "Jadwal", icon: FiCalendar, route: "/jadwal" },
 
@@ -85,7 +84,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+        <Text fontSize="xl" fontFamily="monospace" fontWeight="bold">
           <Link onClick={() => router.push("/dashboard")}>📝E-Rapat</Link>
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
@@ -113,6 +112,7 @@ const NavItem = ({ icon, children, route, ...rest }) => {
         _hover={{
           bg: "#FD6F96",
           color: "white",
+          shadow: "lg",
         }}
         {...rest}
       >
@@ -163,7 +163,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
 
         <Text
           display={{ base: "flex", md: "none" }}
-          fontSize="2xl"
+          fontSize="xl"
           fontFamily="monospace"
           fontWeight="bold"
           onClick={() => router.push("/dashboard")}

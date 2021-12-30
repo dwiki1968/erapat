@@ -1,17 +1,6 @@
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Flex,
-  Heading,
-  Link,
-  Spacer,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import { Box, Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import heroImg from "../../public/heroimg.png";
 import Navbar from "../layout/Navbar";
 
@@ -21,10 +10,11 @@ export default function Home() {
     <>
       <Navbar />
       <Stack
+        mt="30px"
         align={"center"}
         spacing={{ base: 8, md: 10 }}
         py={{ base: 10, md: 18 }}
-        direction={{ base: "column", md: "row" }}
+        direction={{ base: "column-reverse", md: "row" }}
       >
         <Stack flex={1} spacing={{ base: 3, md: 5 }}>
           <Heading
@@ -51,7 +41,7 @@ export default function Home() {
             <Button
               onClick={() => router.push("/user/login")}
               borderRadius="xl"
-              size={"md"}
+              size={"lg"}
               fontWeight={"normal"}
               px={6}
               colorScheme={"red"}
@@ -63,7 +53,7 @@ export default function Home() {
             <Button
               onClick={() => router.push("/jadwal")}
               borderRadius="xl"
-              size={"md"}
+              size={"lg"}
               fontWeight={"normal"}
               px={6}
               colorScheme={"gray"}

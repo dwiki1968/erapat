@@ -1,18 +1,6 @@
-import React from "react";
-import {
-  Center,
-  Container,
-  Heading,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Text,
-  Tabs,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Center, Container, Heading } from "@chakra-ui/react";
 import Head from "next/head";
-import { useState } from "react";
+import React, { useState } from "react";
 import { FiCalendar } from "react-icons/fi";
 import AllRapat from "../components/landing/AllRapat";
 import CustomRadio from "../components/landing/CustomRadio";

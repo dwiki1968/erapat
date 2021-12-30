@@ -1,8 +1,13 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Avatar,
   Box,
   Button,
   chakra,
+  CloseButton,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -11,25 +16,15 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
-  Link,
   Stack,
-  useColorModeValue,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  CloseButton,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useRouter } from "next/router";
-
 import { Field, Form, Formik } from "formik";
+import { useRouter } from "next/router";
+import nookies, { setCookie } from "nookies";
 import { useState } from "react";
 import { FaLock, FaUserAlt } from "react-icons/fa";
 import * as Yup from "yup";
-import ColorModeToggle from "../../components/ui/ColorModeToggle";
-import nookies, { parseCookies, setCookie, destroyCookie } from "nookies";
-import { FiLogIn } from "react-icons/fi";
 import MetaPage from "../../components/layout/MetaPage";
 
 export async function getServerSideProps(ctx) {

@@ -1,12 +1,12 @@
+import nookies from "nookies";
 import React from "react";
-import TabelRapatUser from "../../components/rapat-anda/TabelRapatUser";
+import { FiCalendar } from "react-icons/fi";
+import TabelRapat from "../../components/dashboard/TabelRapat";
+import MetaPage from "../../components/layout/MetaPage";
 import SideMenu from "../../components/layout/SideMenu";
 import DashboardContainer from "../../components/ui/DashboardContainer";
-import PaperContainer from "../../components/ui/PaperContainer";
-import MetaPage from "../../components/layout/MetaPage";
 import PageTittle from "../../components/ui/PageTittle";
-import { FiUser } from "react-icons/fi";
-import nookies from "nookies";
+import PaperContainer from "../../components/ui/PaperContainer";
 
 export async function getServerSideProps(ctx) {
   // Parse
@@ -27,17 +27,16 @@ export async function getServerSideProps(ctx) {
   };
 }
 
-const RapatAnda = () => {
+const SemuaRapat = () => {
   return (
     <>
       <SideMenu>
-        <MetaPage titlePage="Rapat Anda" />
+        <MetaPage titlePage="Semua Rapat" />
 
         <DashboardContainer>
-          <PageTittle title="Rapat Anda" icon={<FiUser />} />
-
+          <PageTittle title="Semua Rapat" icon={<FiCalendar />} />
           <PaperContainer mt={5}>
-            <TabelRapatUser />
+            <TabelRapat />
           </PaperContainer>
         </DashboardContainer>
       </SideMenu>
@@ -45,4 +44,4 @@ const RapatAnda = () => {
   );
 };
 
-export default RapatAnda;
+export default SemuaRapat;
