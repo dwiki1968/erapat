@@ -137,37 +137,4 @@ const RekapPresensi = ({ token }) => {
   );
 };
 
-// const Coba = () => {
-//   return (
-//     <Tabs size="md" colorScheme="red" variant="enclosed" mt={10}>
-//       <TabList>
-//         <Tab mr={5}>
-//           <Text size="lg" fontWeight="bold" mr={2}>
-//             Preview
-//           </Text>{" "}
-//           <FiFileText />
-//         </Tab>
-//         <Tab>
-//           <Text size="lg" fontWeight="bold" mr={2}>
-//             Edit Data
-//           </Text>
-//           <FiEdit />
-//         </Tab>
-//       </TabList>
-//       <TabPanels>
-//         <TabPanel>
-//           {/* preview rekap presensi berisi fungsionalitas untuk print data rekap presensi  */}
-//           <PaperContainer>
-//             <Preview data={dataRapat} />
-//           </PaperContainer>
-//         </TabPanel>
-//         <TabPanel>
-//           <PaperContainer>
-//             <EditRekap data={dataRapat} />
-//           </PaperContainer>
-//         </TabPanel>
-//       </TabPanels>
-//     </Tabs>
-//   );
-// };
 export default RekapPresensi;

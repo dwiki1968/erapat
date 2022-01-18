@@ -1,21 +1,16 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
   Box,
   Button,
   Center,
   Container,
   Flex,
   Heading,
-  Link,
-  Spacer,
-  Text,
-  useColorModeValue,
   Radio,
   RadioGroup,
+  Spacer,
   Stack,
+  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Form, Formik } from "formik";
@@ -24,14 +19,13 @@ import { useState } from "react";
 import PuffLoader from "react-spinners/PuffLoader";
 import useSWR from "swr";
 import * as Yup from "yup";
-import { IsoToLocalDate, IsoToLocalTime } from "../../utils/utils";
+import { IsoToLocalDate, IsoToLocalTime, namaCase } from "../../utils/utils";
 import Footer from "../layout/Footer";
-import ColorModeToggle from "../ui/ColorModeToggle";
+import Navbar from "../layout/Navbar";
 import FormikInput from "../ui/formik/FormikInput";
 import FormikSelect from "../ui/formik/FormikSelect";
 import Success from "./Success";
 import TandaTangan from "./TandaTangan";
-import Navbar from "../layout/Navbar";
 
 const ColorModeContainer = ({ children, light, dark, ...rest }) => {
   return (
@@ -116,21 +110,21 @@ const FormPresensi = () => {
   const onSubmit = async (values) => {
     setLoadingSubmit(true);
     let data = { rapat: id, ...values, ...ttdUrl };
-    // console.log(data);
+    data["nama_peserta"] = namaCase(data.nama_peserta); //merubah input nama menjadi capitalize each word
 
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL}/rekap-presensis`,
         { ...data }
       );
-      // console.log("res: ", );
+
       setResData(response.data);
       setLoadingSubmit(false);
       setSuccessSubmit(true);
     } catch (error) {
       setLoadingSubmit(false);
       setErrorSubmit(true);
-      console.log("err: ", error);
+      alert("err: ", error);
     }
   };
 
@@ -149,8 +143,8 @@ const FormPresensi = () => {
               dark="gray.700"
             >
               <Box>
-                <Heading>Presensi {nama}</Heading>
-                <Text>
+                <Heading fontSize="2xl">Presensi {nama}</Heading>
+                <Text fontSize="sm">
                   {IsoToLocalDate(jadwal_rapat)} | Pukul{" "}
                   {IsoToLocalTime(jadwal_rapat)} WIB - Selesai
                 </Text>
@@ -209,8 +203,7 @@ const FormPresensi = () => {
                                 </Radio>
                                 <Radio value="eks">
                                   <Text fontWeight="semibold">
-                                    {" "}
-                                    Eksternal PPATK{" "}
+                                    Eksternal PPATK
                                   </Text>
                                 </Radio>
                               </Stack>
