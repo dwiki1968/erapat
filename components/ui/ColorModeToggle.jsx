@@ -6,7 +6,7 @@ const ColorModeToggle = () => {
 
   return (
     <IconButton
-      variant="solid"
+      variant="ghost"
       borderRadius="xl"
       aria-label="theme toggle"
       colorScheme="gray"

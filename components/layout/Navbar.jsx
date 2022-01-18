@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/button";
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import { Flex, Heading, Spacer } from "@chakra-ui/layout";
+import { Flex, Spacer } from "@chakra-ui/layout";
 import { useRouter } from "next/router";
 import React from "react";
 import ColorModeToggle from "../ui/ColorModeToggle";

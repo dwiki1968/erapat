@@ -21,6 +21,7 @@ import useSWR from "swr";
 import * as Yup from "yup";
 import { IsoToLocalDate, IsoToLocalTime, namaCase } from "../../utils/utils";
 import Footer from "../layout/Footer";
+import HeaderApp from "../layout/HeaderApp";
 import Navbar from "../layout/Navbar";
 import FormikInput from "../ui/formik/FormikInput";
 import FormikSelect from "../ui/formik/FormikSelect";
@@ -132,7 +133,7 @@ const FormPresensi = () => {
     <>
       <ColorModeContainer light="gray.50" dark="gray.800">
         <Container maxW={"5xl"} minHeight="100vh" p={5}>
-          <Navbar />
+          <HeaderApp />
           <Flex flexDir={{ base: "column", sm: "column", md: "column" }}>
             <ColorModeContainer
               mt={10}
