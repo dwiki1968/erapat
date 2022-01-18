@@ -104,7 +104,7 @@ const RekapPresensi = ({ token }) => {
             finalFocusRef={btnRef}
           >
             <DrawerOverlay />
-            <DrawerContent>
+            <DrawerContent overflow="scroll">
               <DrawerCloseButton mt={4} />
               <PaperContainer>
                 <Preview data={dataRapat} />

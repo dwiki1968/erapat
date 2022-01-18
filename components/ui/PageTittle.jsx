@@ -1,14 +1,15 @@
 import React from "react";
 import { PropTypes } from "prop-types";
-import { Heading, Flex } from "@chakra-ui/react";
+import { Heading, Flex, Text, HStack } from "@chakra-ui/react";
 
-const PageTittle = ({ title, icon }) => {
+const PageTittle = ({ title, icon, ...rest }) => {
   return (
     <>
-      <Flex alignItems="center">
-        <Heading mr={3}> {icon}</Heading>
-        <Heading>{title}</Heading>
-      </Flex>
+      <HStack>
+        <Heading {...rest}>{icon} </Heading>
+        <Heading {...rest}>{title}</Heading>
+        {/* <Heading>{title}</Heading> */}
+      </HStack>
     </>
   );
 };

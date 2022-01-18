@@ -21,7 +21,7 @@ const NavLink = ({ children }) => {
   const router = useRouter();
   return (
     <Link
-      onClick={() => router.push(children)}
+      onClick={() => router.push(`/${children}`)}
       style={{ textDecoration: "none" }}
       px={2}
       py={1}

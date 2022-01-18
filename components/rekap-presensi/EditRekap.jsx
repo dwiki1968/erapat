@@ -84,6 +84,8 @@ const EditRekap = ({ data }) => {
         <Table variant="unstyled" borderRadius="lg">
           <Thead>
             <Tr>
+              <Th>No.</Th>
+
               <Th>Nama</Th>
               <Th>Unit Kerja</Th>
               <Th>Tanda Tangan</Th>
@@ -94,6 +96,7 @@ const EditRekap = ({ data }) => {
             <Tbody>
               {data.presenses.map((rekap, index) => (
                 <Tr key={rekap.id}>
+                  <Td>{(index += 1)}</Td>
                   <Td>{rekap.nama_peserta}</Td>
                   <Td>{rekap.unit_kerja}</Td>
                   <Td>
