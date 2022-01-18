@@ -42,7 +42,7 @@ export default function Home() {
               onClick={() => router.push("/user/login")}
               borderRadius="xl"
               size={"lg"}
-              fontWeight={"normal"}
+              fontWeight={"semibold"}
               px={6}
               colorScheme={"red"}
               bg={"red.400"}
@@ -54,10 +54,9 @@ export default function Home() {
               onClick={() => router.push("/jadwal")}
               borderRadius="xl"
               size={"lg"}
-              fontWeight={"normal"}
+              fontWeight={"semibold"}
               px={6}
               colorScheme={"gray"}
-              bg={"gray.300"}
               _hover={{ bg: "gray.400" }}
             >
               Jadwal
@@ -72,7 +71,13 @@ export default function Home() {
           w={"full"}
         >
           <Box position={"relative"} width={"full"} overflow={"hidden"}>
-            <Image alt={"Hero Image"} src={heroImg} />
+            <Image
+              alt={"Hero Image"}
+              src={heroImg}
+              placeholder="blur"
+              width={460}
+              height={292}
+            />
           </Box>
         </Flex>
       </Stack>
