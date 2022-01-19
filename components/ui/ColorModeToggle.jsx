@@ -6,10 +6,11 @@ const ColorModeToggle = () => {
 
   return (
     <IconButton
-      variant="ghost"
+      variant="solid"
       borderRadius="xl"
       aria-label="theme toggle"
       colorScheme="gray"
+      size="sm"
       icon={colorMode === "light" ? <FiMoon /> : <FiSun />}
       onClick={toggleColorMode}
     />

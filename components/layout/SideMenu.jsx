@@ -84,8 +84,8 @@ const SidebarContent = ({ onClose, ...rest }) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="xl" fontFamily="monospace" fontWeight="bold">
-          <Link onClick={() => router.push("/dashboard")}>📝E-Rapat</Link>
+        <Text fontSize="lg" fontFamily="monospace" fontWeight="bold">
+          <Link onClick={() => router.push("/dashboard")}>📝e-rapat</Link>
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
@@ -163,12 +163,12 @@ const MobileNav = ({ onOpen, ...rest }) => {
 
         <Text
           display={{ base: "flex", md: "none" }}
-          fontSize="xl"
+          fontSize="lg"
           fontFamily="monospace"
           fontWeight="bold"
           onClick={() => router.push("/dashboard")}
         >
-          <Link>📝 E-Rapat</Link>
+          <Link>📝 e-rapat</Link>
         </Text>
 
         <HStack spacing={{ base: "1", md: "6" }}>

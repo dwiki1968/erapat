@@ -1,6 +1,6 @@
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
   Flex,
   HStack,
   IconButton,
@@ -10,19 +10,22 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { FiLogIn, FiMenu, FiX } from "react-icons/fi";
-import { namaCase } from "../../utils/utils";
+import { useRouter } from "next/dist/client/router";
 import ColorModeToggle from "../ui/ColorModeToggle";
 
-const Links = ["jadwal", "cari"];
+import Logo from "../ui/Logo";
 
-const NavLink = ({ children }) => {
+const linkItems = [
+  { nama: "Jadwal", link: "/jadwal" },
+  { nama: "Cari", link: "/cari" },
+  { nama: "Login", link: "/user/login" },
+];
+
+const NavLink = ({ children, link }) => {
   const router = useRouter();
   return (
     <Link
-      onClick={() => router.push(`/${children}`)}
-      style={{ textDecoration: "none" }}
+      onClick={() => router.push(link)}
       px={2}
       py={1}
       rounded={"md"}
@@ -31,8 +34,8 @@ const NavLink = ({ children }) => {
         bg: useColorModeValue("gray.200", "gray.700"),
       }}
     >
-      <Text fontWeight="semibold" fontSize="sm" color="gray.500">
-        {namaCase(children)}
+      <Text fontSize="sm" fontWeight="semibold">
+        {children}
       </Text>
     </Link>
   );
@@ -40,68 +43,47 @@ const NavLink = ({ children }) => {
 
 export default function HeaderApp() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
 
   return (
     <>
-      <Box>
-        <Flex
-          h={16}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-          borderBottomWidth="thin"
-        >
+      <Box borderBottomWidth="thin">
+        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
-            icon={isOpen ? <FiX /> : <FiMenu />}
+            size={"sm"}
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={"Open Menu"}
             display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
-            borderRadius="xl"
-            variant="ghost"
+            mr={10}
           />
-          <HStack spacing={8} alignItems={"center"}>
-            <Box>
-              <Button
-                borderRadius="xl"
-                variant="link"
-                fontWeight="bold"
-                textColor={useColorModeValue("gray.700", "gray.200")}
-                mr={2}
-                onClick={() => router.push("/")}
-              >
-                📝 E-Rapat
-              </Button>
-            </Box>
+          <Box>
+            <Logo />
+          </Box>
+
+          <HStack spacing={8}>
             <HStack
               as={"nav"}
               spacing={4}
               display={{ base: "none", md: "flex" }}
+              alignItems="center"
             >
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+              {linkItems.map((linkItem, index) => (
+                <NavLink link={linkItem.link} key={index}>
+                  {linkItem.nama}
+                </NavLink>
               ))}
             </HStack>
-          </HStack>
-          <Flex alignItems={"center"}>
-            <Button
-              colorScheme="green"
-              borderRadius="xl"
-              variant="solid"
-              size="xs"
-              mr={2}
-              onClick={() => router.push("/user/login")}
-            >
-              Masuk
-            </Button>
             <ColorModeToggle />
-          </Flex>
+          </HStack>
         </Flex>
 
         {isOpen ? (
-          <Box p={2} display={{ md: "none" }}>
+          <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+              {linkItems.map((linkItem, index) => (
+                <NavLink link={linkItem.link} key={index}>
+                  {linkItem.nama}
+                </NavLink>
               ))}
             </Stack>
           </Box>

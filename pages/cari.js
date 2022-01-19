@@ -3,6 +3,7 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import Field from "../components/cari/Field";
+import Result from "../components/cari/Result";
 import Footer from "../components/layout/Footer";
 import HeaderApp from "../components/layout/HeaderApp";
 import PageTittle from "../components/ui/PageTittle";
@@ -26,7 +27,8 @@ const Cari = () => {
         <Box m={5} />
 
         <Field />
-        <Divider />
+        {/* <Divider /> */}
+        {/* <Result /> */}
       </Container>
       <Container maxW={"5xl"}>
         <Footer />
