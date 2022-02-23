@@ -1,21 +1,12 @@
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  useToast,
-  RadioGroup,
-  Radio,
-  Stack,
-} from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
+import qs from "qs";
 import { useState } from "react";
 import { FiEdit, FiSave } from "react-icons/fi";
 import PuffLoader from "react-spinners/PuffLoader";
-import slugify from "slugify";
 import useSWR from "swr";
 import * as Yup from "yup";
 import { IsoToForm } from "../../utils/utils";
@@ -27,7 +18,8 @@ const IdentitasRapat = () => {
   const cookies = parseCookies(); //cookies.token
 
   const router = useRouter();
-  const rapatId = router.query.rapat;
+  const slug = router.query.slug;
+
   const toast = useToast();
   const [editable, setEditable] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -40,9 +32,20 @@ const IdentitasRapat = () => {
   }
 
   const { data, error } = useSWR(
-    rapatId && cookies.token
+    slug && cookies.token
       ? [
-          `${process.env.NEXT_PUBLIC_URL}/rapats?slug_rapat=${rapatId}`,
+          `${process.env.NEXT_PUBLIC_URL}/rapats?${qs.stringify(
+            {
+              filters: {
+                slug_rapat: {
+                  $eq: slug,
+                },
+              },
+            },
+            {
+              encodeValuesOnly: true,
+            }
+          )}`,
           cookies.token,
         ]
       : null
@@ -51,35 +54,37 @@ const IdentitasRapat = () => {
   if (error) {
     console.log("err", error);
   }
+
   //handel untuk loading
   if (!data) {
     return (
       <>
         <Center p={10}>
-          <PuffLoader color="#95DAC1" />
+          <PuffLoader color="red.300" />
         </Center>
       </>
     );
   }
 
-  if (!data.length) {
-    return <>kosong</>;
+  if (!data.data.length) {
+    return (
+      <>
+        <Center minH="100vh">
+          <Text color="red.500" fontStyle="italic">
+            Opps, data tidak ditemukan
+          </Text>
+        </Center>
+      </>
+    );
   }
 
   //jika ada data maka dijalankann baris dibaawah
 
-  const dataRapat = data[0];
-  const {
-    id,
-    nama,
-    jadwal_rapat,
-    pimpinan,
-    tempat,
-    agenda_rapat,
-    jenis,
-    unit,
-  } = dataRapat;
+  const dataRapat = data.data[0];
+  const { nama, jadwal_rapat, pimpinan, tempat, agenda_rapat, jenis, unit } =
+    dataRapat.attributes;
 
+  const id = dataRapat.id;
   //merubah format iso datettime dari strapi agar bisa dicosume form
   const stringJadwal = IsoToForm(jadwal_rapat);
 
@@ -93,7 +98,6 @@ const IdentitasRapat = () => {
     jenis,
   };
 
-  // console.log("initialValues", initialValues);
   //yup validasi
   const validationSchema = Yup.object({
     nama: Yup.string().required("Required"),
@@ -110,15 +114,14 @@ const IdentitasRapat = () => {
     setLoading(true);
 
     //membuat slug rapat
-    const slug_rapat = slugify(values.nama, { lower: true });
-    // console.log("Form data values", values);
     //post data ke server
     try {
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_URL}/rapats/${id}`,
         {
-          ...values,
-          slug_rapat,
+          data: {
+            ...values,
+          },
         },
         {
           headers: {
@@ -137,7 +140,7 @@ const IdentitasRapat = () => {
         isClosable: true,
         position: "top-right",
       });
-      router.push(`/dashboard/rapats/${slug_rapat}`);
+      router.push(`/dashboard/rapats/${slug}`);
     } catch (error) {
       console.log("err put req: ", error);
       setEditable(false);
@@ -167,6 +170,7 @@ const IdentitasRapat = () => {
                 <Flex>
                   {editable ? (
                     <Button
+                      borderRadius="xl"
                       leftIcon={<FiEdit />}
                       variant="solid"
                       size="md"
@@ -177,6 +181,7 @@ const IdentitasRapat = () => {
                     </Button>
                   ) : (
                     <Button
+                      borderRadius="xl"
                       leftIcon={<FiEdit />}
                       variant="solid"
                       size="md"
@@ -189,6 +194,7 @@ const IdentitasRapat = () => {
 
                   <Box mx={3} />
                   <Button
+                    borderRadius="xl"
                     leftIcon={<FiSave />}
                     type="submit"
                     disabled={!formik.isValid || !editable}
@@ -222,9 +228,9 @@ const IdentitasRapat = () => {
                   <option value={unit}>{unit}</option>
 
                   {unitKerja &&
-                    unitKerja.map((unit) => (
-                      <option key={unit.id} value={unit.nama}>
-                        {unit.nama}
+                    unitKerja.data.map((unit) => (
+                      <option key={unit.id} value={unit.attributes.nama}>
+                        {unit.attributes.nama}
                       </option>
                     ))}
                 </FormikSelect>

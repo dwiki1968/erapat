@@ -15,9 +15,9 @@ import {
 import axios from "axios";
 import { parseCookies } from "nookies";
 import React, { useState } from "react";
-import { FiDelete } from "react-icons/fi";
+import { FiDelete, FiTrash, FiTrash2 } from "react-icons/fi";
 import useSWR from "swr";
-import DialogKonfirmasi from "../ui/DialogKonfirmasi";
+import DialogKonfirmasi from "../ui/ConfirmDialog";
 
 const HapusRow = ({ id, token }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -69,7 +69,7 @@ const HapusRow = ({ id, token }) => {
         variant="link"
         onClick={() => setIsOpen(true)}
         colorScheme="red"
-        icon={<FiDelete />}
+        icon={<FiTrash2 />}
       />
     </>
   );
@@ -94,13 +94,14 @@ const UnitKerja = () => {
   };
 
   const handleSubmitTambah = async () => {
-    // console.log("value", value);
     SetIsLoading(true);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_URL}/units`,
         {
-          nama: value,
+          data: {
+            nama: value,
+          },
         },
         {
           headers: {
@@ -108,7 +109,6 @@ const UnitKerja = () => {
           },
         }
       );
-      //   console.log("res: ", response);
       SetIsLoading(false);
       toast({
         title: "Selamat!",
@@ -138,13 +138,20 @@ const UnitKerja = () => {
   return (
     <>
       <Flex maxW="500px">
-        <Input size="sm" value={value} mr={2} onChange={handleChangeTambah} />
+        <Input
+          borderRadius="xl"
+          size="sm"
+          value={value}
+          mr={2}
+          onChange={handleChangeTambah}
+        />
 
         <Button
           size="sm"
           onClick={handleSubmitTambah}
           isDisabled={value === ""}
           isLoading={isLoading}
+          colorScheme="blue"
         >
           Tambah
         </Button>
@@ -161,10 +168,10 @@ const UnitKerja = () => {
 
         <Tbody>
           {unitKerja &&
-            unitKerja.map((unit, index) => (
+            unitKerja.data.map((unit, index) => (
               <Tr key={unit.id}>
                 <Td>{index + 1}</Td>
-                <Td>{unit.nama}</Td>
+                <Td>{unit.attributes.nama}</Td>
                 <Td>
                   <HapusRow id={unit.id} token={cookies.token} />
                 </Td>

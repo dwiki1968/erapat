@@ -15,7 +15,13 @@ function FormikSelect(props) {
       {({ field, form }) => (
         <FormControl isInvalid={form.errors[name] && form.touched[name]} my={3}>
           <FormLabel htmlFor={name}>{label}</FormLabel>
-          <Select id={name} placeholder="Pilih" {...rest} {...field}>
+          <Select
+            borderRadius="xl"
+            id={name}
+            placeholder="Pilih"
+            {...rest}
+            {...field}
+          >
             {children}
           </Select>
           <FormErrorMessage>{form.errors[name]}</FormErrorMessage>

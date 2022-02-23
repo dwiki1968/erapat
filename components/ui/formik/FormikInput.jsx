@@ -15,7 +15,7 @@ function FormikInput(props) {
         <FormControl isInvalid={form.errors[name] && form.touched[name]} my={3}>
           <FormLabel htmlFor={name}>{label}</FormLabel>
           {keterangan}
-          <Input id={name} {...rest} {...field} />
+          <Input borderRadius="xl" id={name} {...rest} {...field} />
           <FormErrorMessage>{form.errors[name]}</FormErrorMessage>
         </FormControl>
       )}

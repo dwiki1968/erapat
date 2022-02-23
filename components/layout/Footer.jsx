@@ -1,7 +1,6 @@
 import {
   Box,
   chakra,
-  Container,
   Heading,
   Stack,
   Text,
@@ -37,25 +36,25 @@ const SocialButton = ({ children, label, href }) => {
 export default function Footer() {
   return (
     <Box
-      mt="50px"
+      mt={10}
+      marginTop="auto"
       bg={useColorModeValue("gray.50", "gray.800")}
       color={useColorModeValue("gray.700", "gray.200")}
       borderRadius="lg"
     >
-      <Container
+      <Box
         as={Stack}
-        maxW={"6xl"}
-        py={4}
+        p={4}
         direction={{ base: "column", md: "row" }}
         spacing={4}
         justify={{ base: "center", md: "space-between" }}
         align={{ base: "center", md: "center" }}
       >
-        <Heading size="xs">📝 E-Rapat</Heading>
-        <Text align="center" fontSize="sm">
-          © 2021 Pusat Pelaporan dan Analisis Transaksi Keungan
+        <Heading size="xs">📝 e-rapat</Heading>
+        <Text align="center" fontSize="xs">
+          © 2021 Pusat Pelaporan dan Analisis Transaksi Keuangan
         </Text>
-        <Text as="i" fontWeight="semibold" fontSize="sm" color="red.300">
+        <Text as="i" fontWeight="semibold" fontSize="xs" color="red.300">
           Indonesia Tanpa Korupsi
         </Text>
         <Stack direction={"row"} spacing={6}>
@@ -75,7 +74,7 @@ export default function Footer() {
             <FaInstagram />
           </SocialButton>
         </Stack>
-      </Container>
+      </Box>
     </Box>
   );
 }

@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/button";
 import { useClipboard } from "@chakra-ui/hooks";
 import { Flex, Spacer } from "@chakra-ui/layout";
-import { Textarea } from "@chakra-ui/textarea";
+import { Input } from "@chakra-ui/react";
 import React from "react";
 
 const Clipboard = ({ kalimat }) => {
@@ -9,9 +9,9 @@ const Clipboard = ({ kalimat }) => {
 
   return (
     <>
-      <Flex alignItems="start">
+      <Flex alignItems="start" maxW="600px">
         <Spacer />
-        <Textarea
+        <Input
           borderRadius="xl"
           variant="filled"
           fontSize="sm"
@@ -21,9 +21,9 @@ const Clipboard = ({ kalimat }) => {
           overflow="hidden"
         />
         <Button
-          size="sm"
+          size="md"
           onClick={onCopy}
-          ml={2}
+          ml={5}
           colorScheme="green"
           borderRadius="xl"
         >
