@@ -1,4 +1,3 @@
-import qs from "qs";
 import {
   Box,
   Button,
@@ -12,35 +11,29 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import nookies, { parseCookies } from "nookies";
 import React from "react";
 import { FiFileText, FiPrinter } from "react-icons/fi";
 import { PuffLoader } from "react-spinners";
 import useSWR from "swr";
-
-import MetaPage from "../layout/MetaPage";
+import DashBoardContainer from "../container/DashboardContainer";
+import PaperContainer from "../container/PaperContainer";
 import SideMenu from "../layout/DashboardMenu";
+import MetaPage from "../layout/MetaPage";
+import BackButton from "../ui/BackButton";
+import PageTittle from "../ui/PageTitle";
+import Clipboard from "./Clipboard";
 import EditRekap from "./EditRekap";
 import Preview from "./Preview";
-import BackButton from "../ui/BackButton";
-import DashBoardContainer from "../container/DashboardContainer";
-import PageTittle from "../ui/PageTitle";
-import PaperContainer from "../container/PaperContainer";
-import Clipboard from "./Clipboard";
 
-const RekapPresensi = ({ token }) => {
-  const cookies = parseCookies();
+const RekapPresensi = ({ jwtToken }) => {
   const router = useRouter();
   const slug = router.query.slug;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
   const { data, error } = useSWR(
-    slug && cookies.token
-      ? [
-          `${process.env.NEXT_PUBLIC_URL}/presensis/rekap/${slug}`,
-          cookies.token,
-        ]
+    slug && jwtToken
+      ? [`${process.env.NEXT_PUBLIC_URL}/presensis/rekap/${slug}`, jwtToken]
       : null
   );
 

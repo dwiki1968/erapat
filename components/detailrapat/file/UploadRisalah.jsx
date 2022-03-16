@@ -58,7 +58,7 @@ function UploadRisalah(props) {
     setIsLoading(true);
     const formData = new FormData();
     formData.append("files", myFiles[0]);
-    formData.append("ref", "Rapat");
+    formData.append("ref", "api::rapat.rapat");
     formData.append("field", "file_risalah");
     formData.append("refId", RapatId);
     try {
@@ -67,11 +67,11 @@ function UploadRisalah(props) {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${cookies.erapat_token}`,
           },
         }
       );
-      console.log("res: ", response);
+      // console.log("res: ", response);
       setIsLoading(false);
       removeAll();
       toast({
@@ -98,16 +98,16 @@ function UploadRisalah(props) {
 
   return (
     <>
-      <Flex>
+      <Box>
         <Box
           cursor="pointer"
           bg="gray.50"
-          borderRadius="lg"
           borderWidth="2px"
           borderColor="gray.200"
           minH="90px"
           borderStyle="dashed"
           padding={5}
+          borderRadius="xl"
           {...getRootProps({ className: "dropzone" })}
         >
           <input {...getInputProps()} />
@@ -118,31 +118,33 @@ function UploadRisalah(props) {
           <List>{files}</List>
         </Box>
 
-        <Flex flexDir="column" ml={2}>
+        <Flex mt={3}>
           <Button
+            mr={5}
             colorScheme="green"
             isDisabled={!myFiles.length}
             onClick={uploadFile}
             size="sm"
             isLoading={isLoading}
             rightIcon={<FiUploadCloud />}
+            borderRadius="xl"
           >
             Unggah
           </Button>
 
           {files.length > 0 && (
             <Button
-              mt={2}
               size="sm"
               rightIcon={<FiDelete />}
               colorScheme="red"
               onClick={removeAll}
+              borderRadius="xl"
             >
               Batal
             </Button>
           )}
         </Flex>
-      </Flex>
+      </Box>
     </>
   );
 }

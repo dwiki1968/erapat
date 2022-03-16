@@ -35,7 +35,7 @@ const ResetPassword = () => {
   const resetToken = router.query.resetToken;
   const toast = useToast();
 
-  console.log("token", resetToken);
+  // console.log("token", resetToken);
 
   const [isFail, setFail] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -209,14 +209,15 @@ const ResetPassword = () => {
                         </Field>
                         <Button
                           disabled={!formik.isValid}
+                          borderRadius="xl"
                           type="submit"
                           variant="solid"
-                          colorScheme="red"
-                          bg="red.400"
+                          colorScheme="blue"
+                          bg="blue.400"
                           width="full"
                           onClick={() => setFail(false)}
                           isLoading={loading}
-                          _hover={{ bg: "red.400" }}
+                          _hover={{ bg: "blue.400" }}
                         >
                           Reset
                         </Button>
@@ -232,7 +233,7 @@ const ResetPassword = () => {
             <Text>
               Kembali ke{" "}
               <Button
-                color="red.400"
+                color="blue.400"
                 variant="link"
                 onClick={() => router.push("/")}
               >

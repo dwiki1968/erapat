@@ -11,7 +11,7 @@ import PaperContainer from "../../components/container/PaperContainer";
 export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx);
 
-  if (!cookies.token) {
+  if (!cookies.erapat_token) {
     return {
       redirect: {
         destination: "/user/login",
@@ -21,12 +21,12 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
-      token: cookies.token,
+      jwtToken: cookies.erapat_token,
     },
   };
 }
 
-function TambahRapat({ token }) {
+function TambahRapat({ jwtToken }) {
   return (
     <>
       <DashboardMenu>
@@ -37,7 +37,7 @@ function TambahRapat({ token }) {
 
           {/* ada warning pada formik */}
           <PaperContainer mt={5} maxWidth="900px">
-            <Tambah token={token} />
+            <Tambah jwtToken={jwtToken} />
           </PaperContainer>
         </DashboardContainer>
       </DashboardMenu>

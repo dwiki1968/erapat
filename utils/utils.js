@@ -44,7 +44,7 @@ export function getCurrentDate() {
 export function maksKarakter(str, num = "15") {
   const body = str.length > num ? str.substring(0, num) : str;
   const ekstensi = str.length > num ? str.slice(-4) : null;
-  return `${body}...${ekstensi}`;
+  return `${body} . . . ${ekstensi}`;
 }
 
 export function namaCase(str) {

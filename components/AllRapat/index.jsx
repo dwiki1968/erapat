@@ -41,7 +41,7 @@ const AllRapat = () => {
 
   // fetc data rapat untuk tabel
   const { data: rapats, error } = useSWR(
-    cookies.token
+    cookies.erapat_token
       ? [
           `${process.env.NEXT_PUBLIC_URL}/rapats?${qs.stringify(
             {
@@ -62,7 +62,7 @@ const AllRapat = () => {
               encodeValuesOnly: true,
             }
           )}`,
-          cookies.token,
+          cookies.erapat_token,
         ]
       : null
   );
@@ -154,9 +154,6 @@ const AllRapat = () => {
               <Th>
                 <Text fontSize="sm">Unit Kerja</Text>
               </Th>
-              <Th>
-                <Text fontSize="sm">Aksi</Text>
-              </Th>
             </Tr>
           </Thead>
 
@@ -165,18 +162,7 @@ const AllRapat = () => {
               {rapats.data.map((rowRapat) => (
                 <Tr key={rowRapat.id}>
                   <Td>
-                    <Text fontSize="sm">
-                      <Link
-                        color="blue.500"
-                        onClick={() =>
-                          router.push(
-                            `/dashboard/rapats/${rowRapat.attributes.slug_rapat}`
-                          )
-                        }
-                      >
-                        {rowRapat.attributes.nama}
-                      </Link>
-                    </Text>
+                    <Text fontSize="sm">{rowRapat.attributes.nama}</Text>
                   </Td>
                   <Td>
                     <Text fontSize="sm">
@@ -192,21 +178,27 @@ const AllRapat = () => {
                   <Td>
                     <Text fontSize="sm">{rowRapat.attributes.unit}</Text>
                   </Td>
-                  <Td>
-                    <AksiTabel
-                      slug={rowRapat.attributes.slug_rapat}
-                      idRapat={rowRapat.id}
-                    />
-                  </Td>
                 </Tr>
               ))}
             </Tbody>
           ) : (
-            <Center p={10}>
-              <Text color="blue.400" fontStyle="italic">
-                Sedang memuat ...
-              </Text>
-            </Center>
+            <Tbody>
+              <Td>
+                <BeatLoader size={10} color="#90CDF4" />
+              </Td>
+              <Td>
+                <BeatLoader size={10} color="#90CDF4" />
+              </Td>
+              <Td>
+                <BeatLoader size={10} color="#90CDF4" />
+              </Td>
+              <Td>
+                <BeatLoader size={10} color="#90CDF4" />
+              </Td>
+              <Td>
+                <BeatLoader size={10} color="#90CDF4" />
+              </Td>
+            </Tbody>
           )}
         </Table>
       </Box>

@@ -5,7 +5,7 @@ import nookies, { parseCookies } from "nookies";
 export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx);
 
-  if (!cookies.token) {
+  if (!cookies.erapat_token) {
     return {
       redirect: {
         destination: "/user/login",
@@ -14,14 +14,14 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: { token: cookies.token },
+    props: { jwtToken: cookies.erapat_token },
   };
 }
 
-const Presensi = () => {
+const Presensi = ({ jwtToken }) => {
   return (
     <>
-      <RekapPresensi />
+      <RekapPresensi jwtToken={jwtToken} />
     </>
   );
 };

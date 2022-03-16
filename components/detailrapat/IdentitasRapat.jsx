@@ -2,7 +2,6 @@ import { Box, Button, Center, Flex, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import { parseCookies } from "nookies";
 import qs from "qs";
 import { useState } from "react";
 import { FiEdit, FiSave } from "react-icons/fi";
@@ -14,9 +13,7 @@ import FormikInput from "../ui/formik/FormikInput";
 import FormikSelect from "../ui/formik/FormikSelect";
 import FormikTextArea from "../ui/formik/FormikTextArea";
 
-const IdentitasRapat = () => {
-  const cookies = parseCookies(); //cookies.token
-
+const IdentitasRapat = ({ jwtToken }) => {
   const router = useRouter();
   const slug = router.query.slug;
 
@@ -32,7 +29,7 @@ const IdentitasRapat = () => {
   }
 
   const { data, error } = useSWR(
-    slug && cookies.token
+    slug && jwtToken
       ? [
           `${process.env.NEXT_PUBLIC_URL}/rapats?${qs.stringify(
             {
@@ -46,7 +43,7 @@ const IdentitasRapat = () => {
               encodeValuesOnly: true,
             }
           )}`,
-          cookies.token,
+          jwtToken,
         ]
       : null
   );
@@ -125,11 +122,11 @@ const IdentitasRapat = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${jwtToken}`,
           },
         }
       );
-      console.log("res: ", response);
+      // console.log("res: ", response);
       setEditable(false);
       setLoading(false);
       toast({

@@ -13,7 +13,6 @@ import {
   Link,
   Select,
   Spacer,
-  Spinner,
   Table,
   Tbody,
   Td,
@@ -45,7 +44,7 @@ const RapatTable = () => {
 
   // fetc data rapat untuk tabel
   const { data: rapats, error } = useSWR(
-    cookies.token
+    cookies.erapat_token
       ? [
           `${process.env.NEXT_PUBLIC_URL}/rapats?${qs.stringify(
             {
@@ -58,7 +57,7 @@ const RapatTable = () => {
               sort: [sortby],
               filters: {
                 pembuat: {
-                  $eq: jwt_decode(cookies.token).id,
+                  $eq: jwt_decode(cookies.erapat_token).id,
                 },
                 nama: {
                   $containsi: searchValSubmit,
@@ -69,7 +68,7 @@ const RapatTable = () => {
               encodeValuesOnly: true,
             }
           )}`,
-          cookies.token,
+          cookies.erapat_token,
         ]
       : null
   );
@@ -89,8 +88,8 @@ const RapatTable = () => {
       <Statistic />
 
       <Divider my={5} />
-      <Heading size="lg" mb={5}>
-        Rapat Buatan Anda
+      <Heading size="md" mb={5} color="blue.600">
+        Rapat buatan anda
       </Heading>
       <Flex flexDir={{ base: "column", sm: "column", md: "column", lg: "row" }}>
         <InputGroup size="md">
@@ -208,9 +207,22 @@ const RapatTable = () => {
               ))}
             </Tbody>
           ) : (
-            <Center minH="200px">
-              <BeatLoader size={10} color="red.500" />
-            </Center>
+            <Tbody>
+              <Tr>
+                <Td>
+                  <BeatLoader size={10} color="#90CDF4" />
+                </Td>
+                <Td>
+                  <BeatLoader size={10} color="#90CDF4" />
+                </Td>
+                <Td>
+                  <BeatLoader size={10} color="#90CDF4" />
+                </Td>
+                <Td>
+                  <BeatLoader size={10} color="#90CDF4" />
+                </Td>
+              </Tr>
+            </Tbody>
           )}
         </Table>
       </Box>

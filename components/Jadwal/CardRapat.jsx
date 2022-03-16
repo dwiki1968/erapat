@@ -16,7 +16,7 @@ const ColorModeContainer = ({ children }) => {
       my={3}
       w="full"
       mx="auto"
-      p={5}
+      p={3}
       bg={useColorModeValue("gray.50", "gray.700")}
       borderRadius="xl"
       _hover={{
@@ -33,11 +33,11 @@ const CardRapat = ({ data }) => {
   return (
     <>
       {data.map((rapat) => {
-        const { nama, jadwal_rapat, slug_rapat } = rapat;
+        const { nama, jadwal_rapat, slug_rapat, unit } = rapat;
         const { id } = rapat;
         return (
           <ColorModeContainer key={id}>
-            <Heading as="h4" size="md">
+            <Heading as="h4" size="sm">
               {nama}
             </Heading>
 
@@ -52,6 +52,9 @@ const CardRapat = ({ data }) => {
 
                 <Text fontSize="sm" mr={5}>
                   ⏲ {IsoToLocalTime(jadwal_rapat)} WIB
+                </Text>
+                <Text fontSize="sm" mr={5}>
+                  📍 {unit}
                 </Text>
 
                 <Link

@@ -23,6 +23,7 @@ import {
   FiMenu,
   FiSettings,
 } from "react-icons/fi";
+import useSWR from "swr";
 import ColorModeToggle from "../ui/ColorModeToggle";
 import DialogKonfirmasi from "../ui/ConfirmDialog";
 import Footer from "./Footer";
@@ -70,6 +71,13 @@ export default function DashboardMenu({ children }) {
 
 const SidebarContent = ({ onClose, ...rest }) => {
   const router = useRouter();
+  const { data: appConst, error: errAppConst } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/app-const`
+  );
+
+  if (errAppConst) {
+    console.log("terjadi error :", errAppConst);
+  }
   return (
     <Box
       transition="3s ease"
@@ -83,7 +91,9 @@ const SidebarContent = ({ onClose, ...rest }) => {
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="lg" fontFamily="monospace" fontWeight="bold">
-          <Link onClick={() => router.push("/dashboard")}>📝e-rapat</Link>
+          <Link onClick={() => router.push("/dashboard")}>
+            📝 {appConst && appConst.data.attributes.app_name}
+          </Link>
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
@@ -132,8 +142,17 @@ const NavItem = ({ icon, children, route, ...rest }) => {
 const MobileNav = ({ onOpen, ...rest }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+
+  const { data: appConst, error: errAppConst } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/app-const`
+  );
+
+  if (errAppConst) {
+    console.log("terjadi error :", errAppConst);
+  }
+
   const onLogOut = () => {
-    destroyCookie(null, "token");
+    destroyCookie(null, "erapat_token");
     router.replace("/user/login");
     setIsOpen(false);
   };
@@ -165,7 +184,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
           fontWeight="bold"
           onClick={() => router.push("/dashboard")}
         >
-          <Link>📝 e-rapat</Link>
+          <Link>📝 {appConst && appConst.data.attributes.app_name}</Link>
         </Text>
 
         <HStack spacing={{ base: "1", md: "6" }}>

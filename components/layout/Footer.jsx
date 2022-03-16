@@ -8,6 +8,7 @@ import {
   VisuallyHidden,
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import useSWR from "swr";
 
 const SocialButton = ({ children, label, href }) => {
   return (
@@ -34,47 +35,60 @@ const SocialButton = ({ children, label, href }) => {
 };
 
 export default function Footer() {
+  const { data: appConst, error: errAppConst } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/app-const`
+  );
+
+  if (errAppConst) {
+    console.log("terjadi error :", errAppConst);
+  }
   return (
-    <Box
-      mt={10}
-      marginTop="auto"
-      bg={useColorModeValue("gray.50", "gray.800")}
-      color={useColorModeValue("gray.700", "gray.200")}
-      borderRadius="lg"
-    >
+    <>
+      <Box m={10} />
       <Box
-        as={Stack}
-        p={4}
-        direction={{ base: "column", md: "row" }}
-        spacing={4}
-        justify={{ base: "center", md: "space-between" }}
-        align={{ base: "center", md: "center" }}
+        mb={3}
+        marginTop="auto"
+        bg={useColorModeValue("gray.50", "gray.800")}
+        color={useColorModeValue("gray.700", "gray.200")}
+        borderRadius="xl"
       >
-        <Heading size="xs">📝 e-rapat</Heading>
-        <Text align="center" fontSize="xs">
-          © 2021 Pusat Pelaporan dan Analisis Transaksi Keuangan
-        </Text>
-        <Text as="i" fontWeight="semibold" fontSize="xs" color="red.300">
-          Indonesia Tanpa Korupsi
-        </Text>
-        <Stack direction={"row"} spacing={6}>
-          <SocialButton label={"Twitter"} href={"https://twitter.com/PPATK"}>
-            <FaTwitter />
-          </SocialButton>
-          <SocialButton
-            label={"YouTube"}
-            href={"https://www.youtube.com/c/PPATKIndonesia"}
-          >
-            <FaYoutube />
-          </SocialButton>
-          <SocialButton
-            label={"Instagram"}
-            href={"https://www.instagram.com/ppatk_indonesia/"}
-          >
-            <FaInstagram />
-          </SocialButton>
-        </Stack>
+        <Box
+          as={Stack}
+          p={4}
+          direction={{ base: "column", md: "row" }}
+          spacing={4}
+          justify={{ base: "center", md: "space-between" }}
+          align={{ base: "center", md: "center" }}
+        >
+          <Heading size="sm">
+            📝 {appConst && appConst.data.attributes.app_name}
+          </Heading>
+          <Text align="center" fontSize="sm">
+            © {new Date().getFullYear()} Pusat Pelaporan dan Analisis Transaksi
+            Keuangan
+          </Text>
+          <Text as="i" fontWeight="semibold" fontSize="xs" color="red.300">
+            Indonesia Tanpa Korupsi
+          </Text>
+          <Stack direction={"row"} spacing={6}>
+            <SocialButton label={"Twitter"} href={"https://twitter.com/PPATK"}>
+              <FaTwitter />
+            </SocialButton>
+            <SocialButton
+              label={"YouTube"}
+              href={"https://www.youtube.com/c/PPATKIndonesia"}
+            >
+              <FaYoutube />
+            </SocialButton>
+            <SocialButton
+              label={"Instagram"}
+              href={"https://www.instagram.com/ppatk_indonesia/"}
+            >
+              <FaInstagram />
+            </SocialButton>
+          </Stack>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }

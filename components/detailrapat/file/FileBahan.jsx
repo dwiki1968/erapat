@@ -24,7 +24,7 @@ const DeleteButton = ({ fileId }) => {
         `${process.env.NEXT_PUBLIC_URL}/upload/files/${fileId}`,
         {
           headers: {
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${cookies.erapat_token}`,
           },
         }
       );
@@ -77,11 +77,15 @@ const FileBahan = (props) => {
   return (
     <div>
       <List>
-        {fileBahan.map((data) => (
+        {fileBahan.data.map((data) => (
           <ListItem key={data.id}>
             <Flex>
-              <Link color="blue.400" href={data.url}>
-                {maksKarakter(data.name, 20)}
+              <Link
+                fontStyle="italic"
+                color="blue.400"
+                href={baseUrl + data.attributes.url}
+              >
+                {maksKarakter(data.attributes.name, 20)}
               </Link>
               <DeleteButton fileId={data.id} />
             </Flex>

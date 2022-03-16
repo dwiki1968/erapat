@@ -19,7 +19,7 @@ import { IsoToLocalDate, IsoToLocalTime } from "../../utils/utils";
 import DialogKonfirmasi from "../ui/ConfirmDialog";
 
 const DeleteButton = ({ presensiId }) => {
-  const cookies = parseCookies(); //token
+  const cookies = parseCookies(); //erapat_token
   const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -29,11 +29,11 @@ const DeleteButton = ({ presensiId }) => {
         `${process.env.NEXT_PUBLIC_URL}/presensis/${presensiId}`,
         {
           headers: {
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${cookies.erapat_token}`,
           },
         }
       );
-      console.log("res: ", response);
+      // console.log("res: ", response);
       toast({
         title: "Selamat!",
         description: "Data berhasil dihapus 🎉",

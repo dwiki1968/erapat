@@ -8,7 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { parseCookies } from "nookies";
-import { FiArchive, FiCalendar, FiSmile, FiUser } from "react-icons/fi";
+import { FiArchive, FiCalendar, FiUser } from "react-icons/fi";
 import useSWR from "swr";
 
 function StatsCard(props) {
@@ -79,8 +79,8 @@ export default function Statistic({}) {
   const cookies = parseCookies();
 
   const { data, error } = useSWR(
-    cookies.token
-      ? [`${process.env.NEXT_PUBLIC_URL}/users/me`, cookies.token]
+    cookies.erapat_token
+      ? [`${process.env.NEXT_PUBLIC_URL}/users/me`, cookies.erapat_token]
       : null
   );
 
@@ -91,20 +91,16 @@ export default function Statistic({}) {
     `${process.env.NEXT_PUBLIC_URL}/rapats/count`
   );
 
-  console.log("upcoming", upcoming);
-  console.log("total", total);
-
-  //belum dilakukan handel eror -> kedepannya kita pakai toast saja
   if (error) {
     console.log(error);
   }
 
   if (errorTotal) {
-    console.log(error);
+    console.log(errorTotal);
   }
 
   if (errorUpcoming) {
-    console.log(error);
+    console.log(errorUpcoming);
   }
 
   return (

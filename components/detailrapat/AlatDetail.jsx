@@ -1,18 +1,15 @@
 import { useDisclosure } from "@chakra-ui/hooks";
-import qs from "qs";
-
 import {
   Box,
   Button,
   Center,
   Collapse,
   Flex,
-  IconButton,
   Text,
   useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { parseCookies } from "nookies";
+import qs from "qs";
 import { FiPlus, FiUserCheck } from "react-icons/fi";
 import PuffLoader from "react-spinners/PuffLoader";
 import useSWR from "swr";
@@ -23,9 +20,7 @@ import FileRisalah from "./file/FileRisalah";
 import UploadBahan from "./file/UploadBahan";
 import UploadRisalah from "./file/UploadRisalah";
 
-function AlatDetail() {
-  const cookies = parseCookies(); //cookies.token
-
+function AlatDetail({ jwtToken }) {
   const router = useRouter();
   const slug = router.query.slug;
 
@@ -33,10 +28,11 @@ function AlatDetail() {
   const { isOpen, onToggle } = useDisclosure();
 
   const { data, error } = useSWR(
-    slug && cookies.token
+    slug && jwtToken
       ? [
           `${process.env.NEXT_PUBLIC_URL}/rapats?${qs.stringify(
             {
+              populate: "*",
               filters: {
                 slug_rapat: {
                   $eq: slug,
@@ -47,7 +43,7 @@ function AlatDetail() {
               encodeValuesOnly: true,
             }
           )}`,
-          cookies.token,
+          jwtToken,
         ]
       : null
   );
@@ -67,6 +63,8 @@ function AlatDetail() {
     );
   }
 
+  // console.log("data", data);
+
   if (!data.data.length) {
     return (
       <>
@@ -81,8 +79,17 @@ function AlatDetail() {
 
   const dataRapat = data.data[0];
   // console.log(dataRapat);
-  const { nama, jadwal_rapat, pimpinan, tempat, agenda_rapat, jenis, unit } =
-    dataRapat.attributes;
+  const {
+    nama,
+    jadwal_rapat,
+    pimpinan,
+    tempat,
+    agenda_rapat,
+    file_risalah,
+    file_bahan,
+    jenis,
+    unit,
+  } = dataRapat.attributes;
 
   const id = dataRapat.id;
 
@@ -124,11 +131,11 @@ function AlatDetail() {
       <Text fontWeight="semibold">File Risalah</Text>
       <Box my={2} />
       <Box>
-        {/* {file_risalah ? (
+        {file_risalah.data ? (
           <FileRisalah fileRisalah={file_risalah} />
         ) : (
           <UploadRisalah RapatId={id} />
-        )} */}
+        )}
 
         <Box my={5} />
         {/* file bahan rapat  */}
@@ -137,19 +144,23 @@ function AlatDetail() {
           *Optional
         </Text>
         <Box my={2} />
-        <IconButton
+        <Button
           onClick={onToggle}
-          icon={<FiPlus />}
-          rounded="full"
-          colorScheme="green"
+          rightIcon={<FiPlus />}
+          borderRadius="xl"
+          colorScheme="blue"
           size="sm"
-        />
+          mb={2}
+        >
+          Tambahkan
+        </Button>
+        {file_bahan.data !== null && <FileBahan fileBahan={file_bahan} />}
+
         <Collapse in={isOpen} animateOpacity>
           <Box mt={2} />
           <UploadBahan RapatId={id} />
         </Collapse>
         <Box my={2} />
-        {/* {file_bahan.length > 0 ? <FileBahan fileBahan={file_bahan} /> : null} */}
       </Box>
     </>
   );

@@ -23,6 +23,7 @@ import Image from "next/image";
 import logoPPATK from "../../public/LOGO_PPATK.png";
 
 const Preview = ({ data }) => {
+  // console.log(data);
   const { rapat, presensi } = data;
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
@@ -52,7 +53,7 @@ const Preview = ({ data }) => {
                 <Image src={logoPPATK} alt="logo" />
               </Box>
               <Box flex={1}>
-                <Center>
+                <Center mb={2}>
                   <Heading size="lg" textAlign="center">
                     Pusat Pelaporan dan Analisis Transaksi Keuangan
                   </Heading>
@@ -64,16 +65,14 @@ const Preview = ({ data }) => {
                 </Center>
               </Box>
             </Flex>
-            <Divider borderWidth="medium" my={3} />
+            <Divider borderWidth="2px" my={3} />
 
-            <Box w="50%">
-              <Heading size="sm" maxWidth="75%">
-                {rapat.nama}
-              </Heading>
+            <Box>
+              <Heading size="sm">{rapat.nama}</Heading>
             </Box>
             <Spacer />
             <Box>
-              <Text fontSize="sm">
+              <Text fontStyle="italic" fontSize="sm">
                 {IsoToLocalDate(rapat.jadwal_rapat)}, Pukul{" "}
                 {IsoToLocalTime(rapat.jadwal_rapat)} WIB - Selesai
               </Text>
@@ -81,10 +80,10 @@ const Preview = ({ data }) => {
           </Box>
         )}
 
-        <Box m={5}></Box>
+        <Box m={3}></Box>
 
         <Box>
-          <Table mt={2} variant="simple" size="sm">
+          <Table mt={2} variant="striped" size="sm">
             <Thead bg="gray.300" h="50px">
               <Tr>
                 <Th>No.</Th>

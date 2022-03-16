@@ -25,7 +25,7 @@ const DeleteButton = ({ fileId }) => {
         `${process.env.NEXT_PUBLIC_URL}/upload/files/${fileId}`,
         {
           headers: {
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${cookies.erapat_token}`,
           },
         }
       );
@@ -83,10 +83,15 @@ const FileRisalah = (props) => {
         {fileRisalah && (
           <ListItem>
             <Flex>
-              <Link color="blue.400" href={fileRisalah.url} isExternal>
-                {maksKarakter(fileRisalah.name, 20)}
+              <Link
+                color="blue.400"
+                href={baseUrl + fileRisalah.data.attributes.url}
+                isExternal
+                fontStyle="italic"
+              >
+                {maksKarakter(fileRisalah.data.attributes.name, 20)}
               </Link>
-              <DeleteButton fileId={fileRisalah.id} />
+              <DeleteButton fileId={fileRisalah.data.id} />
             </Flex>
           </ListItem>
         )}

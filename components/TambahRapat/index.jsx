@@ -20,9 +20,9 @@ import FormikInput from "../ui/formik/FormikInput";
 import FormikSelect from "../ui/formik/FormikSelect";
 import FormikTextArea from "../ui/formik/FormikTextArea";
 
-const TambahRapat = ({ token }) => {
+const TambahRapat = ({ jwtToken }) => {
   //mengambil id user dari jwt
-  const decode = jwt_decode(token); //id --> id user
+  const decode = jwt_decode(jwtToken); //id --> id user
   const toast = useToast();
 
   //get data unit kerja untuk field unit kerja
@@ -72,11 +72,10 @@ const TambahRapat = ({ token }) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${jwtToken}`,
           },
         }
       );
-      // console.log("res: ", response.data.data.attributes.slug_rapat);
       setLoading(false);
       toast({
         title: "Selamat!",
@@ -204,6 +203,7 @@ const TambahRapat = ({ token }) => {
                     variant="solid"
                     size="md"
                     colorScheme="green"
+                    borderRadius="xl"
                     isLoading={loading}
                   >
                     Submit

@@ -20,8 +20,8 @@ const Upcoming = () => {
   if (!rapats) {
     return (
       <>
-        <Center minH="200px">
-          <BeatLoader size={10} color="red.500" />
+        <Center>
+          <BeatLoader size={10} color="#90CDF4" />
         </Center>
       </>
     );

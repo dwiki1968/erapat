@@ -5,7 +5,7 @@ import DetailRapat from "../../../components/DetailRapat";
 export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx);
 
-  if (!cookies.token) {
+  if (!cookies.erapat_token) {
     return {
       redirect: {
         destination: "/user/login",
@@ -14,14 +14,14 @@ export async function getServerSideProps(ctx) {
   }
 
   return {
-    props: {}, // will be passed to the page component as props
+    props: { jwtToken: cookies.erapat_token },
   };
 }
 
-const Rapat = () => {
+const Rapat = ({ jwtToken }) => {
   return (
     <>
-      <DetailRapat />
+      <DetailRapat jwtToken={jwtToken} />
     </>
   );
 };

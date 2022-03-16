@@ -25,9 +25,10 @@ import {
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import nookies, { setCookie } from "nookies";
+import { setCookie } from "nookies";
 import { useState } from "react";
 import { FaLock, FaUserAlt } from "react-icons/fa";
+import useSWR from "swr";
 import * as Yup from "yup";
 
 const CFaUserAlt = chakra(FaUserAlt);
@@ -36,6 +37,14 @@ const CFaLock = chakra(FaLock);
 const Login = () => {
   const router = useRouter();
   const toast = useToast();
+
+  const { data: appConst, error: errAppConst } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/app-const`
+  );
+
+  if (errAppConst) {
+    console.log("terjadi error :", errAppConst);
+  }
 
   const [fail, setFail] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -64,7 +73,7 @@ const Login = () => {
           password: values.password,
         }
       );
-      setCookie(null, "token", response.data.jwt, {
+      setCookie(null, "erapat_token", response.data.jwt, {
         maxAge: 2 * 60 * 60, //2 hours token expired
         path: "/",
       });
@@ -103,7 +112,7 @@ const Login = () => {
             alignItems="center"
           >
             <Avatar bg="gray.400" />
-            <Heading> e-rapat</Heading>
+            <Heading> {appConst && appConst.data.attributes.app_name}</Heading>
             <Box m={5} />
             {fail && (
               <Box w={{ base: "90%", md: "468px" }} m={2} borderRadius="xl">
@@ -213,6 +222,7 @@ const Login = () => {
                           onClick={() => setFail(false)}
                           isLoading={loading}
                           _hover={{ bg: "red.400" }}
+                          borderRadius="xl"
                         >
                           Masuk
                         </Button>
@@ -238,8 +248,13 @@ const Login = () => {
             <Text>
               Belum mempunyai akun?{" "}
               <Button color="red.400" variant="link">
+                {/* {appConst && console.log(appConst)} */}
                 <Link
-                  href="https://wa.me/6289606757971?text=mohon+buatkan+akun+untuk+aplikasi+e-rapat%2C+atas+nama...."
+                  href={
+                    appConst
+                      ? `https://wa.me/${appConst.data.attributes.contact_person_number}?text=request+akun+aplikasi+e-rapat%2C+atas+nama....+email....+username....`
+                      : "https://wa.me/6289606757971?text=request+akun+aplikasi+e-rapat%2C+atas+nama....+email....+username...."
+                  }
                   isExternal
                 >
                   klik disini

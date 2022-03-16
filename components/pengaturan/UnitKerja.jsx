@@ -33,7 +33,7 @@ const HapusRow = ({ id, token }) => {
           },
         }
       );
-      console.log("res: ", response);
+      // console.log("res: ", response);
       toast({
         title: "Selamat!",
         description: "Data berhasil dihapus 🎉",
@@ -105,7 +105,7 @@ const UnitKerja = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${cookies.erapat_token}`,
           },
         }
       );
@@ -173,7 +173,7 @@ const UnitKerja = () => {
                 <Td>{index + 1}</Td>
                 <Td>{unit.attributes.nama}</Td>
                 <Td>
-                  <HapusRow id={unit.id} token={cookies.token} />
+                  <HapusRow id={unit.id} token={cookies.erapat_token} />
                 </Td>
               </Tr>
             ))}

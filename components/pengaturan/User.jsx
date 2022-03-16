@@ -23,15 +23,15 @@ export default function User() {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
-  const cookies = parseCookies(); // cookies.token
+  const cookies = parseCookies(); // cookies.erapat_token
   const toast = useToast();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const { data, error } = useSWR(
-    cookies.token
-      ? [`${process.env.NEXT_PUBLIC_URL}/users/me`, cookies.token]
+    cookies.erapat_token
+      ? [`${process.env.NEXT_PUBLIC_URL}/users/me`, cookies.erapat_token]
       : null
   );
 
@@ -79,11 +79,11 @@ export default function User() {
         },
         {
           headers: {
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${cookies.erapat_token}`,
           },
         }
       );
-      console.log("res: ", response);
+      // console.log("res: ", response);
       setIsLoading(false);
       setIsOpen(false);
 
@@ -121,7 +121,7 @@ export default function User() {
         },
         {
           headers: {
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${cookies.erapat_token}`,
           },
         }
       );

@@ -4,7 +4,7 @@ import HomeDashboard from "../../components/HomeDashboard";
 
 export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx);
-  if (!cookies.token) {
+  if (!cookies.erapat_token) {
     return {
       redirect: {
         destination: "/user/login",
@@ -14,7 +14,7 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
-      token: cookies.token,
+      token: cookies.erapat_token,
     },
   };
 }

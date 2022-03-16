@@ -1,10 +1,26 @@
-import { Box, Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Skeleton,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import useSWR from "swr";
 import heroImg from "../../public/heroimg.png";
 
 export default function Landing() {
   const router = useRouter();
+  const { data: appConst, error: errAppConst } = useSWR(
+    `${process.env.NEXT_PUBLIC_URL}/app-const`
+  );
+
+  if (errAppConst) {
+    console.log("terjadi error :", errAppConst);
+  }
   return (
     <>
       <Stack
@@ -20,16 +36,14 @@ export default function Landing() {
             fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
           >
             <Text as={"span"} position={"relative"}>
-              Aplikasi Rapat
+              {appConst && appConst.data.attributes.app_name}
             </Text>
-            <br />
-            <Text as={"span"} color={"red.400"}>
-              Pusat TI
-            </Text>
+            {/* <Text as={"span"} color={"red.400"}>
+            {appConst && appConst.data.attributes.app_name}
+            </Text> */}
           </Heading>
           <Text fontSize="md" color={"gray.500"}>
-            Selamat datang! aplikasi ini dibuat untuk mengintegrasikan data
-            rapat pada unit kerja Pusat Teknologi Informasi PPATK.
+            {appConst && appConst.data.attributes.app_desc}
           </Text>
           <Stack
             spacing={{ base: 4, sm: 6 }}

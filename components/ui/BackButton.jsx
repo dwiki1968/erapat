@@ -11,7 +11,7 @@ const BackButton = () => {
         mb={5}
         leftIcon={<FiChevronLeft />}
         onClick={() => router.back()}
-        colorScheme="gray"
+        colorScheme="blue"
         variant="link"
       >
         Kembali

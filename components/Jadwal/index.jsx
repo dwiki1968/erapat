@@ -11,7 +11,7 @@ const Jadwal = () => {
     <>
       <PageTittle
         fontSize="2xl"
-        title="Jadwal Rapat PPATK"
+        title="Upcoming meeting"
         icon={<FiCalendar />}
       />
       <Divider my={3} />

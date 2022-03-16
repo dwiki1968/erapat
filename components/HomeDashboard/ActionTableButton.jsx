@@ -22,12 +22,12 @@ const ActionTableButton = ({ slug, idRapat }) => {
         `${process.env.NEXT_PUBLIC_URL}/rapats/${idRapat}`,
         {
           headers: {
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${cookies.erapat_token}`,
           },
         }
       );
       //logic jika berhasil
-      console.log("res: ", response);
+      // console.log("res: ", response);
       setIsOpen(false);
       toast({
         title: "Berhasil",
@@ -63,7 +63,7 @@ const ActionTableButton = ({ slug, idRapat }) => {
 
       {/* komponen tombol aksi */}
       <Flex flexDir={{ base: "column", sm: "column", md: "row" }}>
-        <Tooltip hasArrow label="Edit data rapat" bg="#95DAC1" color="black">
+        <Tooltip hasArrow label="Edit data rapat" bg="red.200" color="black">
           <IconButton
             variant="link"
             colorScheme="blue"
@@ -73,7 +73,7 @@ const ActionTableButton = ({ slug, idRapat }) => {
           />
         </Tooltip>
 
-        <Tooltip hasArrow label="Hapus rapat" bg="#95DAC1" color="black">
+        <Tooltip hasArrow label="Hapus rapat" bg="red.200" color="black">
           <IconButton
             variant="link"
             colorScheme="red"

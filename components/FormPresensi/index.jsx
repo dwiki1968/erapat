@@ -17,6 +17,7 @@ import axios from "axios";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { FiSend } from "react-icons/fi";
 import PuffLoader from "react-spinners/PuffLoader";
 import useSWR from "swr";
 import * as Yup from "yup";
@@ -50,7 +51,7 @@ const FormPresensi = () => {
   );
 
   if (errUnit) {
-    alert("terjadi eror data unit kerja");
+    console.log("terjadi eror data unit kerja : ", errUnit);
   }
 
   const { data, error } = useSWR(
@@ -148,7 +149,6 @@ const FormPresensi = () => {
           <HeaderApp />
           <Flex flexDir={{ base: "column", sm: "column", md: "column" }}>
             <ColorModeContainer
-              mt={10}
               w={{ xs: "100%", sm: "100%" }}
               p={{ base: 3, sm: 4, md: 5, lg: 10 }}
               borderRadius="xl"
@@ -265,12 +265,14 @@ const FormPresensi = () => {
                               disabled={
                                 !formik.isValid || ttdUrl.signature_url == ""
                               }
-                              colorScheme="green"
+                              colorScheme="blue"
                               variant="solid"
                               size="md"
                               isLoading={loadingSubmit}
+                              borderRadius="xl"
+                              rightIcon={<FiSend />}
                             >
-                              Submit
+                              Kirim
                             </Button>
                           </Form>
                         );

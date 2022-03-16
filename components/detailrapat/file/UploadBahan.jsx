@@ -60,7 +60,7 @@ function UploadBahan(props) {
     setIsLoading(true);
     const formData = new FormData();
     // formData.append("files", acceptedFiles[0]);
-    formData.append("ref", "Rapat");
+    formData.append("ref", "api::rapat.rapat");
     formData.append("field", "file_bahan");
     formData.append("refId", RapatId);
     myFiles.forEach((file) => formData.append(`files`, file, file.name));
@@ -70,11 +70,11 @@ function UploadBahan(props) {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${cookies.token}`,
+            Authorization: `Bearer ${cookies.erapat_token}`,
           },
         }
       );
-      console.log("res: ", response);
+      // console.log("res: ", response);
       setIsLoading(false);
       removeAll();
       toast({
@@ -101,16 +101,16 @@ function UploadBahan(props) {
 
   return (
     <>
-      <Flex>
+      <Box>
         <Box
           cursor="pointer"
           bg="gray.50"
-          borderRadius="lg"
           borderWidth="2px"
           borderColor="gray.200"
           minH="90px"
           borderStyle="dashed"
           padding={5}
+          borderRadius="xl"
           {...getRootProps({ className: "dropzone" })}
         >
           <input {...getInputProps()} />
@@ -120,8 +120,11 @@ function UploadBahan(props) {
 
           <List>{files}</List>
         </Box>
-        <Flex ml={2} flexDir="column">
+
+        <Flex mt={3}>
           <Button
+            mr={5}
+            borderRadius="xl"
             colorScheme="green"
             isDisabled={!myFiles.length}
             onClick={uploadFile}
@@ -134,17 +137,17 @@ function UploadBahan(props) {
 
           {files.length > 0 && (
             <Button
-              mt={2}
               size="sm"
               rightIcon={<FiDelete />}
               colorScheme="red"
               onClick={removeAll}
+              borderRadius="xl"
             >
               Batal
             </Button>
           )}
         </Flex>
-      </Flex>
+      </Box>
     </>
   );
 }

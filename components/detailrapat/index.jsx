@@ -10,7 +10,7 @@ import DashboardContainer from "../container/DashboardContainer";
 import PageTittle from "../ui/PageTitle";
 import PaperContainer from "../container/PaperContainer";
 
-const DetailRapat = () => {
+const DetailRapat = ({ jwtToken }) => {
   return (
     <>
       <MetaPage titlePage="Detail Rapat" />
@@ -28,10 +28,11 @@ const DetailRapat = () => {
               }}
             >
               <Box flex={1}>
-                <IdentitasRapat />
+                <IdentitasRapat jwtToken={jwtToken} />
               </Box>
 
               <Divider
+                borderWidth="1px"
                 m={5}
                 colorScheme="green"
                 orientation={{
@@ -42,7 +43,7 @@ const DetailRapat = () => {
                 }}
               />
               <Box w={{ sm: "100%", md: "100%", lg: "50%" }}>
-                <AlatDetail />
+                <AlatDetail jwtToken={jwtToken} />
               </Box>
             </Flex>
           </PaperContainer>

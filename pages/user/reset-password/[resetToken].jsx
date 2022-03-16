@@ -9,7 +9,7 @@ const ResetPwd = () => {
 
   return (
     <>
-      <MetaPage titlePage="Selamat Datang" />
+      <MetaPage titlePage="Reset Password" />
       <ResetPassword />
     </>
   );
