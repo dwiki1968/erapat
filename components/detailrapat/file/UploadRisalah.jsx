@@ -63,7 +63,7 @@ function UploadRisalah(props) {
     formData.append("refId", RapatId);
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/upload`,
+        `${process.env.NEXT_PUBLIC_URL}/api/upload`,
         formData,
         {
           headers: {

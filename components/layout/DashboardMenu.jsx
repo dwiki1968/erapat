@@ -72,7 +72,7 @@ export default function DashboardMenu({ children }) {
 const SidebarContent = ({ onClose, ...rest }) => {
   const router = useRouter();
   const { data: appConst, error: errAppConst } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/app-const`
+    `${process.env.NEXT_PUBLIC_URL}/api/app-const`
   );
 
   if (errAppConst) {
@@ -144,7 +144,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { data: appConst, error: errAppConst } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/app-const`
+    `${process.env.NEXT_PUBLIC_URL}/api/app-const`
   );
 
   if (errAppConst) {

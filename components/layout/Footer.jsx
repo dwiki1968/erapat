@@ -36,7 +36,7 @@ const SocialButton = ({ children, label, href }) => {
 
 export default function Footer() {
   const { data: appConst, error: errAppConst } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/app-const`
+    `${process.env.NEXT_PUBLIC_URL}/api/app-const`
   );
 
   if (errAppConst) {

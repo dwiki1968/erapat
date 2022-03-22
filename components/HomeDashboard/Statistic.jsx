@@ -80,15 +80,15 @@ export default function Statistic({}) {
 
   const { data, error } = useSWR(
     cookies.erapat_token
-      ? [`${process.env.NEXT_PUBLIC_URL}/users/me`, cookies.erapat_token]
+      ? [`${process.env.NEXT_PUBLIC_URL}/api/users/me`, cookies.erapat_token]
       : null
   );
 
-  const { data: upcoming, errorUpcoming } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/rapats/upcomingv2`
-  );
+  // const { data: upcoming, errorUpcoming } = useSWR(
+  //   `${process.env.NEXT_PUBLIC_URL}/api/rapats/upcomingv2`
+  // );
   const { data: total, errorTotal } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/rapats/count`
+    `${process.env.NEXT_PUBLIC_URL}/api/rapats/count`
   );
 
   if (error) {
@@ -99,9 +99,9 @@ export default function Statistic({}) {
     console.log(errorTotal);
   }
 
-  if (errorUpcoming) {
-    console.log(errorUpcoming);
-  }
+  // if (errorUpcoming) {
+  //   console.log(errorUpcoming);
+  // }
 
   return (
     <>
@@ -115,15 +115,15 @@ export default function Statistic({}) {
           icon={<FiUser size={"3em"} />}
         />
         <StatsCard
-          title={"Total"}
+          title={"Jumlah Rapat"}
           stat={total && total}
           icon={<FiArchive size={"3em"} />}
         />
-        <StatsCard
+        {/* <StatsCard
           title={"Akan datang"}
           stat={upcoming ? upcoming.count : null}
           icon={<FiCalendar size={"3em"} />}
-        />
+        /> */}
       </SimpleGrid>
     </>
   );

@@ -61,7 +61,7 @@ const ResetPassword = () => {
     console.log("val", values);
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/auth/reset-password`,
+        `${process.env.NEXT_PUBLIC_URL}/api/auth/reset-password`,
         {
           code: resetToken,
           password: values.password,

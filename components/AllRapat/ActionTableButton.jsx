@@ -19,7 +19,7 @@ const ActionTableButton = ({ slug, idRapat }) => {
     //handle untuk mendelete data
     try {
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_URL}/rapats/${idRapat}`,
+        `${process.env.NEXT_PUBLIC_URL}/api/rapats/${idRapat}`,
         {
           headers: {
             Authorization: `Bearer ${cookies.erapat_token}`,

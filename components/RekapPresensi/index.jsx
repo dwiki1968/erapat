@@ -33,7 +33,7 @@ const RekapPresensi = ({ jwtToken }) => {
 
   const { data, error } = useSWR(
     slug && jwtToken
-      ? [`${process.env.NEXT_PUBLIC_URL}/presensis/rekap/${slug}`, jwtToken]
+      ? [`${process.env.NEXT_PUBLIC_URL}/api/presensis/rekap/${slug}`, jwtToken]
       : null
   );
 
@@ -104,7 +104,7 @@ const RekapPresensi = ({ jwtToken }) => {
             </Button>
 
             <Clipboard
-              kalimat={`${process.env.NEXT_PUBLIC_CLIENT}/presensi/${slug}`}
+              kalimat={`${process.env.NEXT_PUBLIC_CLIENT}/api/presensi/${slug}`}
             />
             <Divider my={5} />
 

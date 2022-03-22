@@ -25,7 +25,7 @@ const HapusRow = ({ id, token }) => {
   const onDelete = async () => {
     try {
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_URL}/units/${id}`,
+        `${process.env.NEXT_PUBLIC_URL}/api/units/${id}`,
 
         {
           headers: {
@@ -82,11 +82,11 @@ const UnitKerja = () => {
   const toast = useToast();
 
   const { data: unitKerja, error: errUnit } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/units`
+    `${process.env.NEXT_PUBLIC_URL}/api/units`
   );
 
   if (errUnit) {
-    alert("terjadi eror data unit kerja");
+    console.log("terjadi eror data unit kerja", errUnit);
   }
 
   const handleChangeTambah = (e) => {
@@ -97,7 +97,7 @@ const UnitKerja = () => {
     SetIsLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/units`,
+        `${process.env.NEXT_PUBLIC_URL}/api/units`,
         {
           data: {
             nama: value,

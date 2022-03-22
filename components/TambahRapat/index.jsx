@@ -27,7 +27,7 @@ const TambahRapat = ({ jwtToken }) => {
 
   //get data unit kerja untuk field unit kerja
   const { data: unitKerja, error: errUnit } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/units`
+    `${process.env.NEXT_PUBLIC_URL}/api/units`
   );
 
   if (errUnit) {
@@ -61,7 +61,7 @@ const TambahRapat = ({ jwtToken }) => {
     const slug_rapat = uuidv4();
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/rapats`,
+        `${process.env.NEXT_PUBLIC_URL}/api/rapats`,
         {
           data: {
             ...values,

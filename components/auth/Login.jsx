@@ -39,7 +39,7 @@ const Login = () => {
   const toast = useToast();
 
   const { data: appConst, error: errAppConst } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/app-const`
+    `${process.env.NEXT_PUBLIC_URL}/api/app-const`
   );
 
   if (errAppConst) {
@@ -67,7 +67,7 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/auth/local`,
+        `${process.env.NEXT_PUBLIC_URL}/api/auth/local`,
         {
           identifier: values.username,
           password: values.password,

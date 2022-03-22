@@ -66,7 +66,7 @@ function UploadBahan(props) {
     myFiles.forEach((file) => formData.append(`files`, file, file.name));
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/upload`,
+        `${process.env.NEXT_PUBLIC_URL}/api/upload`,
         formData,
         {
           headers: {

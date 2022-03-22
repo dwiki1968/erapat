@@ -31,7 +31,7 @@ export default function User() {
 
   const { data, error } = useSWR(
     cookies.erapat_token
-      ? [`${process.env.NEXT_PUBLIC_URL}/users/me`, cookies.erapat_token]
+      ? [`${process.env.NEXT_PUBLIC_URL}/api/users/me`, cookies.erapat_token]
       : null
   );
 
@@ -73,7 +73,7 @@ export default function User() {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/auth/forgot-password`,
+        `${process.env.NEXT_PUBLIC_URL}/api/auth/forgot-password`,
         {
           email: data.email,
         },
@@ -115,7 +115,7 @@ export default function User() {
 
     try {
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_URL}/users/${data.id}`,
+        `${process.env.NEXT_PUBLIC_URL}/api/users/${data.id}`,
         {
           ...values,
         },

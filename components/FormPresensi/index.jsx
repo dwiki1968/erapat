@@ -47,7 +47,7 @@ const FormPresensi = () => {
 
   //get data unit kerja untuk field unit kerja
   const { data: unitKerja, error: errUnit } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/units`
+    `${process.env.NEXT_PUBLIC_URL}/api/units`
   );
 
   if (errUnit) {
@@ -55,7 +55,7 @@ const FormPresensi = () => {
   }
 
   const { data, error } = useSWR(
-    slug ? `${process.env.NEXT_PUBLIC_URL}/rapats/public/${slug}` : null
+    slug ? `${process.env.NEXT_PUBLIC_URL}/api/rapats/public/${slug}` : null
   );
 
   const [jenis, setJenis] = useState("in");
@@ -128,7 +128,7 @@ const FormPresensi = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/presensis`,
+        `${process.env.NEXT_PUBLIC_URL}/api/presensis`,
         { data: { ...data } }
       );
       console.log("res", response);

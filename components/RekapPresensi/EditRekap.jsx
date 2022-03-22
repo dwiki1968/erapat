@@ -26,7 +26,7 @@ const DeleteButton = ({ presensiId }) => {
   const onDelete = async () => {
     try {
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_URL}/presensis/${presensiId}`,
+        `${process.env.NEXT_PUBLIC_URL}/api/presensis/${presensiId}`,
         {
           headers: {
             Authorization: `Bearer ${cookies.erapat_token}`,

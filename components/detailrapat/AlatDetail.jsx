@@ -30,7 +30,7 @@ function AlatDetail({ jwtToken }) {
   const { data, error } = useSWR(
     slug && jwtToken
       ? [
-          `${process.env.NEXT_PUBLIC_URL}/rapats?${qs.stringify(
+          `${process.env.NEXT_PUBLIC_URL}/api/rapats?${qs.stringify(
             {
               populate: "*",
               filters: {

@@ -14,7 +14,7 @@ import CardRapat from "./CardRapat";
 
 const Upcoming = () => {
   const { data: rapats, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/rapats/upcoming`
+    `${process.env.NEXT_PUBLIC_URL}/api/rapats/upcoming`
   );
 
   if (!rapats) {

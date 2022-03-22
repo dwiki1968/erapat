@@ -22,7 +22,7 @@ const DeleteButton = ({ fileId }) => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `${process.env.NEXT_PUBLIC_URL}/upload/files/${fileId}`,
+        `${process.env.NEXT_PUBLIC_URL}/api/upload/files/${fileId}`,
         {
           headers: {
             Authorization: `Bearer ${cookies.erapat_token}`,

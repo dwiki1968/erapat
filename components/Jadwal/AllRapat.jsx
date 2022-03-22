@@ -37,7 +37,7 @@ const AllRapat = () => {
   );
 
   const { data: rapats, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/rapats?${query}`
+    `${process.env.NEXT_PUBLIC_URL}/api/rapats?${query}`
   );
 
   if (!rapats) {

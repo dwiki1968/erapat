@@ -33,7 +33,7 @@ const AllRapat = () => {
   const cookies = parseCookies();
 
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(20);
   const [sortby, setSortby] = useState("createdAt:desc");
 
   const [searchVal, setSearchVal] = useState("");
@@ -43,7 +43,7 @@ const AllRapat = () => {
   const { data: rapats, error } = useSWR(
     cookies.erapat_token
       ? [
-          `${process.env.NEXT_PUBLIC_URL}/rapats?${qs.stringify(
+          `${process.env.NEXT_PUBLIC_URL}/api/rapats?${qs.stringify(
             {
               fields: ["nama", "jadwal_rapat, slug_rapat", "unit"],
               pagination: {
@@ -139,7 +139,7 @@ const AllRapat = () => {
         </Flex>
       </Flex>
       <Box overflow="auto">
-        <Table>
+        <Table variant="striped" colorScheme="blue">
           <Thead>
             <Tr>
               <Th>

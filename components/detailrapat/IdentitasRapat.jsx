@@ -21,7 +21,7 @@ const IdentitasRapat = ({ jwtToken }) => {
   const [editable, setEditable] = useState(false);
   const [loading, setLoading] = useState(false);
   const { data: unitKerja, error: errUnit } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/units`
+    `${process.env.NEXT_PUBLIC_URL}/api/units`
   );
 
   if (errUnit) {
@@ -31,7 +31,7 @@ const IdentitasRapat = ({ jwtToken }) => {
   const { data, error } = useSWR(
     slug && jwtToken
       ? [
-          `${process.env.NEXT_PUBLIC_URL}/rapats?${qs.stringify(
+          `${process.env.NEXT_PUBLIC_URL}/api/rapats?${qs.stringify(
             {
               filters: {
                 slug_rapat: {
@@ -114,7 +114,7 @@ const IdentitasRapat = ({ jwtToken }) => {
     //post data ke server
     try {
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_URL}/rapats/${id}`,
+        `${process.env.NEXT_PUBLIC_URL}/api/rapats/${id}`,
         {
           data: {
             ...values,
