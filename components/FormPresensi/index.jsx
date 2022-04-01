@@ -152,8 +152,8 @@ const FormPresensi = () => {
               w={{ xs: "100%", sm: "100%" }}
               p={{ base: 3, sm: 4, md: 5, lg: 10 }}
               borderRadius="xl"
-              light="gray.50"
-              dark="gray.700"
+              light="blue.50"
+              dark="blue.700"
             >
               <Box>
                 <Heading fontSize="2xl">Presensi {nama}</Heading>

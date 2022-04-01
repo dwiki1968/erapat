@@ -6,7 +6,7 @@ import nookies, { setCookie } from "nookies";
 //user auth checking in browser cookies
 export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx);
-  if (cookies.token) {
+  if (cookies.erapat_token) {
     return {
       redirect: {
         destination: "/dashboard/",

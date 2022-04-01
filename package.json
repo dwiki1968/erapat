@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pm2": "pm2 start pm2.json"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
@@ -22,6 +23,7 @@
     "moment": "^2.29.1",
     "next": "11.1.0",
     "nookies": "^2.5.2",
+    "pm2": "^5.2.0",
     "prop-types": "^15.7.2",
     "qs": "^6.10.3",
     "react": "17.0.2",

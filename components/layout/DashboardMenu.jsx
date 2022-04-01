@@ -30,7 +30,7 @@ import Footer from "./Footer";
 
 const LinkItems = [
   { name: "Beranda", icon: FiHome, route: "/dashboard" },
-  { name: "Semua Rapat", icon: FiCalendar, route: "/dashboard/semua-rapat" },
+  // { name: "Semua Rapat", icon: FiCalendar, route: "/dashboard/semua-rapat" },
   { name: "Tambah Rapat", icon: FiFilePlus, route: "/dashboard/tambah-rapat" },
   { name: "Pengaturan", icon: FiSettings, route: "/dashboard/pengaturan" },
 ];
@@ -153,8 +153,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
 
   const onLogOut = () => {
     destroyCookie(null, "erapat_token");
-    router.replace("/user/login");
+    destroyCookie(null, "BNES_erapat_token");
     setIsOpen(false);
+    router.replace("/user/login");
   };
   return (
     <>

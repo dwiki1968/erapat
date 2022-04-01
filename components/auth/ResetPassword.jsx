@@ -158,7 +158,7 @@ const ResetPassword = () => {
                                 <Input
                                   {...field}
                                   type={showPassword ? "text" : "password"}
-                                  placeholder="Password"
+                                  placeholder="Password baru"
                                   id="password"
                                 />
                                 <InputRightElement width="4.5rem"></InputRightElement>

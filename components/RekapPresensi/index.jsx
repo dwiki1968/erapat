@@ -104,7 +104,7 @@ const RekapPresensi = ({ jwtToken }) => {
             </Button>
 
             <Clipboard
-              kalimat={`${process.env.NEXT_PUBLIC_CLIENT}/api/presensi/${slug}`}
+              kalimat={`${process.env.NEXT_PUBLIC_CLIENT}/presensi/${slug}`}
             />
             <Divider my={5} />
 

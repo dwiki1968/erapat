@@ -7,7 +7,7 @@ export default function AppLogo(props) {
   const router = useRouter();
 
   const { data: appConst, error: errAppConst } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/app-const`
+    `${process.env.NEXT_PUBLIC_URL}/api/app-const`
   );
 
   if (errAppConst) {
