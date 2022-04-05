@@ -25,7 +25,7 @@ import {
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import { setCookie } from "nookies";
+import { setCookie, destroyCookie} from "nookies";
 import { useState } from "react";
 import { FaLock, FaUserAlt } from "react-icons/fa";
 import useSWR from "swr";
@@ -64,6 +64,8 @@ const Login = () => {
 
   //auth req to backend and logic if success or not
   const onSubmit = async (values) => {
+    destroyCookie(null, "erapat_token");
+    destroyCookie(null, "BNES_erapat_token");
     setLoading(true);
     try {
       const response = await axios.post(
@@ -252,8 +254,8 @@ const Login = () => {
                 <Link
                   href={
                     appConst
-                      ? `https://wa.me/${appConst.data.attributes.contact_person_number}?text=request+akun+aplikasi+e-rapat%2C+atas+nama....+email....+username....`
-                      : "https://wa.me/6289606757971?text=request+akun+aplikasi+e-rapat%2C+atas+nama....+email....+username...."
+                      ? `https://wa.me/${appConst.data.attributes.contact_person_number}?text=Request%20register%20user%20aplikasi%20e-rapat%20PPATK%3A%0Anama%20lengkap%3A%20...%0Ausername%20yang%20diinginkan%20(cth%3A%20dks002)%3A%20...%0Aemail%20user%3A%20...`
+                      : "https://wa.me/6289606757971?text=Request%20register%20user%20aplikasi%20e-rapat%20PPATK%3A%0Anama%20lengkap%3A%20...%0Ausername%20yang%20diinginkan%20(cth%3A%20dks002)%3A%20...%0Aemail%20user%3A%20..."
                   }
                   isExternal
                 >

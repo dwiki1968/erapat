@@ -75,7 +75,7 @@ function ProfileCard(props) {
   );
 }
 
-export default function Statistic({}) {
+export default function Statistic({total}) {
   const cookies = parseCookies();
 
   const { data, error } = useSWR(
@@ -87,17 +87,17 @@ export default function Statistic({}) {
   // const { data: upcoming, errorUpcoming } = useSWR(
   //   `${process.env.NEXT_PUBLIC_URL}/api/rapats/upcomingv2`
   // );
-  const { data: total, errorTotal } = useSWR(
-    `${process.env.NEXT_PUBLIC_URL}/api/rapats/count`
-  );
+  // const { data: total, errorTotal } = useSWR(
+  //   `${process.env.NEXT_PUBLIC_URL}/api/rapats/count`
+  // );
 
   if (error) {
     console.log(error);
   }
 
-  if (errorTotal) {
-    console.log(errorTotal);
-  }
+  // if (errorTotal) {
+  //   console.log(errorTotal);
+  // }
 
   // if (errorUpcoming) {
   //   console.log(errorUpcoming);
@@ -116,7 +116,7 @@ export default function Statistic({}) {
         />
         <StatsCard
           title={"Jumlah Rapat"}
-          stat={total && total}
+          stat={total}
           icon={<FiArchive size={"3em"} />}
         />
         {/* <StatsCard

@@ -152,7 +152,7 @@ const FormPresensi = () => {
               w={{ xs: "100%", sm: "100%" }}
               p={{ base: 3, sm: 4, md: 5, lg: 10 }}
               borderRadius="xl"
-              light="blue.50"
+              light="blue.100"
               dark="blue.700"
             >
               <Box>

@@ -8,7 +8,7 @@ import PageTitle from "../../components/ui/PageTitle";
 import { FiSettings } from "react-icons/fi";
 import { Heading, Text } from "@chakra-ui/layout";
 import nookies from "nookies";
-// import UnitKerja from "../../components/pengaturan/UnitKerja";
+import UnitKerja from "../../components/pengaturan/UnitKerja";
 
 export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx);
@@ -44,12 +44,12 @@ const Pengaturan = () => {
             <User />
           </PaperContainer>
 
-          {/* <PaperContainer mt={5} maxWidth="900px">
+          <PaperContainer mt={5} maxWidth="900px">
             <Heading mb={5} size="md">
               🏛 Unit Kerja
             </Heading>
             <UnitKerja />
-          </PaperContainer> */}
+          </PaperContainer>
         </DashboardContainer>
       </SideMenu>
     </>

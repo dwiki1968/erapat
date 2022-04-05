@@ -85,7 +85,7 @@ const RapatTable = () => {
 
   return (
     <>
-      <Statistic />
+      <Statistic total={rapats && rapats.meta.pagination.total} />
 
       <Divider my={5} />
       <Heading size="md" mb={5}>

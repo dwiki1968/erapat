@@ -17,7 +17,7 @@ const ColorModeContainer = ({ children }) => {
       w="full"
       mx="auto"
       p={3}
-      bg={useColorModeValue("gray.50", "gray.700")}
+      bg={useColorModeValue("blue.50", "blue.700")}
       borderRadius="xl"
       _hover={{
         shadow: "md",
@@ -57,7 +57,7 @@ const CardRapat = ({ data }) => {
                   📍 {unit}
                 </Text>
 
-                <Link
+                {/* <Link
                   fontSize="sm"
                   mr={4}
                   onClick={() => {
@@ -66,7 +66,7 @@ const CardRapat = ({ data }) => {
                   color="blue.400"
                 >
                   👨‍💼 Link Presensi
-                </Link>
+                </Link> */}
               </Flex>
             </Box>
           </ColorModeContainer>
