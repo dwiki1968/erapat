@@ -1,25 +1,20 @@
-import React from "react";
+import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
+import React, { useEffect } from "react";
 import Login from "../../components/auth/Login";
 import MetaPage from "../../components/layout/MetaPage";
-import nookies, { setCookie } from "nookies";
 
-//user auth checking in browser cookies
-export async function getServerSideProps(ctx) {
-  const cookies = nookies.get(ctx);
-  if (cookies.erapat_token) {
-    return {
-      redirect: {
-        destination: "/dashboard/",
-      },
-    };
-  }
+const LoginPage = () => {
+  const cookies = parseCookies();
+  const router = useRouter();
 
-  return {
-    props: {},
-  };
-}
+  useEffect(() => {
+    if (cookies.erapat_token) {
+      router.push("/dashboard/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-const login = () => {
   return (
     <>
       <MetaPage titlePage="Masuk ke Aplikasi" />
@@ -28,4 +23,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default LoginPage;

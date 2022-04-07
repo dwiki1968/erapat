@@ -75,9 +75,8 @@ function ProfileCard(props) {
   );
 }
 
-export default function Statistic({total}) {
+export default function Statistic({ total }) {
   const cookies = parseCookies();
-
   const { data, error } = useSWR(
     cookies.erapat_token
       ? [`${process.env.NEXT_PUBLIC_URL}/api/users/me`, cookies.erapat_token]

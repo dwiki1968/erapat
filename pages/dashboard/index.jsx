@@ -1,25 +1,19 @@
-import nookies from "nookies";
-import React from "react";
+import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
+import React, { useEffect } from "react";
 import HomeDashboard from "../../components/HomeDashboard";
 
-export async function getServerSideProps(ctx) {
-  const cookies = nookies.get(ctx);
-  if (!cookies.erapat_token) {
-    return {
-      redirect: {
-        destination: "/user/login",
-      },
-    };
-  }
+const Dashboard = () => {
+  const cookies = parseCookies();
+  const router = useRouter();
 
-  return {
-    props: {
-      token: cookies.erapat_token,
-    },
-  };
-}
+  useEffect(() => {
+    if (!cookies.erapat_token) {
+      router.push("/user/login/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-const Dashboard = ({ token }) => {
   return (
     <>
       <HomeDashboard />

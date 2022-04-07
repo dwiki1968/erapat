@@ -1,27 +1,22 @@
-import nookies from "nookies";
-import React from "react";
+import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
+import React, { useEffect } from "react";
 import DetailRapat from "../../../components/DetailRapat";
 
-export async function getServerSideProps(ctx) {
-  const cookies = nookies.get(ctx);
+const Rapat = () => {
+  const cookies = parseCookies();
+  const router = useRouter();
 
-  if (!cookies.erapat_token) {
-    return {
-      redirect: {
-        destination: "/user/login",
-      },
-    };
-  }
+  useEffect(() => {
+    if (!cookies.erapat_token) {
+      router.push("/user/login/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  return {
-    props: { jwtToken: cookies.erapat_token },
-  };
-}
-
-const Rapat = ({ jwtToken }) => {
   return (
     <>
-      <DetailRapat jwtToken={jwtToken} />
+      <DetailRapat jwtToken={cookies.erapat_token} />
     </>
   );
 };

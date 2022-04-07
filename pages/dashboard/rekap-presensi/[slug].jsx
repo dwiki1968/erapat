@@ -1,27 +1,22 @@
-import React from "react";
+import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
+import React, { useEffect } from "react";
 import RekapPresensi from "../../../components/RekapPresensi";
-import nookies, { parseCookies } from "nookies";
 
-export async function getServerSideProps(ctx) {
-  const cookies = nookies.get(ctx);
+const Presensi = () => {
+  const cookies = parseCookies();
+  const router = useRouter();
 
-  if (!cookies.erapat_token) {
-    return {
-      redirect: {
-        destination: "/user/login",
-      },
-    };
-  }
+  useEffect(() => {
+    if (!cookies.erapat_token) {
+      router.push("/user/login/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  return {
-    props: { jwtToken: cookies.erapat_token },
-  };
-}
-
-const Presensi = ({ jwtToken }) => {
   return (
     <>
-      <RekapPresensi jwtToken={jwtToken} />
+      <RekapPresensi jwtToken={cookies.erapat_token} />
     </>
   );
 };

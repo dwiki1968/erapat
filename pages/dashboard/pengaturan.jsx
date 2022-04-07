@@ -1,33 +1,27 @@
-import React from "react";
-import MetaPage from "../../components/layout/MetaPage";
-import User from "../../components/pengaturan/User";
+import { Heading } from "@chakra-ui/layout";
+import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
+import React, { useEffect } from "react";
+import { FiSettings } from "react-icons/fi";
 import DashboardContainer from "../../components/container/DashboardContainer";
 import PaperContainer from "../../components/container/PaperContainer";
 import SideMenu from "../../components/layout/DashboardMenu";
-import PageTitle from "../../components/ui/PageTitle";
-import { FiSettings } from "react-icons/fi";
-import { Heading, Text } from "@chakra-ui/layout";
-import nookies from "nookies";
+import MetaPage from "../../components/layout/MetaPage";
 import UnitKerja from "../../components/pengaturan/UnitKerja";
-
-export async function getServerSideProps(ctx) {
-  const cookies = nookies.get(ctx);
-
-  if (!cookies.erapat_token) {
-    return {
-      redirect: {
-        destination: "/user/login",
-      },
-    };
-  }
-  return {
-    props: {
-      token: cookies.erapat_token,
-    },
-  };
-}
+import User from "../../components/pengaturan/User";
+import PageTitle from "../../components/ui/PageTitle";
 
 const Pengaturan = () => {
+  const cookies = parseCookies();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!cookies.erapat_token) {
+      router.push("/user/login/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <SideMenu>

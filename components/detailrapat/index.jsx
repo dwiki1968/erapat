@@ -9,8 +9,11 @@ import BackButton from "../ui/BackButton";
 import DashboardContainer from "../container/DashboardContainer";
 import PageTittle from "../ui/PageTitle";
 import PaperContainer from "../container/PaperContainer";
+import { parseCookies } from "nookies";
 
 const DetailRapat = ({ jwtToken }) => {
+  const cookies = parseCookies();
+
   return (
     <>
       <MetaPage titlePage="Detail Rapat" />
@@ -28,7 +31,7 @@ const DetailRapat = ({ jwtToken }) => {
               }}
             >
               <Box flex={1}>
-                <IdentitasRapat jwtToken={jwtToken} />
+                <IdentitasRapat jwtToken={cookies.erapat_token} />
               </Box>
 
               <Divider
@@ -43,7 +46,7 @@ const DetailRapat = ({ jwtToken }) => {
                 }}
               />
               <Box w={{ sm: "100%", md: "100%", lg: "50%" }}>
-                <AlatDetail jwtToken={jwtToken} />
+                <AlatDetail jwtToken={cookies.erapat_token} />
               </Box>
             </Flex>
           </PaperContainer>

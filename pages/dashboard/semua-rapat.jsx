@@ -1,5 +1,6 @@
-import nookies from "nookies";
-import React from "react";
+import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
+import React, { useEffect } from "react";
 import { FiFileText } from "react-icons/fi";
 import AllRapat from "../../components/AllRapat";
 import DashboardContainer from "../../components/container/DashboardContainer";
@@ -8,26 +9,18 @@ import DashboardMenu from "../../components/layout/DashboardMenu";
 import MetaPage from "../../components/layout/MetaPage";
 import PageTitle from "../../components/ui/PageTitle";
 
-export async function getServerSideProps(ctx) {
-  const cookies = nookies.get(ctx);
-  if (!cookies.erapat_token) {
-    return {
-      redirect: {
-        destination: "/user/login",
-      },
-    };
-  }
-
-  return {
-    props: {
-      token: cookies.erapat_token,
-    },
-  };
-}
-
 const SemuaRapat = () => {
+  const cookies = parseCookies();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!cookies.erapat_token) {
+      router.push("/user/login/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
-    <div>
+    <>
       <DashboardMenu>
         <MetaPage titlePage="Semua Rapat" />
 
@@ -40,7 +33,7 @@ const SemuaRapat = () => {
           </PaperContainer>
         </DashboardContainer>
       </DashboardMenu>
-    </div>
+    </>
   );
 };
 

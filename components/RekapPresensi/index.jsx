@@ -86,6 +86,7 @@ const RekapPresensi = ({ jwtToken }) => {
           </Drawer>
           <BackButton />
           <PageTittle
+            size="md"
             title={`Rekap Presensi ${rapat.nama}`}
             icon={<FiFileText />}
           />

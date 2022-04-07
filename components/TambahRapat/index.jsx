@@ -11,6 +11,7 @@ import axios from "axios";
 import { Form, Formik } from "formik";
 import jwt_decode from "jwt-decode";
 import { useRouter } from "next/router";
+import nookies, { parseCookies } from "nookies";
 import { useState } from "react";
 import { FiSave } from "react-icons/fi";
 import useSWR from "swr";
@@ -20,9 +21,12 @@ import FormikInput from "../ui/formik/FormikInput";
 import FormikSelect from "../ui/formik/FormikSelect";
 import FormikTextArea from "../ui/formik/FormikTextArea";
 
-const TambahRapat = ({ jwtToken }) => {
+const TambahRapat = () => {
+  const cookies = parseCookies();
+
   //mengambil id user dari jwt
-  const decode = jwt_decode(jwtToken); //id --> id user
+  // const decode = jwt_decode(cookies.erapat_token); //id --> id user
+
   const toast = useToast();
 
   //get data unit kerja untuk field unit kerja
@@ -57,6 +61,7 @@ const TambahRapat = ({ jwtToken }) => {
   });
 
   const onSubmit = async (values) => {
+    const decoded = jwt_decode(cookies.erapat_token); //id --> id user
     setLoading(true);
     const slug_rapat = uuidv4();
     try {
@@ -67,12 +72,12 @@ const TambahRapat = ({ jwtToken }) => {
             ...values,
             slug_rapat,
             jenis: jenis,
-            pembuat: `${decode.id}`,
+            pembuat: `${decoded.id}`,
           },
         },
         {
           headers: {
-            Authorization: `Bearer ${jwtToken}`,
+            Authorization: `Bearer ${cookies.erapat_token}`,
           },
         }
       );

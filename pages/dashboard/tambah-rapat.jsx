@@ -1,32 +1,25 @@
-import nookies from "nookies";
-import React from "react";
+import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
+import React, { useEffect } from "react";
 import { FiFilePlus } from "react-icons/fi";
-import MetaPage from "../../components/layout/MetaPage";
-import DashboardMenu from "../../components/layout/DashboardMenu";
-import Tambah from "../../components/TambahRapat";
 import DashboardContainer from "../../components/container/DashboardContainer";
-import PageTitle from "../../components/ui/PageTitle";
 import PaperContainer from "../../components/container/PaperContainer";
+import DashboardMenu from "../../components/layout/DashboardMenu";
+import MetaPage from "../../components/layout/MetaPage";
+import TambahRapat from "../../components/TambahRapat";
+import PageTitle from "../../components/ui/PageTitle";
 
-export async function getServerSideProps(ctx) {
-  const cookies = nookies.get(ctx);
+const TambahRapatPage = () => {
+  const cookies = parseCookies();
+  const router = useRouter();
 
-  if (!cookies.erapat_token) {
-    return {
-      redirect: {
-        destination: "/user/login",
-      },
-    };
-  }
+  useEffect(() => {
+    if (!cookies.erapat_token) {
+      router.push("/user/login/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  return {
-    props: {
-      jwtToken: cookies.erapat_token,
-    },
-  };
-}
-
-function TambahRapat({ jwtToken }) {
   return (
     <>
       <DashboardMenu>
@@ -35,14 +28,13 @@ function TambahRapat({ jwtToken }) {
         <DashboardContainer>
           <PageTitle title="Tambah Rapat" icon={<FiFilePlus />} />
 
-          {/* ada warning pada formik */}
           <PaperContainer mt={5} maxWidth="900px">
-            <Tambah jwtToken={jwtToken} />
+            <TambahRapat />
           </PaperContainer>
         </DashboardContainer>
       </DashboardMenu>
     </>
   );
-}
+};
 
-export default TambahRapat;
+export default TambahRapatPage;
