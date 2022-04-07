@@ -25,7 +25,7 @@ import {
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import { setCookie, destroyCookie} from "nookies";
+import { setCookie, destroyCookie } from "nookies";
 import { useState } from "react";
 import { FaLock, FaUserAlt } from "react-icons/fa";
 import useSWR from "swr";
@@ -141,7 +141,7 @@ const Login = () => {
               >
                 {(formik) => {
                   return (
-                    <Form>
+                    <Form method="post">
                       <Stack
                         spacing={4}
                         p="2rem"
