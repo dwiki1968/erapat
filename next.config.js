@@ -1,6 +1,7 @@
 // module.exports = {
 //   reactStrictMode: true,
 // }
+const withTM = require("next-transpile-modules")(["react-simple-captcha"]);
 
 const securityHeaders = [
   {
@@ -9,7 +10,7 @@ const securityHeaders = [
   },
 ];
 
-module.exports = {
+module.exports = withTM({
   async headers() {
     return [
       {
@@ -19,4 +20,16 @@ module.exports = {
       },
     ];
   },
-};
+});
+
+// module.exports = {
+//   async headers() {
+//     return [
+//       {
+//         // Apply these headers to all routes in your application.
+//         source: "/:path*",
+//         headers: securityHeaders,
+//       },
+//     ];
+//   },
+// };

@@ -22,12 +22,18 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
+
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { setCookie, destroyCookie } from "nookies";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaLock, FaUserAlt } from "react-icons/fa";
+import {
+  LoadCanvasTemplateNoReload,
+  loadCaptchaEnginge,
+  validateCaptcha,
+} from "react-simple-captcha";
 import useSWR from "swr";
 import * as Yup from "yup";
 
@@ -55,46 +61,64 @@ const Login = () => {
   const initialValues = {
     username: "",
     password: "",
+    captcha: "",
   };
 
   const validationSchema = Yup.object({
     username: Yup.string().required("Required"),
     password: Yup.string().required("Required"),
+    captcha: Yup.string().required("Required"),
   });
 
   //auth req to backend and logic if success or not
   const onSubmit = async (values) => {
     destroyCookie(null, "erapat_token");
     destroyCookie(null, "BNES_erapat_token");
-    setLoading(true);
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/api/auth/local`,
-        {
-          identifier: values.username,
-          password: values.password,
-        }
-      );
-      setCookie(null, "erapat_token", response.data.jwt, {
-        maxAge: 2 * 60 * 60, //2 hours token expired
-        path: "/",
-      });
-      setLoading(false);
+
+    if (validateCaptcha(values.captcha) == true) {
+      setLoading(true);
+      try {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_URL}/api/auth/local`,
+          {
+            identifier: values.username,
+            password: values.password,
+          }
+        );
+        setCookie(null, "erapat_token", response.data.jwt, {
+          maxAge: 2 * 60 * 60, //2 hours token expired
+          path: "/",
+        });
+        setLoading(false);
+        toast({
+          title: "Selamat!",
+          description: "Berhasil masuk ke aplikasi",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+          position: "top",
+        });
+        router.replace("/dashboard");
+      } catch (error) {
+        setLoading(false);
+        setFail(true);
+        console.log("err : ", error);
+      }
+    } else {
       toast({
-        title: "Selamat!",
-        description: "Berhasil masuk ke aplikasi",
-        status: "success",
-        duration: 9000,
+        title: "Kode Captcha Salah!",
+        description: "Kode captcha yang anda masukkan salah",
+        status: "error",
+        duration: 4000,
         isClosable: true,
         position: "top",
       });
-      router.replace("/dashboard");
-    } catch (error) {
-      setLoading(false);
-      setFail(true);
-      console.log("err : ", error);
     }
   };
+
+  useEffect(() => {
+    loadCaptchaEnginge(4);
+  }, []);
 
   return (
     <>
@@ -192,6 +216,7 @@ const Login = () => {
                                   <CFaLock color="gray.300" />
                                 </InputLeftElement>
                                 <Input
+                                  autoComplete={false}
                                   {...field}
                                   type={showPassword ? "text" : "password"}
                                   placeholder="Password"
@@ -213,6 +238,35 @@ const Login = () => {
                             </FormControl>
                           )}
                         </Field>
+
+                        {/* captcha */}
+                        <Flex>
+                          <Box p={1} mr={2}>
+                            <LoadCanvasTemplateNoReload />
+                          </Box>
+                          <Field name="captcha">
+                            {({ field, form }) => (
+                              <FormControl
+                                isInvalid={
+                                  form.errors["captcha"] &&
+                                  form.touched["captcha"]
+                                }
+                              >
+                                <Input
+                                  {...field}
+                                  type="text"
+                                  placeholder="Kode Captcha"
+                                  id="captcha"
+                                />
+
+                                <FormErrorMessage>
+                                  {form.errors["captcha"]}
+                                </FormErrorMessage>
+                              </FormControl>
+                            )}
+                          </Field>
+                        </Flex>
+                        {/* submit Button */}
 
                         <Button
                           disabled={!formik.isValid}
